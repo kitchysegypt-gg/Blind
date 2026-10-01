@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<!-- BODY:START -->
   <!-- Shared gradients for the 3D icons -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
     <defs>
@@ -33,197 +34,220 @@
     </defs>
   </svg>
 
-  <a class="skip" href="#main">Skip to main content</a>
+  <a class="skip" href="#main" id="skipLink" data-t="skip">Skip to main content</a>
+
+  <div id="previewBanner" class="preview-banner" hidden data-t="previewBanner"></div>
 
   <header class="topbar">
-    <button id="backBtn" class="iconbtn" hidden data-say="Back" aria-label="Back">
+    <button id="backBtn" class="iconbtn" hidden data-say="back" data-t-aria="back" aria-label="Back">
       <span class="ico" data-icon="back"></span>
     </button>
     <h1 id="screenTitle" tabindex="-1">Helping Hand</h1>
-    <button id="settingsBtn" class="iconbtn" data-go="settings" data-say="Settings" aria-label="Settings">
+    <button id="langBtn" class="iconbtn langbtn" data-instant aria-label="العربية" lang="ar">ع</button>
+    <button id="settingsBtn" class="iconbtn" data-go="settings" data-say="settings" data-t-aria="settings" aria-label="Settings">
       <span class="ico" data-icon="gear"></span>
     </button>
   </header>
 
-  <main id="main">
+  <main id="main" tabindex="-1">
     <!-- HOME -->
-    <section id="screen-home" class="screen" data-title="Helping Hand">
+    <section id="screen-home" class="screen" data-title="appName">
       <p id="greeting" class="greeting"></p>
 
-      <button class="mic-hero" id="heroMic" data-say="Speak. Tell me what you need." aria-label="Speak. Tell me what you need.">
+      <button class="mic-hero" id="heroMic" data-say="heroSay" data-t-aria="heroSay">
         <span class="ico ico-xl" data-icon="mic"></span>
-        <span class="mic-hero-text">Tap and say what you need</span>
+        <span class="mic-hero-text" data-t="heroText">Tap and say what you need</span>
       </button>
 
       <div class="grid" role="list">
-        <button role="listitem" class="tile tile-orange" data-go="request:groceries" data-say="Groceries delivery">
-          <span class="ico ico-lg" data-icon="bag"></span><span class="tile-label">Groceries</span>
+        <button role="listitem" class="tile tile-orange" data-go="request:groceries" data-say="groceriesSay">
+          <span class="ico ico-lg" data-icon="bag"></span><span class="tile-label" data-t="groceries">Groceries</span>
         </button>
-        <button role="listitem" class="tile tile-red" data-go="request:medicine" data-say="Medicine and pharmacy">
-          <span class="ico ico-lg" data-icon="pill"></span><span class="tile-label">Medicine</span>
+        <button role="listitem" class="tile tile-red" data-go="request:medicine" data-say="medicineSay">
+          <span class="ico ico-lg" data-icon="pill"></span><span class="tile-label" data-t="medicine">Medicine</span>
         </button>
-        <button role="listitem" class="tile tile-blue" data-go="request:ride" data-say="Get a ride">
-          <span class="ico ico-lg" data-icon="car"></span><span class="tile-label">Ride</span>
+        <button role="listitem" class="tile tile-blue" data-go="request:ride" data-say="rideSay">
+          <span class="ico ico-lg" data-icon="car"></span><span class="tile-label" data-t="ride">Ride</span>
         </button>
-        <button role="listitem" class="tile tile-pink" data-go="request:helper" data-say="Ask someone to help me">
-          <span class="ico ico-lg" data-icon="heart"></span><span class="tile-label">Helper</span>
+        <button role="listitem" class="tile tile-pink" data-go="request:helper" data-say="helperSay">
+          <span class="ico ico-lg" data-icon="heart"></span><span class="tile-label" data-t="helper">Helper</span>
         </button>
-        <button role="listitem" class="tile tile-green" data-go="family" data-say="Call my family">
-          <span class="ico ico-lg" data-icon="phone"></span><span class="tile-label">Call family</span>
+        <button role="listitem" class="tile tile-green" data-go="family" data-say="family">
+          <span class="ico ico-lg" data-icon="phone"></span><span class="tile-label" data-t="family">Call family</span>
         </button>
-        <button role="listitem" class="tile tile-purple" data-go="history" data-say="My requests">
-          <span class="ico ico-lg" data-icon="list"></span><span class="tile-label">My requests</span>
+        <button role="listitem" class="tile tile-purple" data-go="history" data-say="history">
+          <span class="ico ico-lg" data-icon="list"></span><span class="tile-label" data-t="history">My requests</span>
         </button>
       </div>
 
-      <button class="sos" data-go="emergency" data-say="Emergency. Get help now.">
-        <span class="ico ico-lg" data-icon="siren"></span><span>EMERGENCY</span>
+      <button class="sos" data-go="emergency" data-say="emergencySay">
+        <span class="ico ico-lg" data-icon="siren"></span><span data-t="emergency">EMERGENCY</span>
       </button>
     </section>
 
     <!-- REQUEST (groceries / medicine / ride / helper) -->
-    <section id="screen-request" class="screen" hidden data-title="Request">
+    <section id="screen-request" class="screen" hidden data-title="appName">
       <div class="req-head">
         <span id="reqIcon" class="ico ico-xl"></span>
         <p id="reqPrompt" class="lead"></p>
       </div>
 
-      <button class="bigbtn bigbtn-purple" id="dictateBtn" data-say="Speak your request">
-        <span class="ico" data-icon="mic"></span><span>Speak my request</span>
+      <button class="bigbtn bigbtn-purple" id="dictateBtn" data-say="speakRequest">
+        <span class="ico" data-icon="mic"></span><span data-t="speakRequest">Speak my request</span>
       </button>
 
-      <label for="reqText" class="field-label">Or type it here</label>
+      <label for="reqText" class="field-label" data-t="typeHere">Or type it here</label>
       <textarea id="reqText" rows="3" class="field"></textarea>
 
-      <p class="field-label" id="quickLabel">Quick choices</p>
+      <p class="field-label" id="quickLabel" data-t="quick">Quick choices</p>
       <div id="quickChips" class="chips" role="group" aria-labelledby="quickLabel"></div>
 
       <label class="check">
         <input type="checkbox" id="shareLoc" checked>
-        <span>Include my location</span>
+        <span data-t="shareLoc">Include my location</span>
       </label>
 
-      <button class="bigbtn bigbtn-green" id="sendReqBtn" data-say="Send request">
-        <span class="ico" data-icon="send"></span><span>Send request</span>
+      <button class="bigbtn bigbtn-green" id="sendReqBtn" data-say="send">
+        <span class="ico" data-icon="send"></span><span data-t="send">Send request</span>
       </button>
       <p class="hint" id="sendHint"></p>
     </section>
 
     <!-- FAMILY -->
-    <section id="screen-family" class="screen" hidden data-title="Call family">
+    <section id="screen-family" class="screen" hidden data-title="family">
       <div id="familyList" class="stack"></div>
     </section>
 
     <!-- HISTORY -->
-    <section id="screen-history" class="screen" hidden data-title="My requests">
+    <section id="screen-history" class="screen" hidden data-title="history">
       <div id="historyList" class="stack"></div>
-      <button class="bigbtn bigbtn-gray" id="clearHistory" data-say="Clear all requests">
-        <span>Clear list</span>
+      <button class="bigbtn bigbtn-gray" id="clearHistory" data-say="clearSay">
+        <span data-t="clearList">Clear list</span>
       </button>
     </section>
 
     <!-- EMERGENCY -->
-    <section id="screen-emergency" class="screen" hidden data-title="Emergency">
+    <section id="screen-emergency" class="screen" hidden data-title="emergencyTitle">
       <div class="countdown" aria-live="assertive">
         <span class="ico ico-xl pulse" data-icon="siren"></span>
         <p id="countdownText" class="countdown-text"></p>
       </div>
-      <button class="bigbtn bigbtn-red" id="callEmergencyNow" data-say="Call emergency now">
-        <span class="ico" data-icon="phone"></span><span>Call now</span>
+      <button class="bigbtn bigbtn-red" id="callEmergencyNow" data-say="callNow">
+        <span class="ico" data-icon="phone"></span><span data-t="callNow">Call now</span>
       </button>
-      <button class="bigbtn bigbtn-orange" id="alertHelperBtn" data-say="Send my location to my helper">
-        <span class="ico" data-icon="pin"></span><span>Send my location to helper</span>
+      <button class="bigbtn bigbtn-orange" id="alertHelperBtn" data-say="alertHelper">
+        <span class="ico" data-icon="pin"></span><span data-t="alertHelper">Send my location to helper</span>
       </button>
-      <button class="bigbtn bigbtn-gray" id="cancelEmergency" data-say="Cancel. Do not call." data-instant>
-        <span>Cancel</span>
+      <button class="bigbtn bigbtn-gray" id="cancelEmergency" data-say="cancelSay" data-instant>
+        <span data-t="cancel">Cancel</span>
       </button>
     </section>
 
     <!-- SETTINGS -->
-    <section id="screen-settings" class="screen" hidden data-title="Settings">
+    <section id="screen-settings" class="screen" hidden data-title="settings">
       <form id="settingsForm" class="stack" autocomplete="on">
         <fieldset>
-          <legend>About me</legend>
-          <label class="field-label" for="s-name">My name</label>
+          <legend data-t="language">Language</legend>
+          <select class="field" id="s-lang" name="lang" data-t-aria="language">
+            <option value="en">English</option>
+            <option value="ar" lang="ar">العربية</option>
+          </select>
+        </fieldset>
+
+        <fieldset>
+          <legend data-t="aboutMe">About me</legend>
+          <label class="field-label" for="s-name" data-t="myName">My name</label>
           <input class="field" id="s-name" name="name" autocomplete="name">
-          <label class="field-label" for="s-address">My home address</label>
+          <label class="field-label" for="s-address" data-t="myAddress">My home address</label>
           <textarea class="field" id="s-address" name="address" rows="2" autocomplete="street-address"></textarea>
         </fieldset>
 
         <fieldset>
-          <legend>My helper</legend>
-          <p class="hint">Requests are sent to this person (a relative, neighbour, carer or local shop).</p>
-          <label class="field-label" for="s-helperName">Helper's name</label>
+          <legend data-t="myHelper">My helper</legend>
+          <p class="hint" data-t="helperHint">Requests are sent to this person.</p>
+          <label class="field-label" for="s-helperName" data-t="helperName">Helper's name</label>
           <input class="field" id="s-helperName" name="helperName">
-          <label class="field-label" for="s-helperPhone">Helper's phone number</label>
+          <label class="field-label" for="s-helperPhone" data-t="helperPhone">Helper's phone number</label>
           <input class="field" id="s-helperPhone" name="helperPhone" type="tel" inputmode="tel" placeholder="+20 100 000 0000">
-          <label class="field-label" for="s-sendVia">Send messages by</label>
+          <label class="field-label" for="s-sendVia" data-t="sendVia">Send messages by</label>
           <select class="field" id="s-sendVia" name="sendVia">
-            <option value="whatsapp">WhatsApp</option>
-            <option value="sms">Text message (SMS)</option>
+            <option value="whatsapp" data-t="whatsapp">WhatsApp</option>
+            <option value="sms" data-t="sms">Text message (SMS)</option>
           </select>
         </fieldset>
 
         <fieldset>
-          <legend>Family to call</legend>
-          <div class="pair"><input class="field" name="fam1Name" aria-label="Family person 1 name" placeholder="Name"><input class="field" name="fam1Phone" type="tel" inputmode="tel" aria-label="Family person 1 phone" placeholder="Phone"></div>
-          <div class="pair"><input class="field" name="fam2Name" aria-label="Family person 2 name" placeholder="Name"><input class="field" name="fam2Phone" type="tel" inputmode="tel" aria-label="Family person 2 phone" placeholder="Phone"></div>
-          <div class="pair"><input class="field" name="fam3Name" aria-label="Family person 3 name" placeholder="Name"><input class="field" name="fam3Phone" type="tel" inputmode="tel" aria-label="Family person 3 phone" placeholder="Phone"></div>
+          <legend data-t="familyToCall">Family to call</legend>
+          <div class="pair"><input class="field" id="s-fam1Name" name="fam1Name" data-t-aria="fam1Name" data-t-ph="name"><input class="field" id="s-fam1Phone" name="fam1Phone" type="tel" inputmode="tel" data-t-aria="fam1Phone" data-t-ph="phone"></div>
+          <div class="pair"><input class="field" id="s-fam2Name" name="fam2Name" data-t-aria="fam2Name" data-t-ph="name"><input class="field" id="s-fam2Phone" name="fam2Phone" type="tel" inputmode="tel" data-t-aria="fam2Phone" data-t-ph="phone"></div>
+          <div class="pair"><input class="field" id="s-fam3Name" name="fam3Name" data-t-aria="fam3Name" data-t-ph="name"><input class="field" id="s-fam3Phone" name="fam3Phone" type="tel" inputmode="tel" data-t-aria="fam3Phone" data-t-ph="phone"></div>
         </fieldset>
 
         <fieldset>
-          <legend>Emergency</legend>
-          <label class="field-label" for="s-emergency">Emergency number</label>
-          <input class="field" id="s-emergency" name="emergency" type="tel" inputmode="tel" placeholder="e.g. 123, 112, 911">
-          <label class="field-label" for="s-countdown">Seconds before calling automatically</label>
+          <legend data-t="emergencyTitle">Emergency</legend>
+          <label class="field-label" for="s-emergency" data-t="emergencyNumber">Emergency number</label>
+          <input class="field" id="s-emergency" name="emergency" type="tel" inputmode="tel" data-t-ph="emergencyPh">
+          <label class="field-label" for="s-countdown" data-t="countdownLabel">Seconds before calling automatically</label>
           <select class="field" id="s-countdown" name="countdown">
-            <option value="0">Don't call automatically</option>
-            <option value="5">5 seconds</option>
-            <option value="10">10 seconds</option>
+            <option value="0" data-t="noAuto">Don't call automatically</option>
+            <option value="5" data-t="sec5">5 seconds</option>
+            <option value="10" data-t="sec10">10 seconds</option>
           </select>
         </fieldset>
 
         <fieldset>
-          <legend>Seeing and hearing</legend>
-          <label class="check"><input type="checkbox" name="voice"> <span>Read everything aloud</span></label>
-          <label class="check"><input type="checkbox" name="confirmTap"> <span>Tap once to hear, tap again to choose</span></label>
-          <p class="hint">Turn off "tap once to hear" if you use VoiceOver or TalkBack.</p>
-          <label class="field-label" for="s-rate">Voice speed</label>
+          <legend data-t="seeing">Seeing and hearing</legend>
+          <label class="check"><input type="checkbox" id="s-voice" name="voice"> <span data-t="readAloud">Read everything aloud</span></label>
+          <label class="check"><input type="checkbox" id="s-confirmTap" name="confirmTap"> <span data-t="confirmTap">Tap once to hear, tap again to choose</span></label>
+          <p class="hint" data-t="srHint">Turn off "tap once to hear" if you use VoiceOver or TalkBack.</p>
+          <label class="field-label" for="s-rate" data-t="rate">Voice speed</label>
           <select class="field" id="s-rate" name="rate">
-            <option value="0.7">Slow</option>
-            <option value="0.9">Normal</option>
-            <option value="1.15">Fast</option>
+            <option value="0.7" data-t="slow">Slow</option>
+            <option value="0.9" data-t="normal">Normal</option>
+            <option value="1.15" data-t="fast">Fast</option>
           </select>
-          <label class="field-label" for="s-size">Text size</label>
+          <label class="field-label" for="s-size" data-t="size">Text size</label>
           <select class="field" id="s-size" name="size">
-            <option value="1">Large</option>
-            <option value="1.2">Extra large</option>
-            <option value="1.4">Huge</option>
+            <option value="1" data-t="large">Large</option>
+            <option value="1.2" data-t="xl">Extra large</option>
+            <option value="1.4" data-t="huge">Huge</option>
           </select>
-          <label class="field-label" for="s-theme">Colours</label>
+          <label class="field-label" for="s-theme" data-t="colours">Colours</label>
           <select class="field" id="s-theme" name="theme">
-            <option value="dark">Dark (white on black)</option>
-            <option value="yellow">High contrast (yellow on black)</option>
-            <option value="light">Light (black on white)</option>
+            <option value="dark" data-t="themeDark">Dark (white on black)</option>
+            <option value="yellow" data-t="themeYellow">High contrast (yellow on black)</option>
+            <option value="light" data-t="themeLight">Light (black on white)</option>
           </select>
         </fieldset>
 
-        <button type="submit" class="bigbtn bigbtn-green" data-say="Save settings" data-instant>
-          <span>Save</span>
+        <button type="submit" class="bigbtn bigbtn-green" data-say="saveSay" data-instant>
+          <span data-t="save">Save</span>
         </button>
       </form>
     </section>
   </main>
 
-  <!-- Listening overlay -->
-  <div id="listening" class="listening" hidden role="dialog" aria-modal="true" aria-label="Listening">
+  <!-- Listening overlay: speak, or type if the microphone isn't available -->
+  <div id="listening" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="listeningTitle">
     <span class="ico ico-xl pulse" data-icon="mic"></span>
-    <p class="listening-title">Listening…</p>
+    <p class="overlay-title" id="listeningTitle" data-t="listening">Listening…</p>
     <p id="heard" class="heard" aria-live="polite"></p>
-    <button class="bigbtn bigbtn-gray" id="stopListening" data-instant>Stop</button>
+    <label for="typedCmd" class="field-label" data-t="listenType">Or type here</label>
+    <input id="typedCmd" class="field" autocomplete="off">
+    <button class="bigbtn bigbtn-green" id="stopListening" data-instant><span data-t="done">Done</span></button>
+  </div>
+
+  <!-- Preview sheet: shows the message or call instead of sending it (artifact preview only) -->
+  <div id="sheet" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <p class="overlay-title" id="sheetTitle"></p>
+    <p class="sheet-to" id="sheetTo"></p>
+    <pre class="sheet-body" id="sheetBody"></pre>
+    <button class="bigbtn bigbtn-blue" id="sheetCopy" data-instant><span data-t="copy">Copy</span></button>
+    <button class="bigbtn bigbtn-gray" id="sheetClose" data-instant><span data-t="close">Close</span></button>
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
+<!-- BODY:END -->
 
   <script src="app.js"></script>
 </body>

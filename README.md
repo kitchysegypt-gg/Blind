@@ -23,6 +23,16 @@ It's a web app (PWA). Open it in a phone browser and choose **"Add to Home scree
 - Vibration feedback on each tap.
 - 3D-style icons with strong shapes and colours that are easy to tell apart with low vision.
 
+## English and Arabic (العربية)
+
+Tap the **ع / EN** button in the top bar to switch languages at any time. Arabic mode includes:
+- A full right-to-left layout with every word translated
+- Arabic speech using the phone's Arabic voice
+- Arabic voice commands in everyday Egyptian and Modern Standard words, for example «عايز عيش ولبن», «وديني للدكتور», «محتاج دوا الضغط», «اتصل بأحمد», «الحقوني»
+- Messages to the helper written in Arabic
+
+The app starts in Arabic automatically when the phone's language is Arabic.
+
 ## First-time setup
 
 Open **Settings** (the gear at the top right) and fill in:
@@ -42,7 +52,19 @@ python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
-To put it on a phone, host the folder on any HTTPS static host (GitHub Pages, Netlify, etc.). The microphone, location and install-to-home-screen features need HTTPS.
+### Put it online with GitHub Pages
+
+The workflow `.github/workflows/pages.yml` publishes the app each time `main` changes. One-time setup:
+
+1. Merge this branch into `main`.
+2. On GitHub, open **Settings → Pages** and set **Source** to **GitHub Actions**.
+3. Open the **Actions** tab and run **Deploy to GitHub Pages** (or push to `main`).
+
+The app will then be at `https://<your-username>.github.io/<repo-name>/`. Open that link on the phone, then use **Add to Home screen**. The microphone, location and install features need HTTPS, and GitHub Pages provides it.
+
+### Preview build
+
+`python3 tools/build-preview.py` writes `dist/helping-hand-preview.html`, a single-file preview for places that block device features, like a claude.ai artifact. In the preview, calls and messages appear on screen instead of being sent, you type instead of speaking, and the contacts are marked as examples.
 
 ## Files
 
@@ -50,8 +72,10 @@ To put it on a phone, host the folder on any HTTPS static host (GitHub Pages, Ne
 - `styles.css` – large, high-contrast, 3D button styling and themes
 - `app.js` – voice in and out, commands, requests, calling, emergency, settings, and the 3D SVG icons
 - `sw.js`, `manifest.webmanifest`, `icons/` – offline support and installable app
+- `tools/build-preview.py` – builds the single-file preview
+- `.github/workflows/pages.yml` – publishes to GitHub Pages
 
 ## Notes
 
-- Voice commands use the browser's speech recognition (Chrome on Android, Safari on iOS 14.5+). If it isn't available, the app says so and you can use the keyboard's microphone instead.
+- Voice commands use the browser's speech recognition (Chrome on Android, Safari on iOS 14.5+). If it isn't available or the microphone is off, the listening screen shows a box to type in instead.
 - Requests go through your own WhatsApp or SMS app, so you press **Send** once to finish. Sending messages and calls with no tap at all would need a backend service; that could be added later.
