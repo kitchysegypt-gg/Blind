@@ -1,0 +1,14 @@
+{
+  "name": "Helping Hand",
+  "short_name": "Helping Hand",
+  "description": "Voice-guided help for blind and elderly people: groceries, medicine, rides, a helper, family calls and emergency.",
+  "start_url": "./#home",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0b0f",
+  "theme_color": "#0b0b0f",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

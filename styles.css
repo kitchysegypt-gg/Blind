@@ -1,0 +1,248 @@
+:root {
+  --scale: 1;
+  --bg: #0b0b0f;
+  --surface: #1a1c24;
+  --surface-2: #262935;
+  --text: #ffffff;
+  --muted: #c9cedb;
+  --focus: #ffd21f;
+  --border: #3a3f50;
+  --radius: 24px;
+  font-size: calc(20px * var(--scale));
+}
+:root[data-theme="yellow"] {
+  --bg: #000000;
+  --surface: #111111;
+  --surface-2: #1c1c1c;
+  --text: #ffe600;
+  --muted: #ffe600;
+  --focus: #00e5ff;
+  --border: #ffe600;
+}
+:root[data-theme="light"] {
+  --bg: #f4f1ea;
+  --surface: #ffffff;
+  --surface-2: #ebe7de;
+  --text: #111111;
+  --muted: #333a46;
+  --focus: #0047ff;
+  --border: #9aa0ad;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  line-height: 1.35;
+  min-height: 100vh;
+  padding-bottom: env(safe-area-inset-bottom);
+  -webkit-tap-highlight-color: transparent;
+}
+[hidden] { display: none !important; }
+
+.skip {
+  position: absolute; left: -999px; top: 0;
+  background: var(--focus); color: #000; padding: 12px 16px; z-index: 100;
+}
+.skip:focus { left: 8px; top: 8px; }
+
+:focus-visible {
+  outline: 5px solid var(--focus);
+  outline-offset: 4px;
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; gap: 12px;
+  padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
+  background: var(--bg);
+  border-bottom: 2px solid var(--border);
+}
+.topbar h1 {
+  flex: 1; margin: 0; font-size: 1.5rem; font-weight: 800; letter-spacing: .2px;
+}
+.iconbtn {
+  width: 64px; height: 64px; flex: none;
+  border-radius: 20px; border: 2px solid var(--border);
+  background: var(--surface); color: var(--text);
+  display: grid; place-items: center; cursor: pointer;
+  box-shadow: 0 5px 0 rgba(0,0,0,.45);
+}
+.iconbtn:active { transform: translateY(4px); box-shadow: 0 1px 0 rgba(0,0,0,.45); }
+.iconbtn .ico { width: 44px; height: 44px; }
+
+main { max-width: 760px; margin: 0 auto; padding: 16px; }
+.screen { display: flex; flex-direction: column; gap: 18px; }
+
+.greeting { margin: 4px 0 0; font-size: 1.35rem; font-weight: 700; color: var(--muted); }
+.lead { font-size: 1.3rem; font-weight: 700; margin: 0; }
+.hint { color: var(--muted); margin: 0; font-size: .95rem; }
+
+/* ---------- 3D icons ---------- */
+.ico { display: inline-block; width: 56px; height: 56px; flex: none; }
+.ico svg { width: 100%; height: 100%; display: block; overflow: visible;
+  filter: drop-shadow(0 6px 4px rgba(0,0,0,.35)); }
+.ico-lg { width: 84px; height: 84px; }
+.ico-xl { width: 112px; height: 112px; }
+
+/* ---------- Big mic ---------- */
+.mic-hero {
+  display: flex; align-items: center; gap: 18px;
+  width: 100%; padding: 18px 20px; min-height: 140px;
+  border-radius: 32px; border: 3px solid rgba(255,255,255,.18);
+  background: linear-gradient(160deg, #7b3cff 0%, #4a1fb8 100%);
+  color: #fff; font: inherit; font-size: 1.4rem; font-weight: 800; text-align: left;
+  box-shadow: 0 10px 0 #2b0f73, 0 16px 26px rgba(0,0,0,.45), inset 0 2px 0 rgba(255,255,255,.35);
+  cursor: pointer;
+}
+.mic-hero:active { transform: translateY(8px); box-shadow: 0 2px 0 #2b0f73, 0 4px 10px rgba(0,0,0,.4), inset 0 2px 0 rgba(255,255,255,.35); }
+.mic-hero-text { flex: 1; }
+
+/* ---------- Tiles ---------- */
+.grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px;
+  padding-bottom: 8px;
+}
+.tile {
+  --c1: #333; --c2: #222; --edge: #111;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  min-height: 170px; padding: 16px 8px;
+  border-radius: var(--radius);
+  border: 3px solid rgba(255,255,255,.2);
+  background: linear-gradient(165deg, var(--c1), var(--c2));
+  color: #fff; font: inherit; font-weight: 800; font-size: 1.25rem;
+  text-shadow: 0 2px 2px rgba(0,0,0,.45);
+  box-shadow: 0 10px 0 var(--edge), 0 16px 24px rgba(0,0,0,.4), inset 0 2px 0 rgba(255,255,255,.35);
+  cursor: pointer; transition: transform .08s, box-shadow .08s;
+}
+.tile:active { transform: translateY(8px); box-shadow: 0 2px 0 var(--edge), 0 4px 10px rgba(0,0,0,.4), inset 0 2px 0 rgba(255,255,255,.35); }
+.tile .ico { transition: transform .15s; }
+.tile:hover .ico, .tile:focus-visible .ico { transform: translateY(-4px) rotate(-4deg) scale(1.05); }
+.tile-label { text-align: center; overflow-wrap: anywhere; }
+.tile-orange { --c1: #ff9a2e; --c2: #d4600a; --edge: #8a3a00; }
+.tile-red    { --c1: #f24b4b; --c2: #b81c1c; --edge: #6e0b0b; }
+.tile-blue   { --c1: #3b8ff7; --c2: #1a55c4; --edge: #0d2f75; }
+.tile-pink   { --c1: #ff5f9a; --c2: #c41f64; --edge: #730a37; }
+.tile-green  { --c1: #2fc451; --c2: #178a33; --edge: #0b4d1b; }
+.tile-purple { --c1: #8d57ff; --c2: #5728c9; --edge: #2f1178; }
+
+:root[data-theme="yellow"] .tile,
+:root[data-theme="yellow"] .mic-hero {
+  background: #000; color: #ffe600; border-color: #ffe600; text-shadow: none;
+  box-shadow: 0 8px 0 #ffe600;
+}
+
+/* ---------- SOS ---------- */
+.sos {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  width: 100%; min-height: 130px; margin-top: 6px; margin-bottom: 18px;
+  border-radius: 32px; border: 4px solid #fff;
+  background: repeating-linear-gradient(135deg, #e01212 0 26px, #c40c0c 26px 52px);
+  color: #fff; font: inherit; font-size: 1.6rem; font-weight: 900; letter-spacing: 1px;
+  padding: 12px 16px; overflow-wrap: anywhere;
+  box-shadow: 0 10px 0 #5f0000, 0 16px 26px rgba(0,0,0,.5), inset 0 2px 0 rgba(255,255,255,.4);
+  cursor: pointer;
+}
+.sos .ico { width: 72px; height: 72px; }
+.sos:active { transform: translateY(8px); box-shadow: 0 2px 0 #5f0000; }
+
+/* ---------- Big buttons ---------- */
+.bigbtn {
+  --c1: #444; --c2: #333; --edge: #111;
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  width: 100%; min-height: 92px; padding: 14px 20px;
+  border-radius: 26px; border: 3px solid rgba(255,255,255,.2);
+  background: linear-gradient(165deg, var(--c1), var(--c2));
+  color: #fff; font: inherit; font-size: 1.35rem; font-weight: 800;
+  text-shadow: 0 2px 2px rgba(0,0,0,.4);
+  box-shadow: 0 8px 0 var(--edge), 0 12px 20px rgba(0,0,0,.35), inset 0 2px 0 rgba(255,255,255,.3);
+  cursor: pointer; margin-bottom: 8px;
+}
+.bigbtn:active { transform: translateY(6px); box-shadow: 0 2px 0 var(--edge); }
+.bigbtn .ico { width: 56px; height: 56px; }
+.bigbtn-green  { --c1: #2fc451; --c2: #178a33; --edge: #0b4d1b; }
+.bigbtn-red    { --c1: #f24b4b; --c2: #b81c1c; --edge: #6e0b0b; }
+.bigbtn-orange { --c1: #ff9a2e; --c2: #d4600a; --edge: #8a3a00; }
+.bigbtn-purple { --c1: #8d57ff; --c2: #5728c9; --edge: #2f1178; }
+.bigbtn-blue   { --c1: #3b8ff7; --c2: #1a55c4; --edge: #0d2f75; }
+.bigbtn-gray   { --c1: #5b6578; --c2: #3a4152; --edge: #1b1f29; }
+:root[data-theme="yellow"] .bigbtn { background: #000; color: #ffe600; border-color: #ffe600; text-shadow: none; box-shadow: 0 6px 0 #ffe600; }
+
+/* ---------- Request ---------- */
+.req-head { display: flex; align-items: center; gap: 16px; }
+.field-label { display: block; font-weight: 700; margin: 6px 0 6px; }
+.field {
+  width: 100%; font: inherit; font-size: 1.15rem;
+  padding: 16px; border-radius: 16px;
+  border: 3px solid var(--border); background: var(--surface); color: var(--text);
+}
+textarea.field { resize: vertical; min-height: 110px; }
+.chips { display: flex; flex-wrap: wrap; gap: 12px; }
+.chip {
+  font: inherit; font-weight: 700; font-size: 1.1rem;
+  min-height: 64px; padding: 10px 20px; border-radius: 999px;
+  border: 3px solid var(--border); background: var(--surface-2); color: var(--text);
+  box-shadow: 0 5px 0 rgba(0,0,0,.45); cursor: pointer;
+}
+.chip[aria-pressed="true"] { background: var(--focus); color: #000; border-color: var(--focus); }
+.chip:active { transform: translateY(4px); box-shadow: 0 1px 0 rgba(0,0,0,.45); }
+.check { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 1.15rem; min-height: 56px; cursor: pointer; }
+.check input { width: 36px; height: 36px; accent-color: #2fc451; flex: none; }
+
+/* ---------- Lists ---------- */
+.stack { display: flex; flex-direction: column; gap: 16px; }
+.card {
+  background: var(--surface); border: 2px solid var(--border); border-radius: 20px;
+  padding: 16px 18px;
+}
+.card h2 { margin: 0 0 6px; font-size: 1.2rem; }
+.card p { margin: 0; color: var(--muted); }
+.empty { color: var(--muted); font-size: 1.2rem; text-align: center; padding: 30px 10px; }
+
+fieldset { border: 2px solid var(--border); border-radius: 20px; padding: 14px 16px 18px; margin: 0; }
+legend { font-weight: 800; font-size: 1.25rem; padding: 0 8px; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+
+/* ---------- Emergency ---------- */
+.countdown { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 8px 0 4px; }
+.countdown-text { font-size: 1.6rem; font-weight: 900; text-align: center; margin: 0; }
+.pulse { animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(1.1); } }
+
+/* ---------- Listening overlay ---------- */
+.listening {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(10, 6, 30, .96); color: #fff;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  padding: 24px;
+}
+.listening-title { font-size: 2rem; font-weight: 900; margin: 0; }
+.heard { font-size: 1.4rem; min-height: 2em; text-align: center; margin: 0; max-width: 600px; }
+.listening .bigbtn { max-width: 420px; }
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed; left: 16px; right: 16px; bottom: calc(20px + env(safe-area-inset-bottom));
+  max-width: 700px; margin: 0 auto; z-index: 60;
+  background: var(--focus); color: #000; font-weight: 800; font-size: 1.2rem;
+  padding: 18px 20px; border-radius: 20px; text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,.5);
+  opacity: 0; transform: translateY(20px); pointer-events: none; transition: .2s;
+}
+.toast.show { opacity: 1; transform: none; }
+
+/* Small "armed" state for tap-to-hear mode */
+.armed { outline: 5px dashed var(--focus) !important; outline-offset: 4px; }
+
+@media (max-width: 380px) {
+  .grid { gap: 12px; }
+  .tile { min-height: 150px; font-size: 1.1rem; }
+  .ico-lg { width: 70px; height: 70px; }
+  .pair { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

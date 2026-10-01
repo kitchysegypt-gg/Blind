@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Helping Hand</title>
+  <meta name="description" content="A simple, voice-guided helper app for blind and elderly people: groceries, medicine, rides, a helper, family calls and emergency.">
+  <meta name="theme-color" content="#0b0b0f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Helping Hand">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Shared gradients for the 3D icons -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="g-orange" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc061"/><stop offset=".55" stop-color="#ff8a1f"/><stop offset="1" stop-color="#c85400"/></linearGradient>
+      <linearGradient id="g-red" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8a8a"/><stop offset=".5" stop-color="#ee2b2b"/><stop offset="1" stop-color="#a10e0e"/></linearGradient>
+      <linearGradient id="g-blue" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8cc8ff"/><stop offset=".5" stop-color="#2f86f6"/><stop offset="1" stop-color="#1446a8"/></linearGradient>
+      <linearGradient id="g-green" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9df0a8"/><stop offset=".5" stop-color="#2fc451"/><stop offset="1" stop-color="#14792c"/></linearGradient>
+      <linearGradient id="g-pink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb3d1"/><stop offset=".5" stop-color="#ff4f8f"/><stop offset="1" stop-color="#b8155a"/></linearGradient>
+      <linearGradient id="g-purple" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d5b8ff"/><stop offset=".5" stop-color="#8a4dff"/><stop offset="1" stop-color="#4b1fb0"/></linearGradient>
+      <linearGradient id="g-yellow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6a8"/><stop offset=".5" stop-color="#ffd21f"/><stop offset="1" stop-color="#c99100"/></linearGradient>
+      <linearGradient id="g-white" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#e9edf3"/><stop offset="1" stop-color="#b9c2cf"/></linearGradient>
+      <linearGradient id="g-gray" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfd6e0"/><stop offset=".5" stop-color="#8793a5"/><stop offset="1" stop-color="#4a5466"/></linearGradient>
+      <linearGradient id="g-dark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b6578"/><stop offset="1" stop-color="#151a24"/></linearGradient>
+      <linearGradient id="g-glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8f6ff"/><stop offset="1" stop-color="#7fb6e6"/></linearGradient>
+      <linearGradient id="g-gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <radialGradient id="g-shadow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    </defs>
+  </svg>
+
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <header class="topbar">
+    <button id="backBtn" class="iconbtn" hidden data-say="Back" aria-label="Back">
+      <span class="ico" data-icon="back"></span>
+    </button>
+    <h1 id="screenTitle" tabindex="-1">Helping Hand</h1>
+    <button id="settingsBtn" class="iconbtn" data-go="settings" data-say="Settings" aria-label="Settings">
+      <span class="ico" data-icon="gear"></span>
+    </button>
+  </header>
+
+  <main id="main">
+    <!-- HOME -->
+    <section id="screen-home" class="screen" data-title="Helping Hand">
+      <p id="greeting" class="greeting"></p>
+
+      <button class="mic-hero" id="heroMic" data-say="Speak. Tell me what you need." aria-label="Speak. Tell me what you need.">
+        <span class="ico ico-xl" data-icon="mic"></span>
+        <span class="mic-hero-text">Tap and say what you need</span>
+      </button>
+
+      <div class="grid" role="list">
+        <button role="listitem" class="tile tile-orange" data-go="request:groceries" data-say="Groceries delivery">
+          <span class="ico ico-lg" data-icon="bag"></span><span class="tile-label">Groceries</span>
+        </button>
+        <button role="listitem" class="tile tile-red" data-go="request:medicine" data-say="Medicine and pharmacy">
+          <span class="ico ico-lg" data-icon="pill"></span><span class="tile-label">Medicine</span>
+        </button>
+        <button role="listitem" class="tile tile-blue" data-go="request:ride" data-say="Get a ride">
+          <span class="ico ico-lg" data-icon="car"></span><span class="tile-label">Ride</span>
+        </button>
+        <button role="listitem" class="tile tile-pink" data-go="request:helper" data-say="Ask someone to help me">
+          <span class="ico ico-lg" data-icon="heart"></span><span class="tile-label">Helper</span>
+        </button>
+        <button role="listitem" class="tile tile-green" data-go="family" data-say="Call my family">
+          <span class="ico ico-lg" data-icon="phone"></span><span class="tile-label">Call family</span>
+        </button>
+        <button role="listitem" class="tile tile-purple" data-go="history" data-say="My requests">
+          <span class="ico ico-lg" data-icon="list"></span><span class="tile-label">My requests</span>
+        </button>
+      </div>
+
+      <button class="sos" data-go="emergency" data-say="Emergency. Get help now.">
+        <span class="ico ico-lg" data-icon="siren"></span><span>EMERGENCY</span>
+      </button>
+    </section>
+
+    <!-- REQUEST (groceries / medicine / ride / helper) -->
+    <section id="screen-request" class="screen" hidden data-title="Request">
+      <div class="req-head">
+        <span id="reqIcon" class="ico ico-xl"></span>
+        <p id="reqPrompt" class="lead"></p>
+      </div>
+
+      <button class="bigbtn bigbtn-purple" id="dictateBtn" data-say="Speak your request">
+        <span class="ico" data-icon="mic"></span><span>Speak my request</span>
+      </button>
+
+      <label for="reqText" class="field-label">Or type it here</label>
+      <textarea id="reqText" rows="3" class="field"></textarea>
+
+      <p class="field-label" id="quickLabel">Quick choices</p>
+      <div id="quickChips" class="chips" role="group" aria-labelledby="quickLabel"></div>
+
+      <label class="check">
+        <input type="checkbox" id="shareLoc" checked>
+        <span>Include my location</span>
+      </label>
+
+      <button class="bigbtn bigbtn-green" id="sendReqBtn" data-say="Send request">
+        <span class="ico" data-icon="send"></span><span>Send request</span>
+      </button>
+      <p class="hint" id="sendHint"></p>
+    </section>
+
+    <!-- FAMILY -->
+    <section id="screen-family" class="screen" hidden data-title="Call family">
+      <div id="familyList" class="stack"></div>
+    </section>
+
+    <!-- HISTORY -->
+    <section id="screen-history" class="screen" hidden data-title="My requests">
+      <div id="historyList" class="stack"></div>
+      <button class="bigbtn bigbtn-gray" id="clearHistory" data-say="Clear all requests">
+        <span>Clear list</span>
+      </button>
+    </section>
+
+    <!-- EMERGENCY -->
+    <section id="screen-emergency" class="screen" hidden data-title="Emergency">
+      <div class="countdown" aria-live="assertive">
+        <span class="ico ico-xl pulse" data-icon="siren"></span>
+        <p id="countdownText" class="countdown-text"></p>
+      </div>
+      <button class="bigbtn bigbtn-red" id="callEmergencyNow" data-say="Call emergency now">
+        <span class="ico" data-icon="phone"></span><span>Call now</span>
+      </button>
+      <button class="bigbtn bigbtn-orange" id="alertHelperBtn" data-say="Send my location to my helper">
+        <span class="ico" data-icon="pin"></span><span>Send my location to helper</span>
+      </button>
+      <button class="bigbtn bigbtn-gray" id="cancelEmergency" data-say="Cancel. Do not call." data-instant>
+        <span>Cancel</span>
+      </button>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="screen-settings" class="screen" hidden data-title="Settings">
+      <form id="settingsForm" class="stack" autocomplete="on">
+        <fieldset>
+          <legend>About me</legend>
+          <label class="field-label" for="s-name">My name</label>
+          <input class="field" id="s-name" name="name" autocomplete="name">
+          <label class="field-label" for="s-address">My home address</label>
+          <textarea class="field" id="s-address" name="address" rows="2" autocomplete="street-address"></textarea>
+        </fieldset>
+
+        <fieldset>
+          <legend>My helper</legend>
+          <p class="hint">Requests are sent to this person (a relative, neighbour, carer or local shop).</p>
+          <label class="field-label" for="s-helperName">Helper's name</label>
+          <input class="field" id="s-helperName" name="helperName">
+          <label class="field-label" for="s-helperPhone">Helper's phone number</label>
+          <input class="field" id="s-helperPhone" name="helperPhone" type="tel" inputmode="tel" placeholder="+20 100 000 0000">
+          <label class="field-label" for="s-sendVia">Send messages by</label>
+          <select class="field" id="s-sendVia" name="sendVia">
+            <option value="whatsapp">WhatsApp</option>
+            <option value="sms">Text message (SMS)</option>
+          </select>
+        </fieldset>
+
+        <fieldset>
+          <legend>Family to call</legend>
+          <div class="pair"><input class="field" name="fam1Name" aria-label="Family person 1 name" placeholder="Name"><input class="field" name="fam1Phone" type="tel" inputmode="tel" aria-label="Family person 1 phone" placeholder="Phone"></div>
+          <div class="pair"><input class="field" name="fam2Name" aria-label="Family person 2 name" placeholder="Name"><input class="field" name="fam2Phone" type="tel" inputmode="tel" aria-label="Family person 2 phone" placeholder="Phone"></div>
+          <div class="pair"><input class="field" name="fam3Name" aria-label="Family person 3 name" placeholder="Name"><input class="field" name="fam3Phone" type="tel" inputmode="tel" aria-label="Family person 3 phone" placeholder="Phone"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Emergency</legend>
+          <label class="field-label" for="s-emergency">Emergency number</label>
+          <input class="field" id="s-emergency" name="emergency" type="tel" inputmode="tel" placeholder="e.g. 123, 112, 911">
+          <label class="field-label" for="s-countdown">Seconds before calling automatically</label>
+          <select class="field" id="s-countdown" name="countdown">
+            <option value="0">Don't call automatically</option>
+            <option value="5">5 seconds</option>
+            <option value="10">10 seconds</option>
+          </select>
+        </fieldset>
+
+        <fieldset>
+          <legend>Seeing and hearing</legend>
+          <label class="check"><input type="checkbox" name="voice"> <span>Read everything aloud</span></label>
+          <label class="check"><input type="checkbox" name="confirmTap"> <span>Tap once to hear, tap again to choose</span></label>
+          <p class="hint">Turn off "tap once to hear" if you use VoiceOver or TalkBack.</p>
+          <label class="field-label" for="s-rate">Voice speed</label>
+          <select class="field" id="s-rate" name="rate">
+            <option value="0.7">Slow</option>
+            <option value="0.9">Normal</option>
+            <option value="1.15">Fast</option>
+          </select>
+          <label class="field-label" for="s-size">Text size</label>
+          <select class="field" id="s-size" name="size">
+            <option value="1">Large</option>
+            <option value="1.2">Extra large</option>
+            <option value="1.4">Huge</option>
+          </select>
+          <label class="field-label" for="s-theme">Colours</label>
+          <select class="field" id="s-theme" name="theme">
+            <option value="dark">Dark (white on black)</option>
+            <option value="yellow">High contrast (yellow on black)</option>
+            <option value="light">Light (black on white)</option>
+          </select>
+        </fieldset>
+
+        <button type="submit" class="bigbtn bigbtn-green" data-say="Save settings" data-instant>
+          <span>Save</span>
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Listening overlay -->
+  <div id="listening" class="listening" hidden role="dialog" aria-modal="true" aria-label="Listening">
+    <span class="ico ico-xl pulse" data-icon="mic"></span>
+    <p class="listening-title">Listening…</p>
+    <p id="heard" class="heard" aria-live="polite"></p>
+    <button class="bigbtn bigbtn-gray" id="stopListening" data-instant>Stop</button>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
