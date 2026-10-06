@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Helping Hand</title>
   <meta name="description" content="A simple, voice-guided helper app for blind and elderly people.">
-  <meta name="theme-color" content="#0e1116">
+  <meta name="theme-color" content="#fbf6f1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Helping Hand">
   <link rel="manifest" href="manifest.webmanifest">
@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" href="icons/icon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Kufi+Arabic:wght@500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Kufi+Arabic:wght@500;700&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -104,7 +104,7 @@
         <span class="b-text"><span class="b-title" data-t="whereAmI"></span><span class="b-sub" data-t="whereAmISub"></span></span>
         <span class="chev" data-icon="chev"></span>
       </button>
-      <button class="btn btn-green btn-home" data-go="family" data-say="family">
+      <button class="btn btn-pale btn-home" data-go="family" data-say="family">
         <span class="ico-tile"><span class="ico" data-icon="phone"></span></span>
         <span class="b-text"><span class="b-title" data-t="family"></span><span class="b-sub" id="familySub"></span></span>
         <span class="chev" data-icon="chev"></span>
@@ -323,9 +323,9 @@
           </select>
           <label class="field-label" for="s-theme" data-t="colours">Colours</label>
           <select class="field" id="s-theme" name="theme">
+            <option value="light" data-t="themeLight">Cream and blue</option>
             <option value="dark" data-t="themeDark">Dark</option>
             <option value="yellow" data-t="themeYellow">Yellow on black</option>
-            <option value="light" data-t="themeLight">Light</option>
           </select>
         </fieldset>
 

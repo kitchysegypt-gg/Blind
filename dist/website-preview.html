@@ -1,0 +1,403 @@
+<title>Helping Hand</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: one long page, one section per slide of the "Easy help" deck, alternating text left / visual right. */
+:root {
+  --paper: #fbf6f1;
+  --navy: #185079;
+  --navy-deep: #10405f;
+  --blue: #3885ab;
+  --blue-mid: #4e97bb;
+  --blue-soft: #95bfd1;
+  --blue-pale: #bbd6e1;
+  --blue-mist: #dce9ef;
+  --muted: #4a6f8a;
+  --head: "Archivo", "Atkinson Hyperlegible", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--paper); color: var(--navy);
+  font-family: var(--body); font-size: 18px; line-height: 1.55;
+}
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(70vmax 55vmax at 110% -15%, rgba(78, 151, 187, .45), transparent 60%),
+    radial-gradient(60vmax 50vmax at -15% 115%, rgba(56, 133, 171, .32), transparent 60%),
+    radial-gradient(40vmax 35vmax at 100% 100%, rgba(120, 200, 205, .28), transparent 60%);
+}
+a { color: inherit; }
+:focus-visible { outline: 4px solid #e8590c; outline-offset: 3px; }
+
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 24px; }
+h1, h2, h3 { font-family: var(--head); text-transform: uppercase; letter-spacing: -.025em; line-height: 1; margin: 0; text-wrap: balance; }
+h2 { font-size: clamp(2.4rem, 6vw, 4.6rem); font-weight: 700; }
+h3 { font-size: 1.35rem; font-weight: 700; letter-spacing: -.01em; }
+p { margin: 0; }
+.lead { font-size: 1.15rem; font-weight: 700; max-width: 58ch; }
+.muted { color: var(--muted); }
+
+/* ---------- Top bar ---------- */
+.nav {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--paper) 82%, transparent); backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(24, 80, 121, .12);
+}
+.nav .wrap { display: flex; align-items: center; gap: 16px; padding-block: 14px; }
+.brand { display: flex; align-items: center; gap: 12px; font-family: var(--head); font-weight: 800; text-transform: uppercase; text-decoration: none; letter-spacing: -.01em; font-size: 1.15rem; }
+.mark { width: 40px; height: 40px; border-radius: 12px; background: var(--navy); display: grid; place-items: center; flex: none; }
+.mark svg { width: 24px; height: 24px; }
+.nav-links { margin-left: auto; display: flex; gap: 22px; font-weight: 700; font-size: .95rem; }
+.nav-links a { text-decoration: none; }
+.nav-links a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 12px 24px; border-radius: 999px;
+  font-family: var(--head); font-weight: 700; text-transform: uppercase; letter-spacing: .01em;
+  text-decoration: none; background: var(--navy); color: #fff; border: 2px solid var(--navy);
+}
+.btn:hover { background: var(--navy-deep); }
+.btn-ghost { background: transparent; color: var(--navy); }
+.btn-ghost:hover { background: rgba(24, 80, 121, .08); }
+
+/* ---------- Hero (slide 1) ---------- */
+.hero { padding-block: clamp(56px, 10vw, 120px) clamp(48px, 8vw, 96px); }
+.eyebrow { display: flex; align-items: center; gap: 14px; font-family: var(--head); font-weight: 700; font-size: 1.1rem; margin-bottom: 40px; }
+.eyebrow svg { width: 44px; height: 26px; }
+.hero h1 { font-weight: 500; font-size: clamp(3.2rem, 10vw, 8.5rem); letter-spacing: -.045em; }
+.hero h1 strong { display: block; font-weight: 700; }
+.hero .tag { margin-top: 36px; font-family: var(--head); font-weight: 700; text-transform: uppercase; font-size: clamp(1rem, 2vw, 1.35rem); letter-spacing: -.01em; }
+.hero .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+
+/* ---------- Sections ---------- */
+section.slide { padding-block: clamp(56px, 9vw, 112px); }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 88px); align-items: center; }
+.split > * { min-width: 0; }
+.stack { display: flex; flex-direction: column; gap: 22px; }
+.num { font-family: var(--head); font-weight: 700; font-size: clamp(2.6rem, 5vw, 4rem); line-height: 1; letter-spacing: -.03em; }
+
+/* Market (slide 2) */
+.points { display: grid; gap: 28px; margin-top: 36px; }
+.point { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 20px; align-items: start; }
+.point p { font-weight: 700; font-size: 1.05rem; }
+.stat-panel {
+  border-radius: 32px; padding: clamp(24px, 4vw, 44px); color: #fff;
+  background: linear-gradient(160deg, #2a6c94 0%, #185079 100%);
+  display: grid; gap: 22px;
+}
+.stat { border-bottom: 1px solid rgba(255, 255, 255, .25); padding-bottom: 18px; }
+.stat:last-child { border-bottom: 0; padding-bottom: 0; }
+.stat b { display: block; font-family: var(--head); font-size: clamp(2rem, 4vw, 3rem); line-height: 1; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.stat span { font-weight: 700; opacity: .92; }
+.note { font-size: .9rem; color: var(--muted); margin-top: 16px; }
+.stat-panel .note { color: rgba(255, 255, 255, .8); margin-top: 0; }
+
+/* Problem (slide 3) */
+.rows { display: grid; gap: 18px; }
+.row { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; align-items: center; }
+.row .dot { width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center; font-family: var(--head); font-size: 2.6rem; font-weight: 500; color: var(--paper); }
+.row .box { border-radius: 26px; padding: 22px 26px; font-weight: 700; color: var(--paper); line-height: 1.6; }
+.c1 { background: var(--blue-soft); } .c1.box, .c1.dot { color: var(--navy-deep); }
+.c2 { background: var(--blue-mid); }
+.c3 { background: var(--blue); }
+
+/* Solution (slide 4) */
+.panel { background: var(--blue-pale); border-radius: 40px; padding: clamp(28px, 5vw, 64px); }
+.timeline { border-left: 3px solid var(--navy); padding-left: 32px; display: grid; gap: 32px; }
+.tl-item { position: relative; }
+.tl-item::before { content: ""; position: absolute; left: -42px; top: 18px; width: 17px; height: 17px; border-radius: 50%; background: var(--navy); }
+.tl-item .num { font-size: 2.6rem; margin-bottom: 6px; }
+.tl-item p { font-weight: 600; }
+
+/* Value (slide 5) */
+.center { text-align: center; }
+.value-line { position: relative; margin-top: 56px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
+.value-line::before { content: ""; position: absolute; left: -100vw; right: -100vw; top: 18px; height: 3px; background: var(--navy); }
+.value { position: relative; }
+.star { width: 38px; height: 38px; display: block; margin-bottom: 26px; }
+.value .num { font-size: 3rem; margin-bottom: 12px; }
+.value p { font-weight: 700; }
+
+/* Audience (slide 6) */
+.tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.tile { border-radius: 28px; padding: 30px 26px; text-align: center; min-height: 230px; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+.tile h3 { font-size: 2rem; text-transform: none; letter-spacing: -.02em; }
+.t1 { background: var(--blue-pale); } .t2 { background: var(--blue-soft); }
+.t3 { background: #6ba1bc; color: var(--paper); } .t4 { background: var(--blue); color: var(--paper); }
+.persona { margin-top: 26px; border-left: 4px solid var(--blue); padding: 6px 0 6px 18px; font-weight: 700; }
+
+/* Competition (slide 7) */
+.table-wrap { overflow-x: auto; border-radius: 26px; background: rgba(255, 255, 255, .7); border: 1px solid rgba(24, 80, 121, .14); }
+table { width: 100%; border-collapse: collapse; min-width: 560px; }
+th, td { text-align: left; padding: 16px 20px; vertical-align: top; border-bottom: 1px solid rgba(24, 80, 121, .12); }
+th { font-family: var(--head); text-transform: uppercase; font-size: .85rem; letter-spacing: .04em; color: var(--muted); }
+tbody tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 700; white-space: nowrap; }
+tr.us td { background: var(--navy); color: #fff; }
+.edge { margin-top: 28px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 28px; padding: 0; list-style: none; font-weight: 700; }
+.edge li { display: flex; gap: 12px; }
+.edge svg { width: 24px; height: 24px; flex: none; margin-top: 2px; }
+
+/* Marketing (slide 8) */
+.prices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 36px; }
+.price { border-radius: 28px; padding: 28px; background: rgba(255, 255, 255, .75); border: 1px solid rgba(24, 80, 121, .14); display: flex; flex-direction: column; gap: 12px; }
+.price.featured { background: var(--navy); color: #fff; border-color: var(--navy); }
+.price .amount { font-family: var(--head); font-size: 2rem; font-weight: 700; letter-spacing: -.02em; }
+.price ul { margin: 0; padding-left: 20px; }
+.channels { margin-top: 40px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; counter-reset: ch; list-style: none; padding: 0; }
+.channels li { counter-increment: ch; border-top: 3px solid var(--navy); padding-top: 14px; font-weight: 700; }
+.channels li::before { content: counter(ch, decimal-leading-zero); display: block; font-family: var(--head); font-size: 1.8rem; margin-bottom: 6px; }
+.channels span { display: block; font-weight: 400; color: var(--muted); }
+
+/* Implementation (slide 9) */
+.phases { margin-top: 48px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-radius: 30px; overflow: hidden; }
+.phase { padding: 28px 24px 32px; display: flex; flex-direction: column; gap: 10px; }
+.phase:nth-child(1) { background: var(--blue-mist); }
+.phase:nth-child(2) { background: var(--blue-pale); }
+.phase:nth-child(3) { background: var(--blue-soft); }
+.phase:nth-child(4) { background: var(--navy); color: #fff; }
+.phase .when { font-family: var(--head); font-weight: 700; text-transform: uppercase; font-size: .9rem; letter-spacing: .05em; }
+.phase ul { margin: 0; padding-left: 18px; }
+.goal { margin-top: auto; padding-top: 12px; font-family: var(--head); font-weight: 700; font-size: 1.3rem; letter-spacing: -.01em; }
+.facts { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 12px; }
+.fact { background: rgba(255, 255, 255, .8); border: 1px solid rgba(24, 80, 121, .14); border-radius: 999px; padding: 10px 18px; font-weight: 700; }
+
+/* Conclusion (slide 10) */
+.closing { text-align: center; }
+.closing .panel { display: grid; gap: 28px; }
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; text-align: left; }
+.step { background: rgba(255, 255, 255, .7); border-radius: 24px; padding: 22px; }
+.step b { display: block; font-family: var(--head); text-transform: uppercase; font-size: 1.05rem; margin-bottom: 8px; }
+.step ul { margin: 0; padding-left: 18px; }
+
+/* Thank you (slide 11) */
+.thanks { padding-block: clamp(64px, 10vw, 140px); }
+.thanks h2 { font-size: clamp(3rem, 9vw, 7.5rem); font-weight: 500; letter-spacing: -.045em; }
+.thanks h2 strong { display: block; font-weight: 700; }
+footer { padding-block: 28px 40px; border-top: 1px solid rgba(24, 80, 121, .14); font-size: .9rem; color: var(--muted); }
+
+@media (max-width: 900px) {
+  .split, .tiles { grid-template-columns: minmax(0, 1fr); }
+  .value-line, .prices, .channels, .steps { grid-template-columns: minmax(0, 1fr); }
+  .value-line::before { display: none; }
+  .phases { grid-template-columns: minmax(0, 1fr); }
+  .edge { grid-template-columns: minmax(0, 1fr); }
+  .nav-links { display: none; }
+}
+@media (max-width: 520px) {
+  .point { grid-template-columns: 70px minmax(0, 1fr); }
+  .row { grid-template-columns: 64px minmax(0, 1fr); }
+  .row .dot { width: 64px; height: 64px; font-size: 1.8rem; }
+  .nav .btn { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fbf6f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v6M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-6-2.4l-3.6-3.6a2 2 0 0 1 2.8-2.8L7 15"/></svg></span>
+      Helping Hand
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#market">Market</a>
+      <a href="#plan">Plan</a>
+    </nav>
+    <a class="btn" href="https://claude.ai/artifact/KKW63YRKGg9pmyEHGDsNVm" target="_blank" rel="noopener" data-app-link>Try the app</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- 1 · Cover -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow"><svg viewBox="0 0 44 26" fill="none" stroke="#3885ab" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14l7 7L24 4M18 21L35 4"/></svg>2026</p>
+      <h1>Helping Hand <strong>Business Plan</strong></h1>
+      <p class="tag">Voice-first help for blind and elderly people</p>
+      <div class="actions">
+        <a class="btn" href="https://claude.ai/artifact/KKW63YRKGg9pmyEHGDsNVm" target="_blank" rel="noopener" data-app-link>Try the app</a>
+        <a class="btn btn-ghost" href="#market">Read the plan</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · Market opportunity -->
+  <section class="slide" id="market" aria-labelledby="market-h">
+    <div class="wrap split">
+      <div>
+        <h2 id="market-h">Market Opportunity</h2>
+        <div class="points">
+          <div class="point"><span class="num">01</span><p>Egypt first: about 9 million people aged 60+, plus several hundred thousand blind and low-vision adults. Almost all can be reached by smartphone and WhatsApp.</p></div>
+          <div class="point"><span class="num">02</span><p>Then the region and the world: about 30 million people aged 60+ in the Arab world, and 2.2 billion people with a vision impairment.</p></div>
+        </div>
+      </div>
+      <div class="stat-panel" role="list" aria-label="Market size">
+        <div class="stat" role="listitem"><b>~9 million</b><span>people aged 60+ in Egypt</span></div>
+        <div class="stat" role="listitem"><b>~30 million</b><span>people aged 60+ in the Arab world</span></div>
+        <div class="stat" role="listitem"><b>2.2 billion</b><span>people with a vision impairment worldwide</span></div>
+        <p class="note">Approximate figures from public estimates (WHO, UN, CAPMAS). To be checked before sharing with investors.</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <p class="note"><strong>Why now:</strong> most older Egyptians already own a smartphone and use WhatsApp daily; phones have good built-in speech and cameras; more children live in another city or abroad; and delivery, pharmacy and ride services keep growing but aren't built for people who can't see the screen.</p>
+    </div>
+  </section>
+
+  <!-- 3 · Problem -->
+  <section class="slide" id="problem" aria-labelledby="problem-h">
+    <div class="wrap split">
+      <div class="stack">
+        <h2 id="problem-h">Problem Statement</h2>
+        <p class="lead">Blind and elderly people depend on others for everyday tasks, but today's apps were built for young people who can see a screen. Delivery, pharmacy and ride apps rely on small buttons, maps and long menus, and most work in English first.</p>
+        <p class="lead">The result: lost independence, loneliness, and a heavy, disorganised load on families.</p>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="dot c1">01</span><p class="box c1">Groceries, medicine, rides and reading letters all need sight or mobility. Few older people can use a screen reader.</p></div>
+        <div class="row"><span class="dot c2">02</span><p class="box c2">Requests for help go through scattered calls and voice notes. Nobody knows if help is coming.</p></div>
+        <div class="row"><span class="dot c3">03</span><p class="box c3">A missed dose or getting lost can become an emergency, and families far away can't tell.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · Solution -->
+  <section class="slide" id="solution" aria-labelledby="solution-h">
+    <div class="wrap">
+      <div class="panel split">
+        <div class="stack">
+          <h2 id="solution-h">Our Solution</h2>
+          <p class="lead">Helping Hand is a voice-first phone app in Arabic and English with a few large buttons. Say what you need and it opens the right screen.</p>
+          <p class="lead">It works with VoiceOver and TalkBack, and opens straight from the web, with no app store needed.</p>
+        </div>
+        <div class="timeline">
+          <div class="tl-item"><p class="num">01</p><p><strong>Ask for help:</strong> groceries, medicine, a ride or a helper. The helper replies with one tap ("I'm on my way"), and the app reads the answer aloud.</p></div>
+          <div class="tl-item"><p class="num">02</p><p><strong>Read text:</strong> photograph a letter or medicine box and hear it. <strong>Medicine reminders</strong> speak at the right time.</p></div>
+          <div class="tl-item"><p class="num">03</p><p><strong>Where am I?</strong> speaks your street address. One-tap family calls and an emergency button that shares your location.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · Value proposition -->
+  <section class="slide" aria-labelledby="value-h" style="overflow: hidden;">
+    <div class="wrap">
+      <h2 id="value-h" class="center">Value Proposition</h2>
+      <div class="value-line">
+        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">01.</p><p>For users: ask for anything by voice, in your own language, and know help is coming.</p></div>
+        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">02.</p><p>For families: know your parent is safe, took their medicine and has help, even from abroad.</p></div>
+        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">03.</p><p>For partners: reach a large, underserved group of customers through an app they can actually use.</p></div>
+        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">04.</p><p>Our edge: Arabic voice first, big simple buttons, help from people you trust, no install for helpers.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · Target audience -->
+  <section class="slide" aria-labelledby="audience-h">
+    <div class="wrap split">
+      <div class="stack">
+        <h2 id="audience-h">Target Audience</h2>
+        <p class="lead">Our users are older people living alone and blind or low-vision adults. Their families usually set the app up and pay for it.</p>
+        <p class="persona">Hagga Fatma, 72, Cairo. Her eyesight is weak and her son works in Dubai. She needs medicine delivered and reminders.<br><br>Ahmed, 34, Alexandria. Blind since birth, he uses TalkBack and wants to read his mail and get rides on his own.</p>
+      </div>
+      <div class="tiles">
+        <div class="tile t1"><h3>Users</h3><p>People aged 60+ and blind or low-vision adults who use the app every day.</p></div>
+        <div class="tile t2"><h3>Helpers</h3><p>Adult children, neighbours, carers, local shops and pharmacies.</p></div>
+        <div class="tile t3"><h3>Payers</h3><p>Families, especially those working abroad or in the Gulf.</p></div>
+        <div class="tile t4"><h3>Partners</h3><p>Pharmacies, supermarkets, NGOs, insurers and the Ministry of Social Solidarity.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · Competitive analysis -->
+  <section class="slide" aria-labelledby="comp-h">
+    <div class="wrap stack">
+      <h2 id="comp-h">Competitive Analysis</h2>
+      <p class="lead">Others solve one piece: reading, video help from strangers, or delivery. None combine everyday help, reading, reminders and family in one simple Arabic voice app.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Who</th><th scope="col">What it does</th><th scope="col">Gap for our users</th></tr></thead>
+          <tbody>
+            <tr><td>Be My Eyes</td><td>Volunteers help over video; AI describes images</td><td>Not built for everyday errands; helpers are strangers</td></tr>
+            <tr><td>Seeing AI / Lookout</td><td>Reads text and describes surroundings</td><td>Reading only; no help requests, reminders or family link</td></tr>
+            <tr><td>Envision</td><td>Paid AI reader and smart glasses</td><td>Expensive and English-first</td></tr>
+            <tr><td>Talabat, Breadfast, Careem</td><td>Delivery and rides</td><td>Visual, complex menus that most older users can't manage</td></tr>
+            <tr><td>Medicine reminder apps</td><td>Reminders</td><td>Mostly English, small text, no family link</td></tr>
+            <tr><td>WhatsApp and calls</td><td>What families use today</td><td>No structure; easy to miss; no spoken status</td></tr>
+            <tr class="us"><td>Helping Hand</td><td>Help, reading, reminders, location and family in one voice app</td><td>Arabic and English, built for people who can't see the screen</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="edge">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#3885ab" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Everything in one simple, voice-first app, in Arabic</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#3885ab" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Help from family and local shops people already trust</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#3885ab" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Helpers reply with one tap and install nothing</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#3885ab" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Cheap to run: a web app, with the key features working on the phone</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 8 · Marketing and sales -->
+  <section class="slide" aria-labelledby="mkt-h">
+    <div class="wrap">
+      <h2 id="mkt-h">Marketing &amp; Sales Strategy</h2>
+      <div class="prices">
+        <div class="price"><h3>Free</h3><p class="amount">0 EGP</p><ul><li>Ask for help</li><li>Read text</li><li>Medicine reminders</li><li>Where am I and emergency</li></ul></div>
+        <div class="price featured"><h3>Family Plus</h3><p class="amount">49–79 EGP / month</p><p>About $3–5 for families abroad</p><ul><li>Family dashboard</li><li>Several helpers</li><li>Missed-dose alerts to family</li><li>Weekly summary</li></ul></div>
+        <div class="price"><h3>Partners</h3><p class="amount">Per order / plan</p><ul><li>Pharmacies and shops pay per order received</li><li>NGOs and insurers pay to give the app to members</li></ul></div>
+      </div>
+      <ol class="channels">
+        <li>Families first<span>Ads to Egyptians abroad and adults 30–55: "Your parents can ask for help by voice."</span></li>
+        <li>Pharmacies<span>Local pharmacies set the app up for older customers and become the first helpers.</span></li>
+        <li>NGOs and communities<span>Associations for blind people, care homes, mosque and church groups.</span></li>
+        <li>Healthcare<span>Eye hospitals and diabetes and blood-pressure clinics.</span></li>
+        <li>Word of mouth<span>Every helper link shows the app; an "Invite your parent" link.</span></li>
+        <li>Media<span>Human stories around Ramadan and International Day of Older Persons (1 October).</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 9 · Implementation plan -->
+  <section class="slide" id="plan" aria-labelledby="plan-h">
+    <div class="wrap">
+      <h2 id="plan-h" class="center">Implementation Plan</h2>
+      <div class="phases">
+        <div class="phase"><p class="when">Months 0–3 · Pilot</p><ul><li>Go live on GitHub Pages</li><li>1 NGO and 5 pharmacies</li><li>Fix what real users find hard</li></ul><p class="goal">30–50 users</p></div>
+        <div class="phase"><p class="when">Months 3–6 · Launch</p><ul><li>Reminders with the app closed</li><li>Google Play and App Store</li><li>Family Plus, 50 pharmacies</li></ul><p class="goal">2,000 users</p></div>
+        <div class="phase"><p class="when">Months 6–12 · Growth</p><ul><li>Direct pharmacy and grocery ordering</li><li>Family dashboard</li><li>NGO and insurer contracts</li></ul><p class="goal">20,000 users</p></div>
+        <div class="phase"><p class="when">Year 2 · Expand</p><ul><li>Saudi Arabia, UAE, Jordan</li><li>Gulf dialects</li><li>Government and insurance partners</li></ul><p class="goal">The region</p></div>
+      </div>
+      <div class="facts"><span class="fact">Team of 6</span><span class="fact">Year-one budget about $60–100k</span><span class="fact">Cairo and Alexandria first</span></div>
+    </div>
+  </section>
+
+  <!-- 10 · Conclusion and next steps -->
+  <section class="slide closing" aria-labelledby="close-h">
+    <div class="wrap">
+      <div class="panel">
+        <h2 id="close-h">Conclusion &amp; Next Steps</h2>
+        <p class="lead" style="margin-inline: auto;">Millions of older and blind people in Egypt and the Arab world need everyday help that today's apps don't give. Helping Hand already works, with voice, Arabic and English, helper replies, reading and reminders, and families are ready to pay.</p>
+        <div class="steps">
+          <div class="step"><b>Next 30 days</b><ul><li>Go live with a public link</li><li>Sign 1 NGO and 5 pharmacies</li><li>Recruit 30 pilot users</li></ul></div>
+          <div class="step"><b>Next 60 days</b><ul><li>Fix the top 10 pilot problems</li><li>Push-notification reminders</li><li>Check the market figures</li></ul></div>
+          <div class="step"><b>Next 90 days</b><ul><li>App stores and Family Plus</li><li>Ads to Egyptians abroad</li><li>Apply to accelerators and grants</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 · Thank you -->
+  <section class="thanks" aria-labelledby="thanks-h">
+    <div class="wrap">
+      <h2 id="thanks-h">Thank you <strong>very much</strong></h2>
+      <p class="tag" style="margin-top: 28px; font-family: var(--head); font-weight: 700; text-transform: uppercase;">Helping Hand · Voice-first help for blind and elderly people</p>
+      <div style="margin-top: 32px;"><a class="btn" href="https://claude.ai/artifact/KKW63YRKGg9pmyEHGDsNVm" target="_blank" rel="noopener" data-app-link>Try the app</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Helping Hand · Business plan 2026 · Market figures are approximate.</div>
+</footer>

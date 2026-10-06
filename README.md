@@ -67,6 +67,10 @@ If you later turn on "Confirm email" in Supabase, add the Pages address under **
 
 `python3 tools/build-preview.py` writes `dist/helping-hand-preview.html`, a single-file preview for claude.ai artifacts. Artifacts can't make calls, send texts, use the microphone or read GPS, so the preview shows those on screen instead, with an example location. Sign-in there uses the viewer's claude.ai account, Read text uses Claude to read the photo, and helper replies are acted out with an example reply.
 
+## Website
+
+`website/index.html` is the business plan as a one-page website, in the same design as the "Easy help" Canva presentation. It is published with the app at `/website/`, and its "Try the app" buttons open the app.
+
 ## Files
 
 - `index.html`: the screens
@@ -75,4 +79,5 @@ If you later turn on "Confirm email" in Supabase, add the Pages address under **
 - `app.js`: voice, sign-in, requests and replies, reading text, medicine reminders, location, calling and settings
 - `sw.js`, `manifest.webmanifest`, `icons/`: offline support and install
 - `supabase/migrations/`: the database tables
-- `tools/build-preview.py`: builds the artifact preview
+- `website/index.html`: the business-plan website
+- `tools/build-preview.py`: builds the artifact previews of the app and the website

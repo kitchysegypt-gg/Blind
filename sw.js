@@ -1,5 +1,5 @@
 // Offline cache for the app shell, and opening the app from a reminder notification.
-const CACHE = 'helping-hand-v4';
+const CACHE = 'helping-hand-v5';
 const FILES = ['./', 'index.html', 'styles.css', 'app.js', 'helper.html', 'helper.js', 'manifest.webmanifest', 'icons/icon.svg'];
 
 self.addEventListener('install', e => {

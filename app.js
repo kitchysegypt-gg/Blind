@@ -118,7 +118,7 @@ const STRINGS = {
     srHint: 'Turn this off if you use VoiceOver or TalkBack.',
     rate: 'Voice speed', slow: 'Slow', normal: 'Normal', fast: 'Fast',
     size: 'Text size', large: 'Large', xl: 'Extra large', huge: 'Huge',
-    colours: 'Colours', themeDark: 'Dark', themeYellow: 'Yellow on black', themeLight: 'Light',
+    colours: 'Colours', themeDark: 'Dark', themeYellow: 'Yellow on black', themeLight: 'Cream and blue',
     save: 'Save',
 
     tapAgain: '{label}. Tap again to choose.',
@@ -263,7 +263,7 @@ const STRINGS = {
     srHint: 'أوقف هذا الخيار إذا كنت تستخدم VoiceOver أو TalkBack.',
     rate: 'سرعة الصوت', slow: 'بطيء', normal: 'عادي', fast: 'سريع',
     size: 'حجم الخط', large: 'كبير', xl: 'كبير جدًا', huge: 'ضخم',
-    colours: 'الألوان', themeDark: 'داكن', themeYellow: 'أصفر على أسود', themeLight: 'فاتح',
+    colours: 'الألوان', themeDark: 'داكن', themeYellow: 'أصفر على أسود', themeLight: 'كريمي وأزرق',
     save: 'حفظ',
 
     tapAgain: '{label}. اضغط مرة أخرى للاختيار.',
@@ -394,10 +394,12 @@ const DEFAULTS = {
   helperName: '', helperPhone: '', sendVia: 'whatsapp',
   fam1Name: '', fam1Phone: '', fam2Name: '', fam2Phone: '', fam3Name: '', fam3Phone: '',
   emergency: '', countdown: '5',
-  voice: true, confirmTap: true, rate: '0.9', size: '1', theme: 'dark',
+  voice: true, confirmTap: true, rate: '0.9', size: '1', theme: 'light', look: 2,
   meds: [], // [{ id, name, times: ['08:00', '20:00'] }]
 };
 let settings = { ...DEFAULTS, ...store.get('hh.settings', {}) };
+// Version 2 of the look (the presentation's cream and blue) becomes everyone's default once.
+if (settings.look !== 2) settings = { ...settings, theme: 'light', look: 2 };
 let requests = store.get('hh.history', []);
 let skippedSignIn = store.get('hh.skipSignIn', false);
 

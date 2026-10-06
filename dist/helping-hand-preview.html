@@ -1,46 +1,60 @@
 <title>Helping Hand</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Kufi+Arabic:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Kufi+Arabic:wght@500;700&display=swap">
 <style>
 /* Helping Hand
    One calm column of large, clearly coloured buttons. Atkinson Hyperlegible was
    designed by the Braille Institute for low-vision readers; Noto Kufi for Arabic. */
+/* Look: taken from the "Easy help" presentation in Canva. Cream paper, navy type,
+   a family of soft blues, uppercase headings, and blue glows in the corners. */
 :root {
   --scale: 1;
   --font: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-head: "Archivo", "Atkinson Hyperlegible", system-ui, sans-serif;
   --font-ar: "Noto Kufi Arabic", "Noto Sans Arabic", Tahoma, system-ui, sans-serif;
 
-  --bg: #0e1116;
-  --surface: #161a21;
-  --surface-2: #1e232c;
-  --text: #f5f7fa;
-  --muted: #b6becb;
-  --border: #2d333e;
-  --focus: #ffd21f;
+  --bg: #fbf6f1;
+  --surface: #ffffff;
+  --surface-2: #eef4f7;
+  --text: #185079;
+  --muted: #4a6f8a;
+  --border: #c9dbe5;
+  --focus: #e8590c;
   --on-color: #ffffff;
-  --tile: rgba(255, 255, 255, .17);
+  --tile: rgba(255, 255, 255, .2);
+  --glow-1: rgba(78, 151, 187, .38);
+  --glow-2: rgba(56, 133, 171, .30);
+  --glow-3: rgba(120, 200, 205, .30);
 
-  --purple: #5a3fd1;
-  --orange: #b1500c;
-  --teal: #0d7770;
-  --pink: #a3306a;
-  --blue: #1e5ec8;
-  --green: #1b7a3b;
-  --red: #c21f1f;
-  --gray: #39404d;
+  /* Button colours: deep to pale blues from the deck. Pale ones carry navy words. */
+  --purple: #185079; --purple-ink: #ffffff;
+  --orange: #3885ab; --orange-ink: #ffffff;
+  --teal: #bbd6e1;   --teal-ink: #185079;
+  --pink: #95bfd1;   --pink-ink: #10405f;
+  --blue: #2a6c94;   --blue-ink: #ffffff;
+  --green: #1d6a8f;  --green-ink: #ffffff;
+  --pale: #dce9ef;   --pale-ink: #185079;
+  --red: #b42318;    --red-ink: #ffffff;
+  --gray: #4a6f8a;   --gray-ink: #ffffff;
+  --ok: #1b7a3b;
 
-  --radius: 22px;
-  color-scheme: dark;
+  --radius: 26px;
+  color-scheme: light;
   font-size: calc(20px * var(--scale));
 }
-:root[data-look="light"] {
-  --bg: #f4f5f7; --surface: #ffffff; --surface-2: #eceef2; --text: #0f1216; --muted: #454c59;
-  --border: #d3d8e0; --focus: #0047ff; --gray: #4a5160;
-  color-scheme: light;
+:root[data-look="dark"] {
+  --bg: #0e1620; --surface: #15202c; --surface-2: #1c2a38; --text: #f2f6f9; --muted: #b3c4d2;
+  --border: #2b3c4d; --focus: #ffd21f; --glow-1: rgba(56, 133, 171, .28); --glow-2: rgba(24, 80, 121, .45); --glow-3: rgba(56, 133, 171, .18);
+  --teal: #2f6f8f; --teal-ink: #ffffff; --pink: #3d5f78; --pink-ink: #ffffff; --pale: #22384a; --pale-ink: #ffffff;
+  --gray: #33475a;
+  color-scheme: dark;
 }
 :root[data-look="yellow"] {
   --bg: #000; --surface: #000; --surface-2: #000; --text: #ffe600; --muted: #ffe600; --border: #ffe600;
-  --focus: #00e5ff; --on-color: #ffe600; --tile: transparent;
+  --focus: #00e5ff; --on-color: #ffe600; --tile: transparent; --glow-1: transparent; --glow-2: transparent; --glow-3: transparent;
   --purple: #000; --orange: #000; --teal: #000; --pink: #000; --blue: #000; --green: #000; --red: #000; --gray: #000;
+  --purple-ink: #ffe600; --orange-ink: #ffe600; --teal-ink: #ffe600; --pink-ink: #ffe600; --blue-ink: #ffe600;
+  --green-ink: #ffe600; --red-ink: #ffe600; --gray-ink: #ffe600; --pale: #000; --pale-ink: #ffe600;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -55,6 +69,15 @@ body {
 }
 [dir="rtl"] body { font-family: var(--font-ar); }
 [hidden] { display: none !important; }
+/* The deck's soft blue glows, fixed behind everything. */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(60vmax 50vmax at 105% -10%, var(--glow-1), transparent 60%),
+    radial-gradient(55vmax 45vmax at -10% 110%, var(--glow-2), transparent 60%),
+    radial-gradient(40vmax 30vmax at 100% 100%, var(--glow-3), transparent 60%);
+}
+#screenTitle:focus { outline: none; }
 :focus-visible { outline: 5px solid var(--focus); outline-offset: 3px; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
@@ -67,12 +90,13 @@ body {
   position: sticky; top: 0; z-index: 10;
   display: flex; align-items: center; gap: 10px;
   padding: calc(10px + env(safe-area-inset-top, 0px)) 16px 10px;
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
 }
 :root.preview .topbar { top: env(safe-area-inset-top, 0px); padding-top: 10px; }
-.topbar h1 { flex: 1; min-width: 0; margin: 0; font-size: 1.35rem; font-weight: 700; text-wrap: balance; }
+.topbar h1 { flex: 1; min-width: 0; margin: 0; font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; text-transform: uppercase; letter-spacing: -.01em; text-wrap: balance; }
+[dir="rtl"] .topbar h1 { font-family: var(--font-ar); text-transform: none; }
 .iconbtn {
   width: 58px; height: 58px; flex: none; border-radius: 16px;
   border: 1px solid var(--border); background: var(--surface); color: var(--text);
@@ -105,7 +129,7 @@ main { max-width: 620px; margin: 0 auto; padding: 18px 16px 40px; }
 .today { padding: 4px 4px 8px; }
 .today p { margin: 0; }
 .today-hello { font-size: 1.1rem; font-weight: 700; color: var(--muted); }
-.today-time { font-size: 3rem; font-weight: 700; line-height: 1.1; letter-spacing: -.5px; font-variant-numeric: tabular-nums; }
+.today-time { font-family: var(--font-head); font-size: 3.4rem; font-weight: 700; line-height: 1.1; letter-spacing: -.5px; font-variant-numeric: tabular-nums; }
 .today-date { font-size: 1.15rem; font-weight: 700; }
 
 /* ---------- Buttons ---------- */
@@ -114,9 +138,9 @@ main { max-width: 620px; margin: 0 auto; padding: 18px 16px 40px; }
   display: flex; align-items: center; gap: 16px;
   width: 100%; min-height: 78px; padding: 12px 16px;
   border-radius: var(--radius); border: 2px solid transparent;
-  background: var(--c); color: var(--on-color);
+  background: var(--c); color: var(--ink, var(--on-color));
   font: inherit; text-align: start; text-decoration: none; cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .16), 0 2px 0 rgba(0, 0, 0, .3);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .25) inset, 0 6px 18px rgba(24, 80, 121, .12);
   transition: transform .08s, filter .15s;
 }
 .btn:hover { filter: brightness(1.06); }
@@ -125,29 +149,32 @@ main { max-width: 620px; margin: 0 auto; padding: 18px 16px 40px; }
 .btn-home { min-height: 96px; }
 .btn-center { justify-content: center; text-align: center; }
 .ico-tile {
-  width: 56px; height: 56px; flex: none; border-radius: 16px; background: var(--tile);
+  width: 56px; height: 56px; flex: none; border-radius: 50%; background: var(--tile);
   display: grid; place-items: center;
 }
 .btn-home .ico-tile { width: 62px; height: 62px; }
 .btn-home .ico { width: 34px; height: 34px; }
 .b-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.b-title { font-size: 1.3rem; font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
+.b-title { font-family: var(--font-head); font-size: 1.3rem; font-weight: 700; line-height: 1.15; text-transform: uppercase; letter-spacing: -.005em; overflow-wrap: anywhere; }
+[dir="rtl"] .b-title { font-family: var(--font-ar); text-transform: none; }
 .btn-home .b-title { font-size: 1.45rem; }
 .b-sub { font-size: .88rem; font-weight: 400; opacity: .92; overflow-wrap: anywhere; }
 .b-sub:empty { display: none; }
 .chev { width: 26px; height: 26px; opacity: .8; }
-.btn-purple { --c: var(--purple); }
-.btn-orange { --c: var(--orange); }
-.btn-teal { --c: var(--teal); }
-.btn-pink { --c: var(--pink); }
-.btn-blue { --c: var(--blue); }
-.btn-green { --c: var(--green); }
-.btn-red { --c: var(--red); }
-.btn-gray { --c: var(--gray); }
+.btn-purple { --c: var(--purple); --ink: var(--purple-ink); }
+.btn-orange { --c: var(--orange); --ink: var(--orange-ink); }
+.btn-teal { --c: var(--teal); --ink: var(--teal-ink); }
+.btn-pink { --c: var(--pink); --ink: var(--pink-ink); }
+.btn-blue { --c: var(--blue); --ink: var(--blue-ink); }
+.btn-green { --c: var(--green); --ink: var(--green-ink); }
+.btn-pale { --c: var(--pale); --ink: var(--pale-ink); }
+.btn-red { --c: var(--red); --ink: var(--red-ink); }
+.btn-gray { --c: var(--gray); --ink: var(--gray-ink); }
 .btn-outline { background: transparent; color: var(--text); border-color: var(--border); box-shadow: none; min-height: 68px; }
 .btn-outline-light { background: transparent; color: #fff; border-color: #5b6372; box-shadow: none; min-height: 68px; }
 :root[data-look="yellow"] .btn { border-color: #ffe600; box-shadow: none; }
-:root[data-look="light"] .btn-outline { background: var(--surface); }
+.btn-outline { background: var(--surface); }
+:root[data-look="yellow"] .btn-outline { background: transparent; }
 .linkbtn {
   background: none; border: 0; color: var(--text); font: inherit; font-size: 1rem; font-weight: 700;
   text-decoration: underline; text-underline-offset: 4px; padding: 12px 4px; min-height: 52px; cursor: pointer; align-self: center;
@@ -156,11 +183,12 @@ main { max-width: 620px; margin: 0 auto; padding: 18px 16px 40px; }
 
 /* ---------- Welcome (sign in) ---------- */
 .welcome { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 10px 0 6px; }
-.welcome-title { margin: 8px 0 0; font-size: 2rem; font-weight: 700; }
+.welcome-title { margin: 8px 0 0; font-family: var(--font-head); font-size: 2.3rem; font-weight: 700; text-transform: uppercase; letter-spacing: -.02em; }
+[dir="rtl"] .welcome-title { font-family: var(--font-ar); text-transform: none; }
 .welcome-sub { margin: 0; color: var(--muted); font-size: 1.05rem; max-width: 30ch; text-wrap: balance; }
 .mark {
   width: 84px; height: 84px; border-radius: 26px; display: grid; place-items: center;
-  background: var(--purple); color: #fff; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
+  background: var(--purple); color: #fff; box-shadow: 0 8px 24px rgba(24, 80, 121, .25);
 }
 .mark .ico { width: 46px; height: 46px; }
 .mark-lg { width: 104px; height: 104px; border-radius: 32px; align-self: center; }
@@ -170,13 +198,13 @@ main { max-width: 620px; margin: 0 auto; padding: 18px 16px 40px; }
 
 /* ---------- Cards and notices ---------- */
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
-.card-label { margin: 0 0 6px; color: var(--muted); font-weight: 700; font-size: .9rem; text-transform: uppercase; letter-spacing: .06em; }
+.card-label { margin: 0 0 6px; color: var(--muted); font-family: var(--font-head); font-weight: 700; font-size: .9rem; text-transform: uppercase; letter-spacing: .06em; }
 [dir="rtl"] .card-label { text-transform: none; letter-spacing: 0; }
 .place-address { margin: 0 0 8px; font-size: 1.55rem; font-weight: 700; line-height: 1.25; overflow-wrap: anywhere; }
 .read-text { margin: 0; font-size: 1.3rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
 .notice {
   display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: var(--radius);
-  background: var(--surface); border: 2px solid var(--green); font-weight: 700; font-size: 1.05rem;
+  background: var(--surface); border: 2px solid var(--ok); font-weight: 700; font-size: 1.05rem;
   color: var(--text); text-align: start; width: 100%; font-family: inherit; cursor: pointer;
 }
 .notice .ico { color: var(--text); }
@@ -185,7 +213,7 @@ main { max-width: 620px; margin: 0 auto; padding: 18px 16px 40px; }
 /* ---------- Status chips ---------- */
 .chip-status {
   display: inline-block; margin-top: 6px; padding: 3px 10px; border-radius: 999px;
-  font-size: .8rem; font-weight: 700; background: rgba(255, 255, 255, .18); width: fit-content;
+  font-size: .8rem; font-weight: 700; background: rgba(255, 255, 255, .7); color: #185079; width: fit-content;
 }
 .chip-status[data-s="coming"], .chip-status[data-s="done"] { background: #d7f5df; color: #0d4a20; }
 .chip-status[data-s="later"], .chip-status[data-s="seen"] { background: #fff1c2; color: #5a4300; }
@@ -212,10 +240,11 @@ textarea.field { resize: vertical; min-height: 100px; }
 input[type="email"], input[type="tel"] { direction: ltr; }
 [dir="rtl"] input[type="email"], [dir="rtl"] input[type="tel"] { text-align: right; }
 fieldset { border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 16px 16px; margin: 0; background: var(--surface); }
-legend { font-weight: 700; font-size: 1.15rem; padding: 0 8px; }
+legend { font-family: var(--font-head); font-weight: 700; font-size: 1.15rem; padding: 0 8px; text-transform: uppercase; }
+[dir="rtl"] legend { font-family: var(--font-ar); text-transform: none; }
 .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
 .check { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 1.05rem; min-height: 56px; cursor: pointer; }
-.check input { width: 30px; height: 30px; accent-color: var(--green); flex: none; }
+.check input { width: 30px; height: 30px; accent-color: #185079; flex: none; }
 .chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .chip {
   font: inherit; font-weight: 700; font-size: 1.05rem; min-height: 56px; padding: 8px 18px; border-radius: 999px;
@@ -232,19 +261,20 @@ legend { font-weight: 700; font-size: 1.15rem; padding: 0 8px; }
 
 /* ---------- Overlays ---------- */
 .overlay {
-  position: fixed; inset: 0; z-index: 50; background: rgba(9, 11, 15, .97); color: #fff;
+  position: fixed; inset: 0; z-index: 50; background: rgba(16, 52, 79, .97); color: #fff;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
   padding: 24px 16px; overflow-y: auto;
 }
 .overlay > * { width: 100%; max-width: 520px; }
 .overlay > .mark { width: 104px; }
 .overlay .field-label { color: #fff; }
-.overlay .field { background: #161a21; color: #fff; border-color: #2d333e; }
-.overlay-title { font-size: 1.8rem; font-weight: 700; margin: 0; text-align: center; }
+.overlay .field { background: #0f3550; color: #fff; border-color: #4e97bb; }
+.overlay-title { font-family: var(--font-head); font-size: 1.9rem; font-weight: 700; margin: 0; text-align: center; text-transform: uppercase; }
+[dir="rtl"] .overlay-title { font-family: var(--font-ar); text-transform: none; }
 .heard { font-size: 1.15rem; min-height: 1.5em; text-align: center; margin: 0; }
 .sheet-to { font-size: 1.1rem; font-weight: 700; text-align: center; margin: 0; unicode-bidi: plaintext; }
 .sheet-body {
-  margin: 0; padding: 16px; border-radius: 14px; background: #161a21; border: 1px solid #2d333e;
+  margin: 0; padding: 16px; border-radius: 14px; background: #0f3550; border: 1px solid #4e97bb;
   font: inherit; font-size: 1rem; white-space: pre-wrap; overflow-wrap: anywhere; unicode-bidi: plaintext;
 }
 .pulse { animation: pulse 1.6s ease-in-out infinite; }
@@ -357,7 +387,7 @@ legend { font-weight: 700; font-size: 1.15rem; padding: 0 8px; }
         <span class="b-text"><span class="b-title" data-t="whereAmI"></span><span class="b-sub" data-t="whereAmISub"></span></span>
         <span class="chev" data-icon="chev"></span>
       </button>
-      <button class="btn btn-green btn-home" data-go="family" data-say="family">
+      <button class="btn btn-pale btn-home" data-go="family" data-say="family">
         <span class="ico-tile"><span class="ico" data-icon="phone"></span></span>
         <span class="b-text"><span class="b-title" data-t="family"></span><span class="b-sub" id="familySub"></span></span>
         <span class="chev" data-icon="chev"></span>
@@ -576,9 +606,9 @@ legend { font-weight: 700; font-size: 1.15rem; padding: 0 8px; }
           </select>
           <label class="field-label" for="s-theme" data-t="colours">Colours</label>
           <select class="field" id="s-theme" name="theme">
+            <option value="light" data-t="themeLight">Cream and blue</option>
             <option value="dark" data-t="themeDark">Dark</option>
             <option value="yellow" data-t="themeYellow">Yellow on black</option>
-            <option value="light" data-t="themeLight">Light</option>
           </select>
         </fieldset>
 
@@ -744,7 +774,7 @@ const STRINGS = {
     srHint: 'Turn this off if you use VoiceOver or TalkBack.',
     rate: 'Voice speed', slow: 'Slow', normal: 'Normal', fast: 'Fast',
     size: 'Text size', large: 'Large', xl: 'Extra large', huge: 'Huge',
-    colours: 'Colours', themeDark: 'Dark', themeYellow: 'Yellow on black', themeLight: 'Light',
+    colours: 'Colours', themeDark: 'Dark', themeYellow: 'Yellow on black', themeLight: 'Cream and blue',
     save: 'Save',
 
     tapAgain: '{label}. Tap again to choose.',
@@ -889,7 +919,7 @@ const STRINGS = {
     srHint: 'أوقف هذا الخيار إذا كنت تستخدم VoiceOver أو TalkBack.',
     rate: 'سرعة الصوت', slow: 'بطيء', normal: 'عادي', fast: 'سريع',
     size: 'حجم الخط', large: 'كبير', xl: 'كبير جدًا', huge: 'ضخم',
-    colours: 'الألوان', themeDark: 'داكن', themeYellow: 'أصفر على أسود', themeLight: 'فاتح',
+    colours: 'الألوان', themeDark: 'داكن', themeYellow: 'أصفر على أسود', themeLight: 'كريمي وأزرق',
     save: 'حفظ',
 
     tapAgain: '{label}. اضغط مرة أخرى للاختيار.',
@@ -1020,10 +1050,12 @@ const DEFAULTS = {
   helperName: '', helperPhone: '', sendVia: 'whatsapp',
   fam1Name: '', fam1Phone: '', fam2Name: '', fam2Phone: '', fam3Name: '', fam3Phone: '',
   emergency: '', countdown: '5',
-  voice: true, confirmTap: true, rate: '0.9', size: '1', theme: 'dark',
+  voice: true, confirmTap: true, rate: '0.9', size: '1', theme: 'light', look: 2,
   meds: [], // [{ id, name, times: ['08:00', '20:00'] }]
 };
 let settings = { ...DEFAULTS, ...store.get('hh.settings', {}) };
+// Version 2 of the look (the presentation's cream and blue) becomes everyone's default once.
+if (settings.look !== 2) settings = { ...settings, theme: 'light', look: 2 };
 let requests = store.get('hh.history', []);
 let skippedSignIn = store.get('hh.skipSignIn', false);
 
