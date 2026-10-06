@@ -5,12 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Helping Hand</title>
   <meta name="description" content="A simple, voice-guided helper app for blind and elderly people.">
-  <meta name="theme-color" content="#0d0f12">
+  <meta name="theme-color" content="#0e1116">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Helping Hand">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Kufi+Arabic:wght@500;700&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -32,9 +35,12 @@
   <main id="main" tabindex="-1">
     <!-- SIGN IN -->
     <section id="screen-signin" class="screen" hidden data-title="appName">
-      <p class="lead" data-t="signinIntro">Sign in so your helper, family and requests are saved.</p>
+      <div class="welcome">
+        <span class="mark"><span class="ico" data-icon="hand"></span></span>
+        <p class="welcome-title" data-t="appName">Helping Hand</p>
+        <p class="welcome-sub" data-t="signinIntro">Sign in so your helper, family and requests are saved.</p>
+      </div>
 
-      <!-- Installed app: email and password -->
       <form id="authForm" class="stack" novalidate>
         <div id="nameRow" hidden>
           <label class="field-label" for="authName" data-t="myName">My name</label>
@@ -44,22 +50,21 @@
           <label class="field-label" for="authEmail" data-t="email">Email</label>
           <input class="field" id="authEmail" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false">
         </div>
-        <div id="passwordRow">
+        <div>
           <label class="field-label" for="authPassword" data-t="password">Password</label>
           <input class="field" id="authPassword" type="password" autocomplete="current-password">
         </div>
         <p id="authMsg" class="msg" role="alert"></p>
-        <button type="submit" class="btn btn-green" id="authSubmit" data-instant>
-          <span class="ico" data-icon="user"></span><span id="authSubmitLabel" data-t="signIn">Sign in</span>
+        <button type="submit" class="btn btn-green btn-center" id="authSubmit" data-instant>
+          <span class="b-title" id="authSubmitLabel" data-t="signIn">Sign in</span>
         </button>
-        <button type="button" class="btn btn-outline" id="authToggle" data-instant><span id="authToggleLabel" data-t="newHere">I'm new. Create an account</span></button>
+        <button type="button" class="btn btn-outline btn-center" id="authToggle" data-instant><span class="b-title" id="authToggleLabel" data-t="newHere">I'm new. Create an account</span></button>
         <button type="button" class="linkbtn" id="authForgot" data-instant data-t="forgot">I forgot my password</button>
       </form>
 
-      <!-- Hosted preview: the viewer's claude.ai account -->
       <div id="previewAuth" class="stack" hidden>
-        <button type="button" class="btn btn-green" id="continueAs" data-instant>
-          <span class="ico" data-icon="user"></span><span id="continueAsLabel"></span>
+        <button type="button" class="btn btn-green btn-center" id="continueAs" data-instant>
+          <span class="b-title" id="continueAsLabel"></span>
         </button>
       </div>
 
@@ -68,40 +73,64 @@
 
     <!-- HOME -->
     <section id="screen-home" class="screen" hidden data-title="appName">
-      <p id="greeting" class="greeting"></p>
-      <button class="btn btn-purple btn-xl" id="heroMic" data-say="heroSay">
-        <span class="ico" data-icon="mic"></span><span data-t="heroText">Speak</span>
+      <div class="today">
+        <p class="today-hello" id="todayHello"></p>
+        <p class="today-time" id="todayTime"></p>
+        <p class="today-date" id="todayDate"></p>
+      </div>
+      <div id="homeNotices" class="stack"></div>
+
+      <button class="btn btn-purple btn-home" id="heroMic" data-say="heroSay">
+        <span class="ico-tile"><span class="ico" data-icon="mic"></span></span>
+        <span class="b-text"><span class="b-title" data-t="heroText"></span><span class="b-sub" data-t="heroSub"></span></span>
       </button>
-      <button class="btn btn-orange btn-xl" data-go="help" data-say="askHelpSay">
-        <span class="ico" data-icon="heart"></span><span data-t="askHelp">Ask for help</span>
+      <button class="btn btn-orange btn-home" data-go="help" data-say="askHelpSay">
+        <span class="ico-tile"><span class="ico" data-icon="heart"></span></span>
+        <span class="b-text"><span class="b-title" data-t="askHelp"></span><span class="b-sub" data-t="askHelpSub"></span></span>
+        <span class="chev" data-icon="chev"></span>
       </button>
-      <button class="btn btn-blue btn-xl" data-go="location" data-say="whereAmISay">
-        <span class="ico" data-icon="pin"></span><span data-t="whereAmI">Where am I?</span>
+      <button class="btn btn-teal btn-home" data-go="read" data-say="readTextSay">
+        <span class="ico-tile"><span class="ico" data-icon="camera"></span></span>
+        <span class="b-text"><span class="b-title" data-t="readText"></span><span class="b-sub" data-t="readTextSub"></span></span>
+        <span class="chev" data-icon="chev"></span>
       </button>
-      <button class="btn btn-green btn-xl" data-go="family" data-say="family">
-        <span class="ico" data-icon="phone"></span><span data-t="family">Call family</span>
+      <button class="btn btn-pink btn-home" data-go="meds" data-say="medsSay">
+        <span class="ico-tile"><span class="ico" data-icon="clock"></span></span>
+        <span class="b-text"><span class="b-title" data-t="meds"></span><span class="b-sub" id="medsSub"></span></span>
+        <span class="chev" data-icon="chev"></span>
       </button>
-      <button class="btn btn-red btn-xl" data-go="emergency" data-say="emergencySay">
-        <span class="ico" data-icon="alert"></span><span data-t="emergency">Emergency</span>
+      <button class="btn btn-blue btn-home" data-go="location" data-say="whereAmISay">
+        <span class="ico-tile"><span class="ico" data-icon="pin"></span></span>
+        <span class="b-text"><span class="b-title" data-t="whereAmI"></span><span class="b-sub" data-t="whereAmISub"></span></span>
+        <span class="chev" data-icon="chev"></span>
+      </button>
+      <button class="btn btn-green btn-home" data-go="family" data-say="family">
+        <span class="ico-tile"><span class="ico" data-icon="phone"></span></span>
+        <span class="b-text"><span class="b-title" data-t="family"></span><span class="b-sub" id="familySub"></span></span>
+        <span class="chev" data-icon="chev"></span>
+      </button>
+      <button class="btn btn-red btn-home" data-go="emergency" data-say="emergencySay">
+        <span class="ico-tile"><span class="ico" data-icon="alert"></span></span>
+        <span class="b-text"><span class="b-title" data-t="emergency"></span><span class="b-sub" data-t="emergencySub"></span></span>
       </button>
     </section>
 
     <!-- ASK FOR HELP -->
     <section id="screen-help" class="screen" hidden data-title="askHelp">
       <button class="btn btn-orange" data-go="request:groceries" data-say="groceriesSay">
-        <span class="ico" data-icon="bag"></span><span data-t="groceries">Groceries</span>
+        <span class="ico-tile"><span class="ico" data-icon="bag"></span></span><span class="b-text"><span class="b-title" data-t="groceries"></span></span><span class="chev" data-icon="chev"></span>
       </button>
       <button class="btn btn-orange" data-go="request:medicine" data-say="medicineSay">
-        <span class="ico" data-icon="pill"></span><span data-t="medicine">Medicine</span>
+        <span class="ico-tile"><span class="ico" data-icon="pill"></span></span><span class="b-text"><span class="b-title" data-t="medicine"></span></span><span class="chev" data-icon="chev"></span>
       </button>
       <button class="btn btn-orange" data-go="request:ride" data-say="rideSay">
-        <span class="ico" data-icon="car"></span><span data-t="ride">A ride</span>
+        <span class="ico-tile"><span class="ico" data-icon="car"></span></span><span class="b-text"><span class="b-title" data-t="ride"></span></span><span class="chev" data-icon="chev"></span>
       </button>
       <button class="btn btn-orange" data-go="request:helper" data-say="helperSay">
-        <span class="ico" data-icon="person"></span><span data-t="helper">Someone to help me</span>
+        <span class="ico-tile"><span class="ico" data-icon="person"></span></span><span class="b-text"><span class="b-title" data-t="helper"></span></span><span class="chev" data-icon="chev"></span>
       </button>
       <button class="btn btn-gray" data-go="history" data-say="history">
-        <span class="ico" data-icon="list"></span><span data-t="history">My requests</span>
+        <span class="ico-tile"><span class="ico" data-icon="list"></span></span><span class="b-text"><span class="b-title" data-t="history"></span></span><span class="chev" data-icon="chev"></span>
       </button>
     </section>
 
@@ -109,7 +138,7 @@
     <section id="screen-request" class="screen" hidden data-title="appName">
       <p id="reqPrompt" class="lead"></p>
       <button class="btn btn-purple" id="dictateBtn" data-say="speakRequest">
-        <span class="ico" data-icon="mic"></span><span data-t="speakRequest">Speak my request</span>
+        <span class="ico-tile"><span class="ico" data-icon="mic"></span></span><span class="b-text"><span class="b-title" data-t="speakRequest"></span></span>
       </button>
       <label for="reqText" class="field-label" data-t="typeHere">Or type it here</label>
       <textarea id="reqText" rows="3" class="field"></textarea>
@@ -120,33 +149,76 @@
         <span data-t="shareLoc">Include my location</span>
       </label>
       <button class="btn btn-green" id="sendReqBtn" data-say="send">
-        <span class="ico" data-icon="send"></span><span data-t="send">Send request</span>
+        <span class="ico-tile"><span class="ico" data-icon="send"></span></span><span class="b-text"><span class="b-title" data-t="send"></span></span>
       </button>
       <p class="hint" id="sendHint"></p>
     </section>
 
+    <!-- READ TEXT -->
+    <section id="screen-read" class="screen" hidden data-title="readText">
+      <p class="lead" data-t="readHow">Hold the phone about 30 cm (one foot) above the words, in good light.</p>
+      <button class="btn btn-teal btn-home" id="photoBtn" data-say="takePhoto">
+        <span class="ico-tile"><span class="ico" data-icon="camera"></span></span>
+        <span class="b-text"><span class="b-title" data-t="takePhoto">Take a photo</span></span>
+      </button>
+      <input id="photoInput" class="visually-hidden" type="file" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
+      <p id="readStatus" class="status-line" aria-live="polite"></p>
+      <div id="readResult" class="card" hidden>
+        <p class="card-label" data-t="itSays">It says</p>
+        <p id="readText" class="read-text"></p>
+      </div>
+      <div id="readActions" class="stack" hidden>
+        <button class="btn btn-teal" id="readAgainBtn" data-say="readAgain">
+          <span class="ico-tile"><span class="ico" data-icon="speaker"></span></span><span class="b-text"><span class="b-title" data-t="readAgain"></span></span>
+        </button>
+        <button class="btn btn-outline btn-center" id="stopReadBtn" data-instant><span class="b-title" data-t="stopReading">Stop reading</span></button>
+      </div>
+    </section>
+
+    <!-- MEDICINES -->
+    <section id="screen-meds" class="screen" hidden data-title="meds">
+      <div id="medList" class="stack"></div>
+      <button class="btn btn-pink" data-go="medadd" data-say="addMed">
+        <span class="ico-tile"><span class="ico" data-icon="plus"></span></span><span class="b-text"><span class="b-title" data-t="addMed"></span></span>
+      </button>
+      <p class="hint" data-t="medsHint"></p>
+    </section>
+
+    <!-- ADD MEDICINE -->
+    <section id="screen-medadd" class="screen" hidden data-title="addMed">
+      <label class="field-label" for="medName" data-t="medName">Medicine name</label>
+      <div class="field-row">
+        <input class="field" id="medName" autocomplete="off">
+        <button type="button" class="iconbtn iconbtn-lg" id="medNameMic" data-say="speakName" data-t-aria="speakName"><span class="ico" data-icon="mic"></span></button>
+      </div>
+      <p class="field-label" id="medTimesLabel" data-t="medTimes">Times to take it</p>
+      <div id="medTimes" class="stack" role="group" aria-labelledby="medTimesLabel"></div>
+      <button type="button" class="btn btn-outline btn-center" id="addTimeBtn" data-instant><span class="b-title" data-t="addTime">Add another time</span></button>
+      <button type="button" class="btn btn-green" id="saveMedBtn" data-instant>
+        <span class="ico-tile"><span class="ico" data-icon="check"></span></span><span class="b-text"><span class="b-title" data-t="saveMed"></span></span>
+      </button>
+    </section>
+
     <!-- WHERE AM I -->
     <section id="screen-location" class="screen" hidden data-title="whereAmI">
-      <div class="place" aria-live="polite">
-        <p class="place-label" data-t="youAreAt">You are at</p>
+      <div class="card place" aria-live="polite">
+        <p class="card-label" data-t="youAreAt">You are at</p>
         <p class="place-address" id="placeAddress"></p>
         <p class="hint" id="placeNote"></p>
       </div>
       <button class="btn btn-blue" id="readPlace" data-say="readAgain">
-        <span class="ico" data-icon="speaker"></span><span data-t="readAgain">Read it again</span>
+        <span class="ico-tile"><span class="ico" data-icon="speaker"></span></span><span class="b-text"><span class="b-title" data-t="readAgain"></span></span>
       </button>
       <button class="btn btn-green" id="sendPlace" data-say="sendLocation">
-        <span class="ico" data-icon="send"></span><span data-t="sendLocation">Send my location to my helper</span>
+        <span class="ico-tile"><span class="ico" data-icon="send"></span></span><span class="b-text"><span class="b-title" data-t="sendLocation"></span></span>
       </button>
       <a class="btn btn-gray" id="openMaps" href="#" target="_blank" rel="noopener">
-        <span class="ico" data-icon="map"></span><span data-t="openMaps">Open in Maps</span>
+        <span class="ico-tile"><span class="ico" data-icon="map"></span></span><span class="b-text"><span class="b-title" data-t="openMaps"></span></span>
       </a>
       <button class="btn btn-gray" id="savePlace" data-say="saveHome">
-        <span class="ico" data-icon="home"></span><span data-t="saveHome">Save as my home address</span>
+        <span class="ico-tile"><span class="ico" data-icon="home"></span></span><span class="b-text"><span class="b-title" data-t="saveHome"></span></span>
       </button>
-      <button class="btn btn-outline" id="refreshPlace" data-instant>
-        <span data-t="tryAgain">Find me again</span>
-      </button>
+      <button class="btn btn-outline btn-center" id="refreshPlace" data-instant><span class="b-title" data-t="tryAgain">Find me again</span></button>
     </section>
 
     <!-- FAMILY -->
@@ -157,19 +229,19 @@
     <!-- HISTORY -->
     <section id="screen-history" class="screen" hidden data-title="history">
       <div id="historyList" class="stack"></div>
-      <button class="btn btn-outline" id="clearHistory" data-say="clearSay"><span data-t="clearList">Clear list</span></button>
+      <button class="btn btn-outline btn-center" id="clearHistory" data-say="clearSay"><span class="b-title" data-t="clearList">Clear list</span></button>
     </section>
 
     <!-- EMERGENCY -->
     <section id="screen-emergency" class="screen" hidden data-title="emergencyTitle">
       <p id="countdownText" class="countdown-text" aria-live="assertive"></p>
-      <button class="btn btn-red btn-xl" id="callEmergencyNow" data-say="callNow">
-        <span class="ico" data-icon="phone"></span><span data-t="callNow">Call now</span>
+      <button class="btn btn-red btn-home" id="callEmergencyNow" data-say="callNow">
+        <span class="ico-tile"><span class="ico" data-icon="phone"></span></span><span class="b-text"><span class="b-title" data-t="callNow"></span></span>
       </button>
       <button class="btn btn-blue" id="alertHelperBtn" data-say="sendLocation">
-        <span class="ico" data-icon="pin"></span><span data-t="sendLocation">Send my location to my helper</span>
+        <span class="ico-tile"><span class="ico" data-icon="pin"></span></span><span class="b-text"><span class="b-title" data-t="sendLocation"></span></span>
       </button>
-      <button class="btn btn-outline" id="cancelEmergency" data-say="cancelSay" data-instant><span data-t="cancel">Cancel</span></button>
+      <button class="btn btn-outline btn-center" id="cancelEmergency" data-say="cancelSay" data-instant><span class="b-title" data-t="cancel">Cancel</span></button>
     </section>
 
     <!-- SETTINGS -->
@@ -180,9 +252,9 @@
         <div id="passwordChange" class="stack" hidden>
           <label class="field-label" for="newPassword" data-t="newPassword">New password</label>
           <input class="field" id="newPassword" type="password" autocomplete="new-password">
-          <button type="button" class="btn btn-gray" id="savePassword" data-instant><span data-t="changePassword">Change password</span></button>
+          <button type="button" class="btn btn-gray btn-center" id="savePassword" data-instant><span class="b-title" data-t="changePassword"></span></button>
         </div>
-        <button type="button" class="btn btn-outline" id="accountBtn" data-instant><span class="ico" data-icon="logout"></span><span id="accountBtnLabel"></span></button>
+        <button type="button" class="btn btn-outline btn-center" id="accountBtn" data-instant><span class="b-title" id="accountBtnLabel"></span></button>
       </fieldset>
 
       <form id="settingsForm" class="stack" autocomplete="on">
@@ -196,7 +268,7 @@
 
         <fieldset>
           <legend data-t="myHelper">My helper</legend>
-          <p class="hint" data-t="helperHint">Requests are sent to this person.</p>
+          <p class="hint" data-t="helperHint"></p>
           <label class="field-label" for="s-helperName" data-t="helperName">Helper's name</label>
           <input class="field" id="s-helperName" name="helperName">
           <label class="field-label" for="s-helperPhone" data-t="helperPhone">Helper's phone number</label>
@@ -236,7 +308,7 @@
           </select>
           <label class="check"><input type="checkbox" id="s-voice" name="voice"> <span data-t="readAloud">Read everything aloud</span></label>
           <label class="check"><input type="checkbox" id="s-confirmTap" name="confirmTap"> <span data-t="confirmTap">Tap once to hear, tap again to choose</span></label>
-          <p class="hint" data-t="srHint">Turn this off if you use VoiceOver or TalkBack.</p>
+          <p class="hint" data-t="srHint"></p>
           <label class="field-label" for="s-rate" data-t="rate">Voice speed</label>
           <select class="field" id="s-rate" name="rate">
             <option value="0.7" data-t="slow">Slow</option>
@@ -257,19 +329,33 @@
           </select>
         </fieldset>
 
-        <button type="submit" class="btn btn-green" data-instant><span data-t="save">Save</span></button>
+        <button type="submit" class="btn btn-green btn-center" data-instant><span class="b-title" data-t="save">Save</span></button>
       </form>
     </section>
   </main>
 
   <!-- Listening: speak, or type if the microphone isn't available -->
   <div id="listening" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="listeningTitle">
-    <span class="ico ico-big pulse" data-icon="mic"></span>
+    <span class="mark mark-lg pulse"><span class="ico" data-icon="mic"></span></span>
     <p class="overlay-title" id="listeningTitle" data-t="listening">Listening…</p>
     <p id="heard" class="heard" aria-live="polite"></p>
     <label for="typedCmd" class="field-label" data-t="listenType">Or type here</label>
     <input id="typedCmd" class="field" autocomplete="off">
-    <button class="btn btn-green" id="stopListening" data-instant><span data-t="done">Done</span></button>
+    <button class="btn btn-green btn-center" id="stopListening" data-instant><span class="b-title" data-t="done">Done</span></button>
+  </div>
+
+  <!-- Medicine reminder -->
+  <div id="reminder" class="overlay" hidden role="alertdialog" aria-modal="true" aria-labelledby="reminderTitle" aria-describedby="reminderWhat">
+    <span class="mark mark-lg mark-pink pulse"><span class="ico" data-icon="clock"></span></span>
+    <p class="overlay-title" id="reminderTitle" data-t="remindTitle">Time for your medicine</p>
+    <p class="reminder-what" id="reminderWhat"></p>
+    <button class="btn btn-green btn-home" id="tookItBtn" data-instant>
+      <span class="ico-tile"><span class="ico" data-icon="check"></span></span><span class="b-text"><span class="b-title" data-t="tookIt"></span></span>
+    </button>
+    <button class="btn btn-blue" id="snoozeBtn" data-instant>
+      <span class="ico-tile"><span class="ico" data-icon="clock"></span></span><span class="b-text"><span class="b-title" data-t="later10"></span></span>
+    </button>
+    <button class="btn btn-outline-light btn-center" id="skipDoseBtn" data-instant><span class="b-title" data-t="skipDose">Skip this one</span></button>
   </div>
 
   <!-- Preview only: shows the message or call instead of sending it -->
@@ -277,8 +363,8 @@
     <p class="overlay-title" id="sheetTitle"></p>
     <p class="sheet-to" id="sheetTo"></p>
     <pre class="sheet-body" id="sheetBody"></pre>
-    <button class="btn btn-blue" id="sheetCopy" data-instant><span data-t="copy">Copy</span></button>
-    <button class="btn btn-outline-light" id="sheetClose" data-instant><span data-t="close">Close</span></button>
+    <button class="btn btn-blue btn-center" id="sheetCopy" data-instant><span class="b-title" data-t="copy">Copy</span></button>
+    <button class="btn btn-outline-light btn-center" id="sheetClose" data-instant><span class="b-title" data-t="close">Close</span></button>
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>

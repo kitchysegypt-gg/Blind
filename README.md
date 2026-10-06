@@ -6,17 +6,23 @@ It's a web app: open it in the phone's browser and choose **Add to Home screen**
 
 ## The home screen
 
-Five big buttons, top to bottom:
+The time and date in large type, then seven big buttons, top to bottom:
 
 | Button | What it does |
 |---|---|
 | **Speak** | Say what you need ("I need milk and bread", "where am I", "call Omar", «وديني للدكتور»). The app opens the right screen. |
 | **Ask for help** | Groceries, medicine, a ride, or someone to help. The app writes a WhatsApp or SMS message to your helper with your name, address and location, and you press Send. |
+| **Read text** | Take a photo of a letter, label or medicine box and hear what it says. Works in English and Arabic, on the phone itself, with no account or key. |
+| **My medicines** | Add each medicine and the times to take it. At each time the app speaks the reminder, buzzes, and asks "I took it", "Remind me in 10 minutes" or "Skip". |
 | **Where am I?** | Says your street address out loud. You can send it to your helper, open it in Maps, or save it as your home address. |
 | **Call family** | One big button for each saved family member. |
 | **Emergency** | Calls your emergency number (with a countdown you can cancel) or sends your location to your helper. |
 
 Everything is read aloud. By default you tap once to hear a button and tap again to choose it; people who use VoiceOver or TalkBack can turn that off in Settings.
+
+## Helpers can reply
+
+When you're signed in, every request message ends with a private link. The helper taps it, sees what you need and where, and answers with one tap: **I'm on my way**, **I'll come later**, **It's done** or **Sorry, I can't**. The app speaks the answer aloud (for example "Sara is on the way. Groceries: milk and bread") and shows it on the home screen and in My requests. The helper needs no app and no account; the link only opens that one request.
 
 ## Sign in
 
@@ -27,7 +33,12 @@ Accounts are stored in the Supabase project `ggg` (`sjlgitmupecmqhfmuyds`), in t
 - `hh_profiles`: one row per person with their settings
 - `hh_requests`: their request history
 
-Row-level security means each person can read and change only their own rows. The SQL is in `supabase/migrations/`.
+Row-level security means each person can read and change only their own rows. Helpers reach one request only through its secret link, using two database functions (`hh_request_for_helper` and `hh_helper_reply`) that can't list or change anything else. The SQL is in `supabase/migrations/`.
+
+## Limits to know about
+
+- **Medicine reminders** only go off while the app is open (it can be in the background, but not closed). Reminders that work with the app fully closed need a push-notification server, which isn't built yet.
+- **Read text** downloads its reader (about 15 MB) the first time it's used, so the first read needs internet and takes about a minute.
 
 ## Location
 
@@ -54,13 +65,14 @@ If you later turn on "Confirm email" in Supabase, add the Pages address under **
 
 ### Preview build
 
-`python3 tools/build-preview.py` writes `dist/helping-hand-preview.html`, a single-file preview for claude.ai artifacts. Artifacts can't make calls, send texts, use the microphone or read GPS, so the preview shows those on screen instead, with an example location. Sign-in there uses the viewer's claude.ai account.
+`python3 tools/build-preview.py` writes `dist/helping-hand-preview.html`, a single-file preview for claude.ai artifacts. Artifacts can't make calls, send texts, use the microphone or read GPS, so the preview shows those on screen instead, with an example location. Sign-in there uses the viewer's claude.ai account, Read text uses Claude to read the photo, and helper replies are acted out with an example reply.
 
 ## Files
 
 - `index.html`: the screens
+- `helper.html`, `helper.js`: the page a helper opens to reply
 - `styles.css`: the look (3 colour options and 3 text sizes)
-- `app.js`: voice, sign-in, location, requests, calling and settings
+- `app.js`: voice, sign-in, requests and replies, reading text, medicine reminders, location, calling and settings
 - `sw.js`, `manifest.webmanifest`, `icons/`: offline support and install
 - `supabase/migrations/`: the database tables
 - `tools/build-preview.py`: builds the artifact preview

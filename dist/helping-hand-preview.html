@@ -1,32 +1,46 @@
 <title>Helping Hand</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Kufi+Arabic:wght@500;700&display=swap">
 <style>
-/* Helping Hand: big, plain, high-contrast. One column of large buttons. */
+/* Helping Hand
+   One calm column of large, clearly coloured buttons. Atkinson Hyperlegible was
+   designed by the Braille Institute for low-vision readers; Noto Kufi for Arabic. */
 :root {
   --scale: 1;
-  --bg: #0d0f12;
-  --surface: #181b21;
-  --text: #ffffff;
-  --muted: #c4cad6;
-  --border: #3b414d;
+  --font: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-ar: "Noto Kufi Arabic", "Noto Sans Arabic", Tahoma, system-ui, sans-serif;
+
+  --bg: #0e1116;
+  --surface: #161a21;
+  --surface-2: #1e232c;
+  --text: #f5f7fa;
+  --muted: #b6becb;
+  --border: #2d333e;
   --focus: #ffd21f;
-  --purple: #5a3fd1;
-  --orange: #b04f00;
-  --blue: #1d5bc9;
-  --green: #1b7a39;
-  --red: #c41c1c;
-  --gray: #3a404c;
   --on-color: #ffffff;
+  --tile: rgba(255, 255, 255, .17);
+
+  --purple: #5a3fd1;
+  --orange: #b1500c;
+  --teal: #0d7770;
+  --pink: #a3306a;
+  --blue: #1e5ec8;
+  --green: #1b7a3b;
+  --red: #c21f1f;
+  --gray: #39404d;
+
+  --radius: 22px;
   color-scheme: dark;
   font-size: calc(20px * var(--scale));
 }
-:root[data-look="yellow"] {
-  --bg: #000; --surface: #000; --text: #ffe600; --muted: #ffe600; --border: #ffe600; --focus: #00e5ff;
-  --purple: #000; --orange: #000; --blue: #000; --green: #000; --red: #000; --gray: #000; --on-color: #ffe600;
-}
 :root[data-look="light"] {
-  --bg: #ffffff; --surface: #f1f3f6; --text: #111318; --muted: #3d4350; --border: #8a919e; --focus: #0047ff;
-  --gray: #4a5160;
+  --bg: #f4f5f7; --surface: #ffffff; --surface-2: #eceef2; --text: #0f1216; --muted: #454c59;
+  --border: #d3d8e0; --focus: #0047ff; --gray: #4a5160;
   color-scheme: light;
+}
+:root[data-look="yellow"] {
+  --bg: #000; --surface: #000; --surface-2: #000; --text: #ffe600; --muted: #ffe600; --border: #ffe600;
+  --focus: #00e5ff; --on-color: #ffe600; --tile: transparent;
+  --purple: #000; --orange: #000; --teal: #000; --pink: #000; --blue: #000; --green: #000; --red: #000; --gray: #000;
 }
 
 * { box-sizing: border-box; }
@@ -34,148 +48,222 @@ html, body { margin: 0; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
+  font-family: var(--font);
   line-height: 1.35;
   min-height: 100vh;
   -webkit-tap-highlight-color: transparent;
 }
+[dir="rtl"] body { font-family: var(--font-ar); }
 [hidden] { display: none !important; }
 :focus-visible { outline: 5px solid var(--focus); outline-offset: 3px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .skip { position: absolute; inset-inline-start: -9999px; top: 0; background: var(--focus); color: #000; padding: 12px 16px; z-index: 100; }
 .skip:focus { inset-inline-start: 8px; top: 8px; }
-
-.preview-banner { background: var(--focus); color: #000; font-weight: 700; font-size: .85rem; padding: 10px 16px; text-align: center; }
+.preview-banner { background: var(--focus); color: #000; font-weight: 700; font-size: .8rem; padding: 8px 16px; text-align: center; }
 
 /* ---------- Top bar ---------- */
 .topbar {
   position: sticky; top: 0; z-index: 10;
   display: flex; align-items: center; gap: 10px;
   padding: calc(10px + env(safe-area-inset-top, 0px)) 16px 10px;
-  background: var(--bg); border-bottom: 2px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
 }
 :root.preview .topbar { top: env(safe-area-inset-top, 0px); padding-top: 10px; }
-.topbar h1 { flex: 1; min-width: 0; margin: 0; font-size: 1.4rem; font-weight: 800; }
+.topbar h1 { flex: 1; min-width: 0; margin: 0; font-size: 1.35rem; font-weight: 700; text-wrap: balance; }
 .iconbtn {
-  width: 60px; height: 60px; flex: none; border-radius: 16px;
-  border: 2px solid var(--border); background: var(--surface); color: var(--text);
+  width: 58px; height: 58px; flex: none; border-radius: 16px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
   display: grid; place-items: center; cursor: pointer; font: inherit;
 }
-.iconbtn .ico { width: 30px; height: 30px; }
-.langbtn { font-size: 1.4rem; font-weight: 900; }
+.iconbtn .ico { width: 28px; height: 28px; }
+.iconbtn-lg { width: 64px; height: 64px; }
+.langbtn { font-family: var(--font-ar); font-size: 1.3rem; font-weight: 700; }
+[dir="rtl"] .langbtn { font-family: var(--font); }
 
-main { max-width: 640px; margin: 0 auto; padding: 16px 16px 32px; }
-.screen { display: flex; flex-direction: column; gap: 14px; }
-.stack { display: flex; flex-direction: column; gap: 14px; }
+main { max-width: 620px; margin: 0 auto; padding: 18px 16px 40px; }
+.screen { display: flex; flex-direction: column; gap: 12px; }
+.stack { display: flex; flex-direction: column; gap: 12px; }
 
-.greeting { margin: 4px 0 6px; font-size: 1.2rem; font-weight: 700; color: var(--muted); }
-.lead { font-size: 1.25rem; font-weight: 700; margin: 0; }
-.lead-sm { font-size: 1.05rem; font-weight: 700; margin: 0 0 12px; overflow-wrap: anywhere; }
-.hint { color: var(--muted); margin: 0; font-size: .95rem; }
-.msg { margin: 0; font-weight: 700; font-size: 1.05rem; min-height: 1em; }
+.lead { font-size: 1.2rem; font-weight: 700; margin: 0; text-wrap: balance; }
+.lead-sm { font-size: 1rem; font-weight: 700; margin: 0 0 12px; overflow-wrap: anywhere; }
+.hint { color: var(--muted); margin: 0; font-size: .9rem; }
+.msg { margin: 0; font-weight: 700; font-size: 1rem; padding: 12px 14px; border-radius: 14px; background: var(--surface-2); }
 .msg:empty { display: none; }
+.status-line { margin: 0; font-weight: 700; font-size: 1.1rem; min-height: 1.4em; }
+.status-line:empty { display: none; }
 
-/* ---------- Icons: plain white line symbols ---------- */
-.ico { display: inline-block; width: 36px; height: 36px; flex: none; }
-.ico svg { width: 100%; height: 100%; display: block; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.ico-big { width: 80px; height: 80px; }
-[dir="rtl"] [data-icon="back"] svg, [dir="rtl"] [data-icon="send"] svg, [dir="rtl"] [data-icon="logout"] svg { transform: scaleX(-1); }
+/* ---------- Icons: plain line symbols ---------- */
+.ico { display: inline-block; width: 32px; height: 32px; flex: none; }
+.ico svg, .chev svg { width: 100%; height: 100%; display: block; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+[dir="rtl"] [data-icon="back"] svg, [dir="rtl"] [data-icon="chev"] svg,
+[dir="rtl"] [data-icon="send"] svg { transform: scaleX(-1); }
+
+/* ---------- Today ---------- */
+.today { padding: 4px 4px 8px; }
+.today p { margin: 0; }
+.today-hello { font-size: 1.1rem; font-weight: 700; color: var(--muted); }
+.today-time { font-size: 3rem; font-weight: 700; line-height: 1.1; letter-spacing: -.5px; font-variant-numeric: tabular-nums; }
+.today-date { font-size: 1.15rem; font-weight: 700; }
 
 /* ---------- Buttons ---------- */
 .btn {
   --c: var(--gray);
-  display: flex; align-items: center; gap: 18px;
-  width: 100%; min-height: 80px; padding: 14px 22px;
-  border-radius: 20px; border: 3px solid transparent;
+  display: flex; align-items: center; gap: 16px;
+  width: 100%; min-height: 78px; padding: 12px 16px;
+  border-radius: var(--radius); border: 2px solid transparent;
   background: var(--c); color: var(--on-color);
-  font: inherit; font-size: 1.3rem; font-weight: 800; text-align: start; text-decoration: none;
-  cursor: pointer; box-shadow: 0 4px 0 rgba(0, 0, 0, .35);
+  font: inherit; text-align: start; text-decoration: none; cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .16), 0 2px 0 rgba(0, 0, 0, .3);
+  transition: transform .08s, filter .15s;
 }
-.btn:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0, 0, 0, .35); }
-.btn > span:last-child { min-width: 0; overflow-wrap: anywhere; }
-.btn-xl { min-height: 104px; font-size: 1.55rem; }
-.btn-xl .ico { width: 44px; height: 44px; }
+.btn:hover { filter: brightness(1.06); }
+.btn:active { transform: scale(.985); }
+.btn:disabled { opacity: .6; cursor: progress; }
+.btn-home { min-height: 96px; }
+.btn-center { justify-content: center; text-align: center; }
+.ico-tile {
+  width: 56px; height: 56px; flex: none; border-radius: 16px; background: var(--tile);
+  display: grid; place-items: center;
+}
+.btn-home .ico-tile { width: 62px; height: 62px; }
+.btn-home .ico { width: 34px; height: 34px; }
+.b-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.b-title { font-size: 1.3rem; font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
+.btn-home .b-title { font-size: 1.45rem; }
+.b-sub { font-size: .88rem; font-weight: 400; opacity: .92; overflow-wrap: anywhere; }
+.b-sub:empty { display: none; }
+.chev { width: 26px; height: 26px; opacity: .8; }
 .btn-purple { --c: var(--purple); }
 .btn-orange { --c: var(--orange); }
+.btn-teal { --c: var(--teal); }
+.btn-pink { --c: var(--pink); }
 .btn-blue { --c: var(--blue); }
 .btn-green { --c: var(--green); }
 .btn-red { --c: var(--red); }
 .btn-gray { --c: var(--gray); }
-.btn-outline { background: transparent; color: var(--text); border-color: var(--border); box-shadow: none; justify-content: center; }
-.btn-outline-light { background: transparent; color: #fff; border-color: #6b7280; box-shadow: none; justify-content: center; }
+.btn-outline { background: transparent; color: var(--text); border-color: var(--border); box-shadow: none; min-height: 68px; }
+.btn-outline-light { background: transparent; color: #fff; border-color: #5b6372; box-shadow: none; min-height: 68px; }
 :root[data-look="yellow"] .btn { border-color: #ffe600; box-shadow: none; }
+:root[data-look="light"] .btn-outline { background: var(--surface); }
 .linkbtn {
-  background: none; border: 0; color: var(--text); font: inherit; font-size: 1.05rem; font-weight: 700;
-  text-decoration: underline; text-underline-offset: 4px; padding: 14px 4px; min-height: 56px; cursor: pointer; align-self: center;
+  background: none; border: 0; color: var(--text); font: inherit; font-size: 1rem; font-weight: 700;
+  text-decoration: underline; text-underline-offset: 4px; padding: 12px 4px; min-height: 52px; cursor: pointer; align-self: center;
 }
 .armed { outline: 5px dashed var(--focus) !important; outline-offset: 3px; }
+
+/* ---------- Welcome (sign in) ---------- */
+.welcome { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 10px 0 6px; }
+.welcome-title { margin: 8px 0 0; font-size: 2rem; font-weight: 700; }
+.welcome-sub { margin: 0; color: var(--muted); font-size: 1.05rem; max-width: 30ch; text-wrap: balance; }
+.mark {
+  width: 84px; height: 84px; border-radius: 26px; display: grid; place-items: center;
+  background: var(--purple); color: #fff; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
+}
+.mark .ico { width: 46px; height: 46px; }
+.mark-lg { width: 104px; height: 104px; border-radius: 32px; align-self: center; }
+.mark-lg .ico { width: 56px; height: 56px; }
+.mark-pink { background: var(--pink); }
+:root[data-look="yellow"] .mark { background: #000; color: #ffe600; border: 2px solid #ffe600; }
+
+/* ---------- Cards and notices ---------- */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+.card-label { margin: 0 0 6px; color: var(--muted); font-weight: 700; font-size: .9rem; text-transform: uppercase; letter-spacing: .06em; }
+[dir="rtl"] .card-label { text-transform: none; letter-spacing: 0; }
+.place-address { margin: 0 0 8px; font-size: 1.55rem; font-weight: 700; line-height: 1.25; overflow-wrap: anywhere; }
+.read-text { margin: 0; font-size: 1.3rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+.notice {
+  display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: var(--radius);
+  background: var(--surface); border: 2px solid var(--green); font-weight: 700; font-size: 1.05rem;
+  color: var(--text); text-align: start; width: 100%; font-family: inherit; cursor: pointer;
+}
+.notice .ico { color: var(--text); }
+.notice-pink { border-color: var(--pink); }
+
+/* ---------- Status chips ---------- */
+.chip-status {
+  display: inline-block; margin-top: 6px; padding: 3px 10px; border-radius: 999px;
+  font-size: .8rem; font-weight: 700; background: rgba(255, 255, 255, .18); width: fit-content;
+}
+.chip-status[data-s="coming"], .chip-status[data-s="done"] { background: #d7f5df; color: #0d4a20; }
+.chip-status[data-s="later"], .chip-status[data-s="seen"] { background: #fff1c2; color: #5a4300; }
+.chip-status[data-s="cant"] { background: #ffd9d9; color: #6b0b0b; }
+
+/* ---------- Medicines ---------- */
+.med { display: flex; align-items: center; gap: 14px; }
+.med-main { flex: 1; min-width: 0; }
+.med-name { margin: 0; font-size: 1.3rem; font-weight: 700; overflow-wrap: anywhere; }
+.med-times { margin: 4px 0 0; color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+.time-row { display: flex; gap: 10px; align-items: center; }
+.time-row .field { flex: 1; font-variant-numeric: tabular-nums; }
+.reminder-what { margin: 0; font-size: 1.8rem; font-weight: 700; text-align: center; overflow-wrap: anywhere; }
 
 /* ---------- Forms ---------- */
 .field-label { display: block; font-weight: 700; margin: 4px 0 6px; }
 .field {
   width: 100%; font: inherit; font-size: 1.15rem; padding: 14px 16px; border-radius: 14px;
-  border: 3px solid var(--border); background: var(--surface); color: var(--text);
+  border: 2px solid var(--border); background: var(--surface); color: var(--text); min-height: 58px;
 }
+.field:focus { border-color: var(--focus); outline: none; }
+.field-row { display: flex; gap: 10px; align-items: center; }
 textarea.field { resize: vertical; min-height: 100px; }
 input[type="email"], input[type="tel"] { direction: ltr; }
 [dir="rtl"] input[type="email"], [dir="rtl"] input[type="tel"] { text-align: right; }
-fieldset { border: 2px solid var(--border); border-radius: 18px; padding: 12px 16px 16px; margin: 0; }
-legend { font-weight: 800; font-size: 1.2rem; padding: 0 8px; }
+fieldset { border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 16px 16px; margin: 0; background: var(--surface); }
+legend { font-weight: 700; font-size: 1.15rem; padding: 0 8px; }
 .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-.check { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 1.1rem; min-height: 56px; cursor: pointer; }
-.check input { width: 32px; height: 32px; accent-color: var(--green); flex: none; }
+.check { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 1.05rem; min-height: 56px; cursor: pointer; }
+.check input { width: 30px; height: 30px; accent-color: var(--green); flex: none; }
 .chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .chip {
-  font: inherit; font-weight: 700; font-size: 1.1rem; min-height: 58px; padding: 8px 18px; border-radius: 999px;
-  border: 3px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer;
+  font: inherit; font-weight: 700; font-size: 1.05rem; min-height: 56px; padding: 8px 18px; border-radius: 999px;
+  border: 2px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer;
 }
 .chip[aria-pressed="true"] { background: var(--focus); color: #000; border-color: var(--focus); }
 
-/* ---------- Where am I ---------- */
-.place { background: var(--surface); border: 2px solid var(--border); border-radius: 20px; padding: 18px; }
-.place-label { margin: 0 0 6px; color: var(--muted); font-weight: 700; }
-.place-address { margin: 0 0 8px; font-size: 1.6rem; font-weight: 800; line-height: 1.25; overflow-wrap: anywhere; }
-
 /* ---------- Lists ---------- */
-.empty { color: var(--muted); font-size: 1.15rem; text-align: center; padding: 24px 8px; margin: 0; }
-.history-item small { font-weight: 600; opacity: .85; }
+.empty { color: var(--muted); font-size: 1.1rem; text-align: center; padding: 24px 8px; margin: 0; }
+.history-item .b-sub { opacity: .85; }
 
 /* ---------- Emergency ---------- */
-.countdown-text { font-size: 1.6rem; font-weight: 900; text-align: center; margin: 8px 0; }
+.countdown-text { font-size: 1.5rem; font-weight: 700; text-align: center; margin: 8px 0; text-wrap: balance; }
 
 /* ---------- Overlays ---------- */
 .overlay {
-  position: fixed; inset: 0; z-index: 50; background: rgba(8, 9, 12, .97); color: #fff;
+  position: fixed; inset: 0; z-index: 50; background: rgba(9, 11, 15, .97); color: #fff;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
   padding: 24px 16px; overflow-y: auto;
 }
 .overlay > * { width: 100%; max-width: 520px; }
-.overlay > .ico { width: 80px; }
+.overlay > .mark { width: 104px; }
 .overlay .field-label { color: #fff; }
-.overlay .field { background: #181b21; color: #fff; border-color: #3b414d; }
-.overlay-title { font-size: 1.8rem; font-weight: 900; margin: 0; text-align: center; }
-.heard { font-size: 1.2rem; min-height: 1.5em; text-align: center; margin: 0; }
-.sheet-to { font-size: 1.15rem; font-weight: 700; text-align: center; margin: 0; unicode-bidi: plaintext; }
+.overlay .field { background: #161a21; color: #fff; border-color: #2d333e; }
+.overlay-title { font-size: 1.8rem; font-weight: 700; margin: 0; text-align: center; }
+.heard { font-size: 1.15rem; min-height: 1.5em; text-align: center; margin: 0; }
+.sheet-to { font-size: 1.1rem; font-weight: 700; text-align: center; margin: 0; unicode-bidi: plaintext; }
 .sheet-body {
-  margin: 0; padding: 16px; border-radius: 14px; background: #181b21; border: 2px solid #3b414d;
-  font: inherit; font-size: 1.05rem; white-space: pre-wrap; overflow-wrap: anywhere; unicode-bidi: plaintext;
+  margin: 0; padding: 16px; border-radius: 14px; background: #161a21; border: 1px solid #2d333e;
+  font: inherit; font-size: 1rem; white-space: pre-wrap; overflow-wrap: anywhere; unicode-bidi: plaintext;
 }
-.pulse { animation: pulse 1.2s ease-in-out infinite; }
-@keyframes pulse { 50% { opacity: .5; } }
+.pulse { animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(1.06); } }
 
 /* ---------- Toast ---------- */
 .toast {
   position: fixed; left: 16px; right: 16px; bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-  max-width: 600px; margin: 0 auto; z-index: 60;
-  background: var(--focus); color: #000; font-weight: 800; font-size: 1.15rem;
-  padding: 16px 20px; border-radius: 16px; text-align: center;
+  max-width: 580px; margin: 0 auto; z-index: 60;
+  background: var(--focus); color: #000; font-weight: 700; font-size: 1.1rem;
+  padding: 16px 20px; border-radius: 16px; text-align: center; box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
   opacity: 0; transform: translateY(16px); pointer-events: none; transition: .2s;
 }
 .toast.show { opacity: 1; transform: none; }
 
 @media (max-width: 380px) {
   .pair { grid-template-columns: 1fr; }
-  .btn { gap: 14px; padding: 12px 16px; }
+  .btn { gap: 12px; padding: 10px 12px; }
+  .today-time { font-size: 2.5rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
@@ -200,9 +288,12 @@ legend { font-weight: 800; font-size: 1.2rem; padding: 0 8px; }
   <main id="main" tabindex="-1">
     <!-- SIGN IN -->
     <section id="screen-signin" class="screen" hidden data-title="appName">
-      <p class="lead" data-t="signinIntro">Sign in so your helper, family and requests are saved.</p>
+      <div class="welcome">
+        <span class="mark"><span class="ico" data-icon="hand"></span></span>
+        <p class="welcome-title" data-t="appName">Helping Hand</p>
+        <p class="welcome-sub" data-t="signinIntro">Sign in so your helper, family and requests are saved.</p>
+      </div>
 
-      <!-- Installed app: email and password -->
       <form id="authForm" class="stack" novalidate>
         <div id="nameRow" hidden>
           <label class="field-label" for="authName" data-t="myName">My name</label>
@@ -212,22 +303,21 @@ legend { font-weight: 800; font-size: 1.2rem; padding: 0 8px; }
           <label class="field-label" for="authEmail" data-t="email">Email</label>
           <input class="field" id="authEmail" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false">
         </div>
-        <div id="passwordRow">
+        <div>
           <label class="field-label" for="authPassword" data-t="password">Password</label>
           <input class="field" id="authPassword" type="password" autocomplete="current-password">
         </div>
         <p id="authMsg" class="msg" role="alert"></p>
-        <button type="submit" class="btn btn-green" id="authSubmit" data-instant>
-          <span class="ico" data-icon="user"></span><span id="authSubmitLabel" data-t="signIn">Sign in</span>
+        <button type="submit" class="btn btn-green btn-center" id="authSubmit" data-instant>
+          <span class="b-title" id="authSubmitLabel" data-t="signIn">Sign in</span>
         </button>
-        <button type="button" class="btn btn-outline" id="authToggle" data-instant><span id="authToggleLabel" data-t="newHere">I'm new. Create an account</span></button>
+        <button type="button" class="btn btn-outline btn-center" id="authToggle" data-instant><span class="b-title" id="authToggleLabel" data-t="newHere">I'm new. Create an account</span></button>
         <button type="button" class="linkbtn" id="authForgot" data-instant data-t="forgot">I forgot my password</button>
       </form>
 
-      <!-- Hosted preview: the viewer's claude.ai account -->
       <div id="previewAuth" class="stack" hidden>
-        <button type="button" class="btn btn-green" id="continueAs" data-instant>
-          <span class="ico" data-icon="user"></span><span id="continueAsLabel"></span>
+        <button type="button" class="btn btn-green btn-center" id="continueAs" data-instant>
+          <span class="b-title" id="continueAsLabel"></span>
         </button>
       </div>
 
@@ -236,40 +326,64 @@ legend { font-weight: 800; font-size: 1.2rem; padding: 0 8px; }
 
     <!-- HOME -->
     <section id="screen-home" class="screen" hidden data-title="appName">
-      <p id="greeting" class="greeting"></p>
-      <button class="btn btn-purple btn-xl" id="heroMic" data-say="heroSay">
-        <span class="ico" data-icon="mic"></span><span data-t="heroText">Speak</span>
+      <div class="today">
+        <p class="today-hello" id="todayHello"></p>
+        <p class="today-time" id="todayTime"></p>
+        <p class="today-date" id="todayDate"></p>
+      </div>
+      <div id="homeNotices" class="stack"></div>
+
+      <button class="btn btn-purple btn-home" id="heroMic" data-say="heroSay">
+        <span class="ico-tile"><span class="ico" data-icon="mic"></span></span>
+        <span class="b-text"><span class="b-title" data-t="heroText"></span><span class="b-sub" data-t="heroSub"></span></span>
       </button>
-      <button class="btn btn-orange btn-xl" data-go="help" data-say="askHelpSay">
-        <span class="ico" data-icon="heart"></span><span data-t="askHelp">Ask for help</span>
+      <button class="btn btn-orange btn-home" data-go="help" data-say="askHelpSay">
+        <span class="ico-tile"><span class="ico" data-icon="heart"></span></span>
+        <span class="b-text"><span class="b-title" data-t="askHelp"></span><span class="b-sub" data-t="askHelpSub"></span></span>
+        <span class="chev" data-icon="chev"></span>
       </button>
-      <button class="btn btn-blue btn-xl" data-go="location" data-say="whereAmISay">
-        <span class="ico" data-icon="pin"></span><span data-t="whereAmI">Where am I?</span>
+      <button class="btn btn-teal btn-home" data-go="read" data-say="readTextSay">
+        <span class="ico-tile"><span class="ico" data-icon="camera"></span></span>
+        <span class="b-text"><span class="b-title" data-t="readText"></span><span class="b-sub" data-t="readTextSub"></span></span>
+        <span class="chev" data-icon="chev"></span>
       </button>
-      <button class="btn btn-green btn-xl" data-go="family" data-say="family">
-        <span class="ico" data-icon="phone"></span><span data-t="family">Call family</span>
+      <button class="btn btn-pink btn-home" data-go="meds" data-say="medsSay">
+        <span class="ico-tile"><span class="ico" data-icon="clock"></span></span>
+        <span class="b-text"><span class="b-title" data-t="meds"></span><span class="b-sub" id="medsSub"></span></span>
+        <span class="chev" data-icon="chev"></span>
       </button>
-      <button class="btn btn-red btn-xl" data-go="emergency" data-say="emergencySay">
-        <span class="ico" data-icon="alert"></span><span data-t="emergency">Emergency</span>
+      <button class="btn btn-blue btn-home" data-go="location" data-say="whereAmISay">
+        <span class="ico-tile"><span class="ico" data-icon="pin"></span></span>
+        <span class="b-text"><span class="b-title" data-t="whereAmI"></span><span class="b-sub" data-t="whereAmISub"></span></span>
+        <span class="chev" data-icon="chev"></span>
+      </button>
+      <button class="btn btn-green btn-home" data-go="family" data-say="family">
+        <span class="ico-tile"><span class="ico" data-icon="phone"></span></span>
+        <span class="b-text"><span class="b-title" data-t="family"></span><span class="b-sub" id="familySub"></span></span>
+        <span class="chev" data-icon="chev"></span>
+      </button>
+      <button class="btn btn-red btn-home" data-go="emergency" data-say="emergencySay">
+        <span class="ico-tile"><span class="ico" data-icon="alert"></span></span>
+        <span class="b-text"><span class="b-title" data-t="emergency"></span><span class="b-sub" data-t="emergencySub"></span></span>
       </button>
     </section>
 
     <!-- ASK FOR HELP -->
     <section id="screen-help" class="screen" hidden data-title="askHelp">
       <button class="btn btn-orange" data-go="request:groceries" data-say="groceriesSay">
-        <span class="ico" data-icon="bag"></span><span data-t="groceries">Groceries</span>
+        <span class="ico-tile"><span class="ico" data-icon="bag"></span></span><span class="b-text"><span class="b-title" data-t="groceries"></span></span><span class="chev" data-icon="chev"></span>
       </button>
       <button class="btn btn-orange" data-go="request:medicine" data-say="medicineSay">
-        <span class="ico" data-icon="pill"></span><span data-t="medicine">Medicine</span>
+        <span class="ico-tile"><span class="ico" data-icon="pill"></span></span><span class="b-text"><span class="b-title" data-t="medicine"></span></span><span class="chev" data-icon="chev"></span>
       </button>
       <button class="btn btn-orange" data-go="request:ride" data-say="rideSay">
-        <span class="ico" data-icon="car"></span><span data-t="ride">A ride</span>
+        <span class="ico-tile"><span class="ico" data-icon="car"></span></span><span class="b-text"><span class="b-title" data-t="ride"></span></span><span class="chev" data-icon="chev"></span>
       </button>
       <button class="btn btn-orange" data-go="request:helper" data-say="helperSay">
-        <span class="ico" data-icon="person"></span><span data-t="helper">Someone to help me</span>
+        <span class="ico-tile"><span class="ico" data-icon="person"></span></span><span class="b-text"><span class="b-title" data-t="helper"></span></span><span class="chev" data-icon="chev"></span>
       </button>
       <button class="btn btn-gray" data-go="history" data-say="history">
-        <span class="ico" data-icon="list"></span><span data-t="history">My requests</span>
+        <span class="ico-tile"><span class="ico" data-icon="list"></span></span><span class="b-text"><span class="b-title" data-t="history"></span></span><span class="chev" data-icon="chev"></span>
       </button>
     </section>
 
@@ -277,7 +391,7 @@ legend { font-weight: 800; font-size: 1.2rem; padding: 0 8px; }
     <section id="screen-request" class="screen" hidden data-title="appName">
       <p id="reqPrompt" class="lead"></p>
       <button class="btn btn-purple" id="dictateBtn" data-say="speakRequest">
-        <span class="ico" data-icon="mic"></span><span data-t="speakRequest">Speak my request</span>
+        <span class="ico-tile"><span class="ico" data-icon="mic"></span></span><span class="b-text"><span class="b-title" data-t="speakRequest"></span></span>
       </button>
       <label for="reqText" class="field-label" data-t="typeHere">Or type it here</label>
       <textarea id="reqText" rows="3" class="field"></textarea>
@@ -288,33 +402,76 @@ legend { font-weight: 800; font-size: 1.2rem; padding: 0 8px; }
         <span data-t="shareLoc">Include my location</span>
       </label>
       <button class="btn btn-green" id="sendReqBtn" data-say="send">
-        <span class="ico" data-icon="send"></span><span data-t="send">Send request</span>
+        <span class="ico-tile"><span class="ico" data-icon="send"></span></span><span class="b-text"><span class="b-title" data-t="send"></span></span>
       </button>
       <p class="hint" id="sendHint"></p>
     </section>
 
+    <!-- READ TEXT -->
+    <section id="screen-read" class="screen" hidden data-title="readText">
+      <p class="lead" data-t="readHow">Hold the phone about 30 cm (one foot) above the words, in good light.</p>
+      <button class="btn btn-teal btn-home" id="photoBtn" data-say="takePhoto">
+        <span class="ico-tile"><span class="ico" data-icon="camera"></span></span>
+        <span class="b-text"><span class="b-title" data-t="takePhoto">Take a photo</span></span>
+      </button>
+      <input id="photoInput" class="visually-hidden" type="file" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
+      <p id="readStatus" class="status-line" aria-live="polite"></p>
+      <div id="readResult" class="card" hidden>
+        <p class="card-label" data-t="itSays">It says</p>
+        <p id="readText" class="read-text"></p>
+      </div>
+      <div id="readActions" class="stack" hidden>
+        <button class="btn btn-teal" id="readAgainBtn" data-say="readAgain">
+          <span class="ico-tile"><span class="ico" data-icon="speaker"></span></span><span class="b-text"><span class="b-title" data-t="readAgain"></span></span>
+        </button>
+        <button class="btn btn-outline btn-center" id="stopReadBtn" data-instant><span class="b-title" data-t="stopReading">Stop reading</span></button>
+      </div>
+    </section>
+
+    <!-- MEDICINES -->
+    <section id="screen-meds" class="screen" hidden data-title="meds">
+      <div id="medList" class="stack"></div>
+      <button class="btn btn-pink" data-go="medadd" data-say="addMed">
+        <span class="ico-tile"><span class="ico" data-icon="plus"></span></span><span class="b-text"><span class="b-title" data-t="addMed"></span></span>
+      </button>
+      <p class="hint" data-t="medsHint"></p>
+    </section>
+
+    <!-- ADD MEDICINE -->
+    <section id="screen-medadd" class="screen" hidden data-title="addMed">
+      <label class="field-label" for="medName" data-t="medName">Medicine name</label>
+      <div class="field-row">
+        <input class="field" id="medName" autocomplete="off">
+        <button type="button" class="iconbtn iconbtn-lg" id="medNameMic" data-say="speakName" data-t-aria="speakName"><span class="ico" data-icon="mic"></span></button>
+      </div>
+      <p class="field-label" id="medTimesLabel" data-t="medTimes">Times to take it</p>
+      <div id="medTimes" class="stack" role="group" aria-labelledby="medTimesLabel"></div>
+      <button type="button" class="btn btn-outline btn-center" id="addTimeBtn" data-instant><span class="b-title" data-t="addTime">Add another time</span></button>
+      <button type="button" class="btn btn-green" id="saveMedBtn" data-instant>
+        <span class="ico-tile"><span class="ico" data-icon="check"></span></span><span class="b-text"><span class="b-title" data-t="saveMed"></span></span>
+      </button>
+    </section>
+
     <!-- WHERE AM I -->
     <section id="screen-location" class="screen" hidden data-title="whereAmI">
-      <div class="place" aria-live="polite">
-        <p class="place-label" data-t="youAreAt">You are at</p>
+      <div class="card place" aria-live="polite">
+        <p class="card-label" data-t="youAreAt">You are at</p>
         <p class="place-address" id="placeAddress"></p>
         <p class="hint" id="placeNote"></p>
       </div>
       <button class="btn btn-blue" id="readPlace" data-say="readAgain">
-        <span class="ico" data-icon="speaker"></span><span data-t="readAgain">Read it again</span>
+        <span class="ico-tile"><span class="ico" data-icon="speaker"></span></span><span class="b-text"><span class="b-title" data-t="readAgain"></span></span>
       </button>
       <button class="btn btn-green" id="sendPlace" data-say="sendLocation">
-        <span class="ico" data-icon="send"></span><span data-t="sendLocation">Send my location to my helper</span>
+        <span class="ico-tile"><span class="ico" data-icon="send"></span></span><span class="b-text"><span class="b-title" data-t="sendLocation"></span></span>
       </button>
       <a class="btn btn-gray" id="openMaps" href="#" target="_blank" rel="noopener">
-        <span class="ico" data-icon="map"></span><span data-t="openMaps">Open in Maps</span>
+        <span class="ico-tile"><span class="ico" data-icon="map"></span></span><span class="b-text"><span class="b-title" data-t="openMaps"></span></span>
       </a>
       <button class="btn btn-gray" id="savePlace" data-say="saveHome">
-        <span class="ico" data-icon="home"></span><span data-t="saveHome">Save as my home address</span>
+        <span class="ico-tile"><span class="ico" data-icon="home"></span></span><span class="b-text"><span class="b-title" data-t="saveHome"></span></span>
       </button>
-      <button class="btn btn-outline" id="refreshPlace" data-instant>
-        <span data-t="tryAgain">Find me again</span>
-      </button>
+      <button class="btn btn-outline btn-center" id="refreshPlace" data-instant><span class="b-title" data-t="tryAgain">Find me again</span></button>
     </section>
 
     <!-- FAMILY -->
@@ -325,19 +482,19 @@ legend { font-weight: 800; font-size: 1.2rem; padding: 0 8px; }
     <!-- HISTORY -->
     <section id="screen-history" class="screen" hidden data-title="history">
       <div id="historyList" class="stack"></div>
-      <button class="btn btn-outline" id="clearHistory" data-say="clearSay"><span data-t="clearList">Clear list</span></button>
+      <button class="btn btn-outline btn-center" id="clearHistory" data-say="clearSay"><span class="b-title" data-t="clearList">Clear list</span></button>
     </section>
 
     <!-- EMERGENCY -->
     <section id="screen-emergency" class="screen" hidden data-title="emergencyTitle">
       <p id="countdownText" class="countdown-text" aria-live="assertive"></p>
-      <button class="btn btn-red btn-xl" id="callEmergencyNow" data-say="callNow">
-        <span class="ico" data-icon="phone"></span><span data-t="callNow">Call now</span>
+      <button class="btn btn-red btn-home" id="callEmergencyNow" data-say="callNow">
+        <span class="ico-tile"><span class="ico" data-icon="phone"></span></span><span class="b-text"><span class="b-title" data-t="callNow"></span></span>
       </button>
       <button class="btn btn-blue" id="alertHelperBtn" data-say="sendLocation">
-        <span class="ico" data-icon="pin"></span><span data-t="sendLocation">Send my location to my helper</span>
+        <span class="ico-tile"><span class="ico" data-icon="pin"></span></span><span class="b-text"><span class="b-title" data-t="sendLocation"></span></span>
       </button>
-      <button class="btn btn-outline" id="cancelEmergency" data-say="cancelSay" data-instant><span data-t="cancel">Cancel</span></button>
+      <button class="btn btn-outline btn-center" id="cancelEmergency" data-say="cancelSay" data-instant><span class="b-title" data-t="cancel">Cancel</span></button>
     </section>
 
     <!-- SETTINGS -->
@@ -348,9 +505,9 @@ legend { font-weight: 800; font-size: 1.2rem; padding: 0 8px; }
         <div id="passwordChange" class="stack" hidden>
           <label class="field-label" for="newPassword" data-t="newPassword">New password</label>
           <input class="field" id="newPassword" type="password" autocomplete="new-password">
-          <button type="button" class="btn btn-gray" id="savePassword" data-instant><span data-t="changePassword">Change password</span></button>
+          <button type="button" class="btn btn-gray btn-center" id="savePassword" data-instant><span class="b-title" data-t="changePassword"></span></button>
         </div>
-        <button type="button" class="btn btn-outline" id="accountBtn" data-instant><span class="ico" data-icon="logout"></span><span id="accountBtnLabel"></span></button>
+        <button type="button" class="btn btn-outline btn-center" id="accountBtn" data-instant><span class="b-title" id="accountBtnLabel"></span></button>
       </fieldset>
 
       <form id="settingsForm" class="stack" autocomplete="on">
@@ -364,7 +521,7 @@ legend { font-weight: 800; font-size: 1.2rem; padding: 0 8px; }
 
         <fieldset>
           <legend data-t="myHelper">My helper</legend>
-          <p class="hint" data-t="helperHint">Requests are sent to this person.</p>
+          <p class="hint" data-t="helperHint"></p>
           <label class="field-label" for="s-helperName" data-t="helperName">Helper's name</label>
           <input class="field" id="s-helperName" name="helperName">
           <label class="field-label" for="s-helperPhone" data-t="helperPhone">Helper's phone number</label>
@@ -404,7 +561,7 @@ legend { font-weight: 800; font-size: 1.2rem; padding: 0 8px; }
           </select>
           <label class="check"><input type="checkbox" id="s-voice" name="voice"> <span data-t="readAloud">Read everything aloud</span></label>
           <label class="check"><input type="checkbox" id="s-confirmTap" name="confirmTap"> <span data-t="confirmTap">Tap once to hear, tap again to choose</span></label>
-          <p class="hint" data-t="srHint">Turn this off if you use VoiceOver or TalkBack.</p>
+          <p class="hint" data-t="srHint"></p>
           <label class="field-label" for="s-rate" data-t="rate">Voice speed</label>
           <select class="field" id="s-rate" name="rate">
             <option value="0.7" data-t="slow">Slow</option>
@@ -425,19 +582,33 @@ legend { font-weight: 800; font-size: 1.2rem; padding: 0 8px; }
           </select>
         </fieldset>
 
-        <button type="submit" class="btn btn-green" data-instant><span data-t="save">Save</span></button>
+        <button type="submit" class="btn btn-green btn-center" data-instant><span class="b-title" data-t="save">Save</span></button>
       </form>
     </section>
   </main>
 
   <!-- Listening: speak, or type if the microphone isn't available -->
   <div id="listening" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="listeningTitle">
-    <span class="ico ico-big pulse" data-icon="mic"></span>
+    <span class="mark mark-lg pulse"><span class="ico" data-icon="mic"></span></span>
     <p class="overlay-title" id="listeningTitle" data-t="listening">Listening…</p>
     <p id="heard" class="heard" aria-live="polite"></p>
     <label for="typedCmd" class="field-label" data-t="listenType">Or type here</label>
     <input id="typedCmd" class="field" autocomplete="off">
-    <button class="btn btn-green" id="stopListening" data-instant><span data-t="done">Done</span></button>
+    <button class="btn btn-green btn-center" id="stopListening" data-instant><span class="b-title" data-t="done">Done</span></button>
+  </div>
+
+  <!-- Medicine reminder -->
+  <div id="reminder" class="overlay" hidden role="alertdialog" aria-modal="true" aria-labelledby="reminderTitle" aria-describedby="reminderWhat">
+    <span class="mark mark-lg mark-pink pulse"><span class="ico" data-icon="clock"></span></span>
+    <p class="overlay-title" id="reminderTitle" data-t="remindTitle">Time for your medicine</p>
+    <p class="reminder-what" id="reminderWhat"></p>
+    <button class="btn btn-green btn-home" id="tookItBtn" data-instant>
+      <span class="ico-tile"><span class="ico" data-icon="check"></span></span><span class="b-text"><span class="b-title" data-t="tookIt"></span></span>
+    </button>
+    <button class="btn btn-blue" id="snoozeBtn" data-instant>
+      <span class="ico-tile"><span class="ico" data-icon="clock"></span></span><span class="b-text"><span class="b-title" data-t="later10"></span></span>
+    </button>
+    <button class="btn btn-outline-light btn-center" id="skipDoseBtn" data-instant><span class="b-title" data-t="skipDose">Skip this one</span></button>
   </div>
 
   <!-- Preview only: shows the message or call instead of sending it -->
@@ -445,8 +616,8 @@ legend { font-weight: 800; font-size: 1.2rem; padding: 0 8px; }
     <p class="overlay-title" id="sheetTitle"></p>
     <p class="sheet-to" id="sheetTo"></p>
     <pre class="sheet-body" id="sheetBody"></pre>
-    <button class="btn btn-blue" id="sheetCopy" data-instant><span data-t="copy">Copy</span></button>
-    <button class="btn btn-outline-light" id="sheetClose" data-instant><span data-t="close">Close</span></button>
+    <button class="btn btn-blue btn-center" id="sheetCopy" data-instant><span class="b-title" data-t="copy">Copy</span></button>
+    <button class="btn btn-outline-light btn-center" id="sheetClose" data-instant><span class="b-title" data-t="close">Close</span></button>
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
@@ -485,6 +656,13 @@ const ICONS = {
   map: '<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>',
   speaker: '<path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9.5 9.5 0 0 1 0 13"/>',
   home: '<path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/>',
+  hand: '<path d="M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v6M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-6-2.4l-3.6-3.6a2 2 0 0 1 2.8-2.8L7 15"/>',
+  camera: '<path d="M14.5 4h-5L7.5 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3.5z"/><circle cx="12" cy="13" r="3.5"/>',
+  clock: '<circle cx="12" cy="12" r="9.5"/><path d="M12 6.5V12l3.5 2"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  check: '<path d="M20 6 9 17l-5-5"/>',
+  chev: '<path d="m9 18 6-6-6-6"/>',
+  trash: '<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/>',
   logout: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>',
 };
 function iconSVG(name) {
@@ -612,6 +790,33 @@ const STRINGS = {
     previewMsgTitle: 'Message to send', previewCallTitle: 'Phone call',
     previewMsgSay: 'In the installed app this message opens in {via}, ready to send to {name}.',
     previewCallSay: 'In the installed app this calls {num}.',
+    heroSub: 'Say what you need', askHelpSub: 'Groceries, medicine, a ride', whereAmISub: 'Hear your street address',
+    emergencySub: 'Call for help now', readText: 'Read text', readTextSub: 'Point the camera at a letter or label',
+    readTextSay: 'Read text with the camera', meds: 'My medicines', medsSay: 'My medicines and reminders',
+    medsSubEmpty: 'Set reminders for your tablets', nextDose: 'Next: {name} at {time}',
+    familySubEmpty: 'Add family numbers in Settings',
+    readHow: 'Hold the phone about 30 cm (one foot) above the words, in good light.',
+    takePhoto: 'Take a photo', itSays: 'It says', stopReading: 'Stop reading',
+    readIntro: 'Read text. Tap take a photo, then point the camera at the words.',
+    readingNow: 'Reading the words. Please wait…',
+    readNothing: "I couldn't find any words. Hold the phone a little further away, in good light, and try again.",
+    readFail: "I couldn't read that photo. Please try again.",
+    readNeedsApp: 'Reading text works in the installed app.',
+    readLoading: 'Getting the reader ready. The first time takes a minute…',
+    medsIntro: 'My medicines. You have {n}. {next}', medsIntroNone: 'My medicines. You have none yet. Tap add a medicine.',
+    noMeds: 'No medicines yet.', addMed: 'Add a medicine', medName: 'Medicine name', speakName: 'Say the name',
+    medTimes: 'Times to take it', addTime: 'Add another time', saveMed: 'Save medicine', removeTime: 'Remove this time',
+    deleteMed: 'Remove {name}', medSaved: 'Saved. I will remind you at {times}.', medDeleted: '{name} removed.',
+    needMedName: 'Please say or type the medicine name.', needMedTime: 'Please add at least one time.',
+    medsHint: 'Reminders work while Helping Hand is open. Leave it open on your phone.',
+    remindTitle: 'Time for your medicine', remindSay: "It's time for {name}. Tap I took it, or remind me later.",
+    tookIt: 'I took it', later10: 'Remind me in 10 minutes', skipDose: 'Skip this one',
+    doseTaken: 'Well done. {name} marked as taken.', snoozed: 'I will remind you again in 10 minutes.', doseSkipped: 'Skipped.',
+    replyLink: 'Tap to answer: {url}',
+    status_sent: 'Sent', status_seen: 'Seen', status_coming: 'On the way', status_later: 'Coming later', status_cant: "Can't help", status_done: 'Done',
+    reply_seen: '{name} has seen your request. {what}.', reply_coming: '{name} is on the way. {what}.',
+    reply_later: '{name} will come later. {what}.', reply_cant: "{name} can't help with this one. {what}. You could ask someone else.",
+    reply_done: '{name} says it is done. {what}.',
     to: 'To: {name} {num}', example: '(example)', langSwitchTo: 'العربية',
   },
   ar: {
@@ -730,6 +935,33 @@ const STRINGS = {
     previewMsgTitle: 'الرسالة التي ستُرسل', previewCallTitle: 'مكالمة هاتفية',
     previewMsgSay: 'في التطبيق المثبّت تُفتح هذه الرسالة في {via} جاهزة للإرسال إلى {name}.',
     previewCallSay: 'في التطبيق المثبّت يتم الاتصال بالرقم {num}.',
+    heroSub: 'قل ما تحتاجه', askHelpSub: 'بقالة، دواء، توصيلة', whereAmISub: 'اسمع عنوانك',
+    emergencySub: 'اطلب النجدة الآن', readText: 'اقرأ لي', readTextSub: 'وجّه الكاميرا إلى رسالة أو ملصق',
+    readTextSay: 'اقرأ النص بالكاميرا', meds: 'أدويتي', medsSay: 'أدويتي ومواعيدها',
+    medsSubEmpty: 'اضبط تذكيرًا لأدويتك', nextDose: 'التالي: {name} الساعة {time}',
+    familySubEmpty: 'أضف أرقام العائلة من الإعدادات',
+    readHow: 'امسك الهاتف على بعد ٣٠ سم تقريبًا فوق الكلام، في مكان مضاء.',
+    takePhoto: 'التقط صورة', itSays: 'المكتوب', stopReading: 'أوقف القراءة',
+    readIntro: 'اقرأ لي. اضغط التقط صورة، ثم وجّه الكاميرا إلى الكلام.',
+    readingNow: 'جارٍ قراءة الكلام. انتظر قليلًا…',
+    readNothing: 'لم أجد كلامًا. أبعد الهاتف قليلًا في مكان مضاء وحاول مرة أخرى.',
+    readFail: 'لم أستطع قراءة الصورة. حاول مرة أخرى.',
+    readNeedsApp: 'قراءة النص تعمل في التطبيق المثبّت.',
+    readLoading: 'جارٍ تجهيز القارئ. المرة الأولى تأخذ دقيقة…',
+    medsIntro: 'أدويتي. لديك {n}. {next}', medsIntroNone: 'أدويتي. لا توجد أدوية بعد. اضغط أضف دواء.',
+    noMeds: 'لا توجد أدوية بعد.', addMed: 'أضف دواء', medName: 'اسم الدواء', speakName: 'قل الاسم',
+    medTimes: 'مواعيد الدواء', addTime: 'أضف موعدًا آخر', saveMed: 'احفظ الدواء', removeTime: 'احذف هذا الموعد',
+    deleteMed: 'احذف {name}', medSaved: 'تم الحفظ. سأذكّرك الساعة {times}.', medDeleted: 'تم حذف {name}.',
+    needMedName: 'من فضلك قل أو اكتب اسم الدواء.', needMedTime: 'من فضلك أضف موعدًا واحدًا على الأقل.',
+    medsHint: 'التذكير يعمل ما دام تطبيق يد العون مفتوحًا. اتركه مفتوحًا على هاتفك.',
+    remindTitle: 'موعد الدواء', remindSay: 'حان موعد {name}. اضغط أخذته، أو ذكّرني لاحقًا.',
+    tookIt: 'أخذته', later10: 'ذكّرني بعد ١٠ دقائق', skipDose: 'تخطَّ هذه المرة',
+    doseTaken: 'أحسنت. تم تسجيل {name}.', snoozed: 'سأذكّرك بعد ١٠ دقائق.', doseSkipped: 'تم التخطي.',
+    replyLink: 'اضغط للرد: {url}',
+    status_sent: 'أُرسل', status_seen: 'تمت رؤيته', status_coming: 'في الطريق', status_later: 'سيأتي لاحقًا', status_cant: 'لا يستطيع', status_done: 'تم',
+    reply_seen: '{name} رأى طلبك. {what}.', reply_coming: '{name} في الطريق إليك. {what}.',
+    reply_later: '{name} سيأتي لاحقًا. {what}.', reply_cant: '{name} لا يستطيع المساعدة في هذا الطلب. {what}. يمكنك أن تطلب من شخص آخر.',
+    reply_done: '{name} يقول إن الطلب تم. {what}.',
     to: 'إلى: {name} {num}', example: '(مثال)', langSwitchTo: 'English',
   },
 };
@@ -769,6 +1001,7 @@ const REQUESTS = {
   },
 };
 const REQUEST_ICONS = { groceries: 'bag', medicine: 'pill', ride: 'car', helper: 'person', location: 'pin' };
+const STATUSES = ['sent', 'seen', 'coming', 'later', 'cant', 'done'];
 
 /* ---------- Local storage ---------- */
 const store = {
@@ -788,6 +1021,7 @@ const DEFAULTS = {
   fam1Name: '', fam1Phone: '', fam2Name: '', fam2Phone: '', fam3Name: '', fam3Phone: '',
   emergency: '', countdown: '5',
   voice: true, confirmTap: true, rate: '0.9', size: '1', theme: 'dark',
+  meds: [], // [{ id, name, times: ['08:00', '20:00'] }]
 };
 let settings = { ...DEFAULTS, ...store.get('hh.settings', {}) };
 let requests = store.get('hh.history', []);
@@ -807,6 +1041,12 @@ function speechLang() {
   const nav = navigator.language || 'en-US';
   if (settings.lang === 'ar') return /^ar/i.test(nav) ? nav : 'ar-EG';
   return /^ar/i.test(nav) ? 'en-US' : nav;
+}
+function listSep() { return settings.lang === 'ar' ? '، ' : ', '; }
+function fmtTime(hhmm) {
+  const [h, m] = hhmm.split(':').map(Number);
+  const d = new Date(); d.setHours(h, m, 0, 0);
+  return d.toLocaleTimeString(locale(), { hour: 'numeric', minute: '2-digit' });
 }
 
 function applyLanguage() {
@@ -828,18 +1068,43 @@ function applyLook() {
   document.documentElement.style.setProperty('--scale', settings.size);
 }
 
+// Markup for buttons made in code, matching the ones in index.html.
+function btnInner(icon, title, sub, { chevron = false } = {}) {
+  const wrap = document.createElement('template');
+  wrap.innerHTML = `<span class="ico-tile"><span class="ico">${iconSVG(icon)}</span></span><span class="b-text"><span class="b-title"></span><span class="b-sub"></span></span>${chevron ? `<span class="chev">${iconSVG('chev')}</span>` : ''}`;
+  wrap.content.querySelector('.b-title').textContent = title;
+  wrap.content.querySelector('.b-sub').textContent = sub || '';
+  return wrap.content;
+}
+function makeBtn(cls, icon, title, sub, opts) {
+  const b = document.createElement('button');
+  b.className = `btn ${cls}`;
+  b.appendChild(btnInner(icon, title, sub, opts));
+  return b;
+}
+
 /* ---------- Speech out ---------- */
 const synth = window.speechSynthesis;
-function speak(text, { force = false } = {}) {
-  if (!synth || (!settings.voice && !force) || !text) return;
-  synth.cancel();
+function utter(text) {
   const u = new SpeechSynthesisUtterance(text);
   u.rate = parseFloat(settings.rate) || 0.9;
   u.lang = speechLang();
   const base = u.lang.slice(0, 2).toLowerCase();
   const voice = synth.getVoices().find(v => v.lang.toLowerCase().startsWith(base));
   if (voice) u.voice = voice;
-  synth.speak(u);
+  return u;
+}
+function speak(text, { force = false } = {}) {
+  if (!synth || (!settings.voice && !force) || !text) return;
+  synth.cancel();
+  synth.speak(utter(text));
+}
+// Long text in short pieces: some phones stop speaking a single long sentence after ~15 seconds.
+function speakLong(text) {
+  if (!synth || !text) return;
+  synth.cancel();
+  const pieces = text.replace(/\s*\n\s*/g, '\n').split(/(?<=[.!?؟\n])\s+/).flatMap(p => p.match(/.{1,180}(\s|$)|.{1,180}/g) || []);
+  pieces.filter(p => p.trim()).forEach(p => synth.speak(utter(p.trim())));
 }
 let toastTimer;
 function toast(text, { say = true } = {}) {
@@ -849,6 +1114,11 @@ function toast(text, { say = true } = {}) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => el.classList.remove('show'), 4500);
   if (say) speak(text);
+}
+
+/* ---------- Platform capabilities (hosted preview only) ---------- */
+function useCapability(name) {
+  return window.claude && window.claude.use ? window.claude.use(name).catch(() => null) : Promise.resolve(null);
 }
 
 /* ---------- Speech in (typing when the mic isn't available) ---------- */
@@ -911,7 +1181,7 @@ typed.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefau
 let armedEl = null, armedAt = 0;
 function labelOf(el) {
   const key = el.dataset.say;
-  return (key && T(key)) || el.getAttribute('aria-label') || el.textContent.trim();
+  return (key && T(key)) || el.getAttribute('aria-label') || el.textContent.trim().replace(/\s+/g, ' ');
 }
 document.addEventListener('click', e => {
   const el = e.target.closest('button, a.btn');
@@ -1048,11 +1318,21 @@ const SupabaseAccount = {
     });
   },
   async loadRequests() {
-    const rows = await this.rest('hh_requests?select=type,text,created_at&order=created_at.desc&limit=50');
-    return (rows || []).map(r => ({ type: r.type, text: r.text, at: Date.parse(r.created_at) }));
+    const rows = await this.rest('hh_requests?select=type,text,status,created_at&order=created_at.desc&limit=50');
+    return (rows || []).map(r => ({ type: r.type, text: r.text, status: r.status, at: Date.parse(r.created_at) }));
   },
-  async addRequest(r) { await this.rest('hh_requests', { method: 'POST', prefer: 'return=minimal', body: { type: r.type, text: r.text } }); },
+  // Returns the secret token for the helper's reply link.
+  async addRequest(r, extra = {}) {
+    const rows = await this.rest('hh_requests?select=token', {
+      method: 'POST', prefer: 'return=representation',
+      body: { type: r.type, text: r.text, ...extra },
+    });
+    return rows && rows[0] ? rows[0].token : null;
+  },
   async clearRequests() { await this.rest(`hh_requests?user_id=eq.${this.session.user.id}`, { method: 'DELETE' }); },
+  async repliesSince(iso) {
+    return this.rest(`hh_requests?select=type,text,status,status_at&status_at=gt.${encodeURIComponent(iso)}&order=status_at.asc`);
+  },
 };
 
 const ClaudeAccount = {
@@ -1061,8 +1341,7 @@ const ClaudeAccount = {
   signedIn() { return !!this.id && !!store.get('hh.claudeSignedIn', false); },
   who() { return this.name || T('continueAsYou'); },
   init() {
-    const use = window.claude && window.claude.use ? n => window.claude.use(n) : () => Promise.resolve(null);
-    this.ready = Promise.all([use('user'), use('db')]).then(async ([user, db]) => {
+    this.ready = Promise.all([useCapability('user'), useCapability('db')]).then(async ([user, db]) => {
       this.user = user; this.db = db;
       if (user) {
         this.id = await user.id();
@@ -1078,8 +1357,10 @@ const ClaudeAccount = {
   async loadSettings() { const s = await this.col().doc('profile').get(); return s.exists ? s.data().settings : null; },
   async saveSettings(s) { await this.col().doc('profile').set({ settings: s }); },
   async loadRequests() { const s = await this.col().doc('requests').get(); return s.exists ? (s.data().items || []) : []; },
-  async addRequest() { await this.col().doc('requests').set({ items: requests.slice(0, 50) }); },
+  async addRequest() { await this.saveRequests(); return null; },
+  async saveRequests() { await this.col().doc('requests').set({ items: requests.slice(0, 50) }); },
   async clearRequests() { await this.col().doc('requests').set({ items: [] }); },
+  async repliesSince() { return []; },
 };
 
 const Account = PREVIEW ? ClaudeAccount : SupabaseAccount;
@@ -1096,6 +1377,7 @@ async function afterSignIn() {
     const remoteReqs = await Account.loadRequests();
     if (remoteReqs.length) { requests = remoteReqs; store.set('hh.history', requests); }
   } catch { /* offline: keep what's on the phone */ }
+  if (!store.get('hh.lastReplyAt', null)) store.set('hh.lastReplyAt', new Date().toISOString());
   applyLook();
   applyLanguage();
 }
@@ -1174,7 +1456,6 @@ document.getElementById('skipSignIn').addEventListener('click', () => {
   store.set('hh.skipSignIn', true);
   go('home');
 });
-
 function renderSignin() {
   document.getElementById('authForm').hidden = PREVIEW;
   document.getElementById('previewAuth').hidden = !PREVIEW;
@@ -1212,6 +1493,11 @@ function go(route) {
   const hash = '#' + route;
   if (location.hash === hash) render(); else location.hash = hash;
 }
+// Go somewhere without leaving the current screen in the back history (after a form is done).
+function goReplace(route) {
+  if (PREVIEW) { memStack.pop(); memStack.push(route); render(); return; }
+  location.replace('#' + route);
+}
 backBtn.addEventListener('click', () => {
   if (PREVIEW) { memStack.pop(); render(); return; }
   if (navigatedInApp) window.history.back(); else location.replace('#home');
@@ -1227,12 +1513,14 @@ document.getElementById('skipLink').addEventListener('click', e => {
 });
 
 function needsSignIn() { return Account.configured() && !Account.signedIn() && !skippedSignIn; }
+function screenNow() { return currentRoute().split(':')[0]; }
 
 function render() {
   let [screen, arg] = currentRoute().split(':');
   if (needsSignIn() && screen !== 'signin') screen = 'signin';
   stopEmergency();
   disarm();
+  if (screen !== 'read' && synth && reading) { synth.cancel(); reading = false; }
 
   const section = document.getElementById(`screen-${screen}`);
   if (!section) { go('home'); return; }
@@ -1250,6 +1538,9 @@ function render() {
   if (screen === 'history') renderHistory();
   if (screen === 'settings') renderSettings();
   if (screen === 'emergency') startEmergency();
+  if (screen === 'read') renderRead();
+  if (screen === 'meds') renderMeds();
+  if (screen === 'medadd') renderMedAdd();
 
   titleEl.textContent = title;
   document.title = screen === 'home' || screen === 'signin' ? T('appName') : `${title} · ${T('appName')}`;
@@ -1264,38 +1555,65 @@ function render() {
   } else if (screen === 'family') speak(T('familyIntro'));
   else if (screen === 'history') speak(T('historyIntro', { n: requests.length }));
   else if (screen === 'settings') speak(T('settingsIntro'));
+  else if (screen === 'read') speak(T('readIntro'));
+  else if (screen === 'meds') speak(medsSummary());
+  else if (screen === 'medadd') speak(T('addMed'));
 }
 
 /* ---------- Home ---------- */
 let greeted = false;
-function greetingText() {
+function greetingParts() {
   const now = new Date();
   const h = now.getHours();
   const part = T(h < 12 ? 'morning' : h < 18 ? 'afternoon' : 'evening');
   const name = settings.name ? T('greetName', { name: settings.name }) : '';
-  const day = now.toLocaleDateString(locale(), { weekday: 'long', day: 'numeric', month: 'long' });
-  const time = now.toLocaleTimeString(locale(), { hour: 'numeric', minute: '2-digit' });
-  return T('greet', { part, name, day, time });
+  return {
+    hello: `${part}${name}`,
+    day: now.toLocaleDateString(locale(), { weekday: 'long', day: 'numeric', month: 'long' }),
+    time: now.toLocaleTimeString(locale(), { hour: 'numeric', minute: '2-digit' }),
+  };
+}
+function greetingText() {
+  const g = greetingParts();
+  return T('greet', { part: g.hello, name: '', day: g.day, time: g.time });
+}
+function renderToday() {
+  const g = greetingParts();
+  document.getElementById('todayHello').textContent = g.hello;
+  document.getElementById('todayTime').textContent = g.time;
+  document.getElementById('todayDate').textContent = g.day;
 }
 function renderHome() {
-  document.getElementById('greeting').textContent = greetingText();
-  const existing = document.getElementById('setupCard');
-  if (existing) existing.remove();
+  renderToday();
+  const next = nextDose();
+  document.getElementById('medsSub').textContent = next ? T('nextDose', { name: next.med.name, time: fmtTime(next.time) }) : T('medsSubEmpty');
+  const fam = familyContacts().map(c => c.name);
+  document.getElementById('familySub').textContent = fam.length ? fam.join(listSep()) : T('familySubEmpty');
+
+  const notices = document.getElementById('homeNotices');
+  notices.innerHTML = '';
+  const last = store.get('hh.lastReply', null);
+  if (last && Date.now() - last.at < 6 * 3600 * 1000) {
+    const n = document.createElement('button');
+    n.className = 'notice';
+    n.dataset.instant = '';
+    n.innerHTML = `<span class="ico">${iconSVG('check')}</span><span></span>`;
+    n.lastChild.textContent = replyText(last);
+    n.addEventListener('click', () => speak(replyText(last), { force: true }));
+    notices.appendChild(n);
+  }
   if (!settings.helperPhone) {
-    const btn = document.createElement('button');
-    btn.id = 'setupCard';
-    btn.className = 'btn btn-outline';
+    const btn = makeBtn('btn-outline', 'gear', T('setupFirst'));
     btn.dataset.go = 'settings';
     btn.dataset.say = 'setupFirstSay';
-    btn.innerHTML = `<span class="ico">${iconSVG('gear')}</span><span></span>`;
-    btn.lastChild.textContent = T('setupFirst');
-    document.getElementById('greeting').after(btn);
+    notices.appendChild(btn);
   }
   if (greeted) { speak(T('homeSay')); return; }
   greeted = true;
   // Browsers only allow speech after the first touch, so greet on it.
   document.addEventListener('pointerdown', () => speak(`${greetingText()} ${T('homeSay')}`), { once: true });
 }
+setInterval(() => { if (screenNow() === 'home') renderToday(); }, 30000);
 
 document.getElementById('heroMic').addEventListener('click', async () => {
   const said = await listen();
@@ -1306,7 +1624,9 @@ document.getElementById('heroMic').addEventListener('click', async () => {
 // Keyword matching in English and Arabic (Egyptian and Modern Standard words).
 const COMMANDS = [
   ['emergency', /emergenc|\bsos\b|ambulance|police|\bfire\b|i fell|fallen|i('m| am) hurt|help me now|طوارئ|طوارىء|اسعاف|إسعاف|نجدة|النجده|شرطة|بوليس|حريق|وقعت|الحقوني|إلحقوني/],
-  ['location', /where am i|where i am|my location|location|address|أنا فين|انا فين|أين أنا|اين انا|مكاني|موقعي|عنواني|أنا فين/],
+  ['location', /where am i|where i am|my location|location|address|أنا فين|انا فين|أين أنا|اين انا|مكاني|موقعي|عنواني/],
+  ['read', /read (this|it|text|the (label|letter|box|paper))|camera|photo|scan|what does (this|it) say|اقرأ لي|اقرا لي|اقرأ الورق|كاميرا|صورة|صوّر|ايه المكتوب|إيه المكتوب/],
+  ['meds', /remind|my medicines|my pills|medicine times|pill times|تذكير|ذكرني|ذكّرني|أدويتي|ادويتي|مواعيد الدوا|مواعيد العلاج/],
   ['call', /\b(call|phone|ring)\b|اتصل|إتصل|كلم|كلّم|رن على/],
   ['medicine', /medic|pharm|pill|tablet|drug|prescription|drops|دوا|دواء|صيدلي|حبوب|برشام|روشت|قطرة/],
   ['ride', /\bride\b|taxi|\bcar\b|drive|take me|go to|lift|uber|careem|مشوار|عربية|تاكسي|اوبر|أوبر|كريم|وصلني|وصّلني|وديني|ودّيني|خدني|توصيلة|اروح|أروح|أذهب/],
@@ -1322,6 +1642,8 @@ function handleCommand(text) {
   switch (match) {
     case 'emergency': return go('emergency');
     case 'location': return go('location');
+    case 'read': return go('read');
+    case 'meds': return go('meds');
     case 'call': {
       const fam = familyContacts().find(c => t.includes(c.name.toLowerCase().replace(/\s*\(.*\)$/, '')));
       return fam ? callNumber(fam.phone, fam.name) : go('family');
@@ -1366,31 +1688,344 @@ document.getElementById('dictateBtn').addEventListener('click', async () => {
   const said = await listen();
   if (!said) { speak(T('didntHear')); return; }
   const box = document.getElementById('reqText');
-  box.value = (box.value ? box.value + (settings.lang === 'ar' ? '، ' : ', ') : '') + said;
+  box.value = (box.value ? box.value + listSep() : '') + said;
   speak(T('wroteReady', { text: said }));
 });
+function helperLink(token) {
+  return `${location.origin}${location.pathname.replace(/[^/]*$/, '')}helper.html?r=${token}`;
+}
+function greetLine() {
+  const helperName = settings.helperName ? T('msgName', { name: settings.helperName }) : '';
+  return settings.name ? T('msgHello', { name: helperName, me: settings.name }) : T('msgHelloAnon', { name: helperName });
+}
 document.getElementById('sendReqBtn').addEventListener('click', async () => {
   const cfg = req(currentRequest);
-  const sep = settings.lang === 'ar' ? '، ' : ', ';
   const picked = [...document.querySelectorAll('#quickChips .chip[aria-pressed="true"]')].map(b => b.textContent);
   const typedText = document.getElementById('reqText').value.trim();
-  const details = [...picked, typedText].filter(Boolean).join(sep);
+  const details = [...picked, typedText].filter(Boolean).join(listSep());
   if (!details) { toast(T('needDetails')); return; }
   if (!settings.helperPhone) { toast(T('needHelperPhone')); go('settings'); return; }
 
   speak(T('sending'));
   const pos = document.getElementById('shareLoc').checked ? await getPosition() : null;
-  const helperName = settings.helperName ? T('msgName', { name: settings.helperName }) : '';
-  const lines = [
-    settings.name ? T('msgHello', { name: helperName, me: settings.name }) : T('msgHelloAnon', { name: helperName }),
-    `${cfg.intro} ${details}.`,
-  ];
+  const lines = [greetLine(), `${cfg.intro} ${details}.`];
   if (settings.address) lines.push(T('msgAddress', { a: settings.address }));
   if (pos) lines.push(T('msgLocation', { l: mapsLink(pos) }));
+  const token = await addHistory({ type: currentRequest, text: details }, {
+    requester_name: settings.name || null, address: settings.address || null, location_url: pos ? mapsLink(pos) : null,
+  });
+  if (token) lines.push(T('replyLink', { url: helperLink(token) }));
   lines.push(T('msgFooter'));
-  addHistory({ type: currentRequest, text: details });
   sendMessage(settings.helperPhone, lines.join('\n'));
+  if (PREVIEW) simulateReply(currentRequest, details);
 });
+
+/* ---------- Helper replies ---------- */
+function replyText(r) {
+  const name = settings.helperName || T('yourHelper');
+  const what = r.type === 'location' ? `${T('locationShared')}` : `${req(r.type).title}: ${r.text}`;
+  return T(`reply_${r.status}`, { name, what });
+}
+function announceReply(r) {
+  store.set('hh.lastReply', { type: r.type, text: r.text, status: r.status, at: Date.now() });
+  const msg = replyText(r);
+  toast(msg, { say: false });
+  speak(msg, { force: true });
+  if (navigator.vibrate) navigator.vibrate([80, 60, 80]);
+  notify(T('appName'), msg);
+  if (screenNow() === 'home') renderHome();
+  if (screenNow() === 'history') renderHistory();
+}
+let polling = false;
+async function checkReplies() {
+  if (polling || PREVIEW || !Account.signedIn() || document.hidden) return;
+  polling = true;
+  try {
+    const since = store.get('hh.lastReplyAt', new Date().toISOString());
+    const rows = await Account.repliesSince(since);
+    if (rows && rows.length) {
+      store.set('hh.lastReplyAt', rows[rows.length - 1].status_at);
+      requests = await Account.loadRequests();
+      store.set('hh.history', requests);
+      rows.forEach(announceReply);
+    }
+  } catch { /* try again next time */ }
+  polling = false;
+}
+setInterval(checkReplies, 20000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) { checkReplies(); checkReminders(); } });
+
+// The preview has no server, so it plays out an example reply.
+function simulateReply(type, text) {
+  setTimeout(() => {
+    const item = requests.find(r => r.text === text && r.type === type);
+    if (item) { item.status = 'coming'; store.set('hh.history', requests); if (Account.signedIn()) Account.saveRequests().catch(() => {}); }
+    announceReply({ type, text, status: 'coming' });
+  }, 9000);
+}
+
+/* ---------- Read text with the camera ---------- */
+let reading = false;
+let ocrWorker = null;
+const photoInput = document.getElementById('photoInput');
+function renderRead() {
+  document.getElementById('readStatus').textContent = '';
+  document.getElementById('readResult').hidden = true;
+  document.getElementById('readActions').hidden = true;
+}
+document.getElementById('photoBtn').addEventListener('click', () => { photoInput.value = ''; photoInput.click(); });
+photoInput.addEventListener('change', () => { if (photoInput.files[0]) readPhoto(photoInput.files[0]); });
+
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src; s.onload = resolve; s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+// Phone photos are huge; a smaller copy reads just as well and much faster.
+async function shrink(file, max = 1800) {
+  const img = await createImageBitmap(file);
+  const scale = Math.min(1, max / Math.max(img.width, img.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.round(img.width * scale);
+  canvas.height = Math.round(img.height * scale);
+  canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+  return canvas;
+}
+async function ocrOnPhone(file) {
+  if (!window.Tesseract) {
+    setReadStatus(T('readLoading'));
+    await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js');
+  }
+  if (!ocrWorker) {
+    const langs = settings.lang === 'ar' ? ['ara', 'eng'] : ['eng', 'ara'];
+    ocrWorker = await window.Tesseract.createWorker(langs);
+  }
+  setReadStatus(T('readingNow'));
+  const { data } = await ocrWorker.recognize(await shrink(file));
+  return data.text || '';
+}
+async function ocrWithClaude(file) {
+  const sample = await useCapability('sample');
+  const limits = sample ? await sample.limits().catch(() => null) : null;
+  if (!sample || !limits || !limits.images) throw new Error('unavailable');
+  const blob = await shrinkToBlob(file);
+  const res = await sample(
+    'This photo was taken by a blind or elderly person who wants to hear what it says. ' +
+    'Write out all the readable text in reading order, in its original language. ' +
+    'If it is a medicine box or label, give the medicine name, strength and any warnings first. ' +
+    'Reply with only the text. If there is no readable text, reply exactly NO_TEXT.',
+    { images: [blob] },
+  );
+  return res.text === 'NO_TEXT' ? '' : res.text;
+}
+async function shrinkToBlob(file) {
+  const canvas = await shrink(file, 1600);
+  return new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.85));
+}
+function setReadStatus(text) {
+  document.getElementById('readStatus').textContent = text;
+  speak(text, { force: true });
+}
+function cleanText(text) {
+  return text.split('\n').map(l => l.replace(/\s+/g, ' ').trim()).filter(l => /[\p{L}\p{N}]{2,}/u.test(l)).join('\n');
+}
+async function readPhoto(file) {
+  document.getElementById('readResult').hidden = true;
+  document.getElementById('readActions').hidden = true;
+  setReadStatus(T('readingNow'));
+  let text = '';
+  try {
+    text = cleanText(PREVIEW ? await ocrWithClaude(file) : await ocrOnPhone(file));
+  } catch (e) {
+    setReadStatus(T(PREVIEW && e.message === 'unavailable' ? 'readNeedsApp' : 'readFail'));
+    return;
+  }
+  if (!text) { setReadStatus(T('readNothing')); return; }
+  document.getElementById('readStatus').textContent = '';
+  document.getElementById('readText').textContent = text;
+  document.getElementById('readResult').hidden = false;
+  document.getElementById('readActions').hidden = false;
+  reading = true;
+  speakLong(text);
+}
+document.getElementById('readAgainBtn').addEventListener('click', () => {
+  reading = true;
+  speakLong(document.getElementById('readText').textContent);
+});
+document.getElementById('stopReadBtn').addEventListener('click', () => { reading = false; synth && synth.cancel(); });
+
+/* ---------- Medicines and reminders ---------- */
+function todayKey(d = new Date()) { return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; }
+function doseKey(med, time, d) { return `${todayKey(d)}|${med.id}|${time}`; }
+function getDoses() { return store.get('hh.doses', {}); }
+function setDose(key, value) {
+  const doses = getDoses();
+  doses[key] = value;
+  // Keep about two weeks.
+  const keys = Object.keys(doses);
+  if (keys.length > 300) keys.slice(0, keys.length - 300).forEach(k => delete doses[k]);
+  store.set('hh.doses', doses);
+}
+function nextDose() {
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  let best = null;
+  (settings.meds || []).forEach(med => med.times.forEach(time => {
+    const [h, m] = time.split(':').map(Number);
+    let mins = h * 60 + m - nowMin;
+    if (mins < 0) mins += 24 * 60;
+    if (!best || mins < best.mins) best = { med, time, mins };
+  }));
+  return best;
+}
+function medsSummary() {
+  const meds = settings.meds || [];
+  if (!meds.length) return T('medsIntroNone');
+  const next = nextDose();
+  return T('medsIntro', { n: meds.length, next: next ? T('nextDose', { name: next.med.name, time: fmtTime(next.time) }) + '.' : '' });
+}
+function renderMeds() {
+  const list = document.getElementById('medList');
+  list.innerHTML = '';
+  const meds = settings.meds || [];
+  if (!meds.length) {
+    const p = document.createElement('p');
+    p.className = 'empty';
+    p.textContent = T('noMeds');
+    list.appendChild(p);
+    return;
+  }
+  meds.forEach(med => {
+    const card = document.createElement('div');
+    card.className = 'card med';
+    const main = document.createElement('div');
+    main.className = 'med-main';
+    const name = document.createElement('p');
+    name.className = 'med-name';
+    name.textContent = med.name;
+    const times = document.createElement('p');
+    times.className = 'med-times';
+    times.textContent = med.times.map(fmtTime).join(' · ');
+    main.append(name, times);
+    const del = document.createElement('button');
+    del.className = 'iconbtn iconbtn-lg';
+    del.dataset.say = T('deleteMed', { name: med.name });
+    del.setAttribute('aria-label', T('deleteMed', { name: med.name }));
+    del.innerHTML = `<span class="ico">${iconSVG('trash')}</span>`;
+    del.addEventListener('click', () => {
+      saveSettings({ ...settings, meds: settings.meds.filter(m => m.id !== med.id) });
+      toast(T('medDeleted', { name: med.name }));
+      renderMeds();
+    });
+    card.append(main, del);
+    list.appendChild(card);
+  });
+}
+function addTimeRow(value) {
+  const wrap = document.getElementById('medTimes');
+  const row = document.createElement('div');
+  row.className = 'time-row';
+  const input = document.createElement('input');
+  input.type = 'time';
+  input.className = 'field';
+  input.value = value;
+  input.setAttribute('aria-label', T('medTimes'));
+  const del = document.createElement('button');
+  del.type = 'button';
+  del.className = 'iconbtn iconbtn-lg';
+  del.dataset.instant = '';
+  del.setAttribute('aria-label', T('removeTime'));
+  del.innerHTML = `<span class="ico">${iconSVG('trash')}</span>`;
+  del.addEventListener('click', () => { row.remove(); });
+  row.append(input, del);
+  wrap.appendChild(row);
+}
+function renderMedAdd() {
+  document.getElementById('medName').value = '';
+  document.getElementById('medTimes').innerHTML = '';
+  addTimeRow('08:00');
+}
+document.getElementById('addTimeBtn').addEventListener('click', () => {
+  if (document.querySelectorAll('#medTimes input').length < 6) addTimeRow('20:00');
+});
+document.getElementById('medNameMic').addEventListener('click', async () => {
+  const said = await listen();
+  if (said) { document.getElementById('medName').value = said; speak(said, { force: true }); }
+});
+document.getElementById('saveMedBtn').addEventListener('click', () => {
+  const name = document.getElementById('medName').value.trim();
+  const times = [...new Set([...document.querySelectorAll('#medTimes input')].map(i => i.value).filter(Boolean))].sort();
+  if (!name) { toast(T('needMedName')); document.getElementById('medName').focus(); return; }
+  if (!times.length) { toast(T('needMedTime')); return; }
+  const med = { id: Date.now().toString(36), name, times };
+  saveSettings({ ...settings, meds: [...(settings.meds || []), med] });
+  askNotificationPermission();
+  toast(T('medSaved', { times: times.map(fmtTime).join(listSep()) }));
+  goReplace('meds');
+});
+
+// Reminders: checked every 20 seconds while the app is open.
+const reminderEl = document.getElementById('reminder');
+let reminderNow = null; // { med, time, key }
+let reminderRepeat = null;
+function checkReminders() {
+  if (reminderNow || needsSignIn()) return;
+  const now = new Date();
+  const doses = getDoses();
+  for (const med of settings.meds || []) {
+    for (const time of med.times) {
+      const [h, m] = time.split(':').map(Number);
+      const due = new Date(now); due.setHours(h, m, 0, 0);
+      const late = now - due;
+      if (late < 0 || late > 3 * 3600 * 1000) continue; // due within the last 3 hours
+      const key = doseKey(med, time, now);
+      const state = doses[key];
+      if (state === 'taken' || state === 'skipped') continue;
+      if (state && state.snooze && Date.now() < state.snooze) continue;
+      showReminder(med, time, key);
+      return;
+    }
+  }
+}
+function showReminder(med, time, key) {
+  reminderNow = { med, time, key };
+  document.getElementById('reminderWhat').textContent = `${med.name} · ${fmtTime(time)}`;
+  reminderEl.hidden = false;
+  document.getElementById('tookItBtn').focus();
+  const say = () => speak(T('remindSay', { name: med.name }), { force: true });
+  say();
+  reminderRepeat = setInterval(say, 45000);
+  if (navigator.vibrate) navigator.vibrate([300, 150, 300, 150, 300]);
+  notify(T('remindTitle'), T('remindSay', { name: med.name }));
+}
+function closeReminder(value, messageKey) {
+  if (!reminderNow) return;
+  setDose(reminderNow.key, value);
+  const name = reminderNow.med.name;
+  reminderNow = null;
+  clearInterval(reminderRepeat);
+  reminderEl.hidden = true;
+  speak(T(messageKey, { name }), { force: true });
+  if (screenNow() === 'home') renderHome();
+}
+document.getElementById('tookItBtn').addEventListener('click', () => closeReminder('taken', 'doseTaken'));
+document.getElementById('snoozeBtn').addEventListener('click', () => closeReminder({ snooze: Date.now() + 10 * 60000 }, 'snoozed'));
+document.getElementById('skipDoseBtn').addEventListener('click', () => closeReminder('skipped', 'doseSkipped'));
+setInterval(checkReminders, 20000);
+
+function askNotificationPermission() {
+  if (PREVIEW || !('Notification' in window) || Notification.permission !== 'default') return;
+  Notification.requestPermission().catch(() => {});
+}
+// A phone notification as well, for when the screen is off or another app is open.
+function notify(title, body) {
+  if (PREVIEW || !document.hidden || !('Notification' in window) || Notification.permission !== 'granted') return;
+  if (navigator.serviceWorker && navigator.serviceWorker.ready) {
+    navigator.serviceWorker.ready.then(reg => reg.showNotification(title, { body, icon: 'icons/icon.svg', tag: 'helping-hand', renotify: true, vibrate: [300, 150, 300] })).catch(() => {});
+  }
+}
 
 /* ---------- Location ---------- */
 let lastPlace = null; // { pos, address }
@@ -1407,21 +2042,25 @@ function getPosition() {
 }
 function mapsLink(pos) { return `https://maps.google.com/?q=${pos.lat.toFixed(5)},${pos.lng.toFixed(5)}`; }
 
-// Street address from OpenStreetMap (free, no key needed).
+// Street address from OpenStreetMap (free, no key needed). Tries twice; the service is sometimes busy.
 async function addressFor(pos) {
-  try {
-    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=18&addressdetails=1&lat=${pos.lat}&lon=${pos.lng}&accept-language=${settings.lang}`;
-    const res = await fetch(url, { headers: { Accept: 'application/json' } });
-    if (!res.ok) throw new Error();
-    const j = await res.json();
-    const a = j.address || {};
-    const street = [a.house_number, a.road || a.pedestrian || a.footway].filter(Boolean).join(' ');
-    const area = a.neighbourhood || a.suburb || a.quarter || a.city_district;
-    const city = a.city || a.town || a.village || a.state;
-    const parts = [street, area, city].filter(Boolean);
-    const sep = settings.lang === 'ar' ? '، ' : ', ';
-    return parts.length ? parts.join(sep) : (j.display_name || null);
-  } catch { return null; }
+  const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=18&addressdetails=1&lat=${pos.lat}&lon=${pos.lng}&accept-language=${settings.lang}`;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(url, { headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error();
+      const j = await res.json();
+      const a = j.address || {};
+      const street = [a.house_number, a.road || a.pedestrian || a.footway].filter(Boolean).join(' ');
+      const area = a.neighbourhood || a.suburb || a.quarter || a.city_district;
+      const city = a.city || a.town || a.village || a.state;
+      const parts = [street, area, city].filter(Boolean);
+      return parts.length ? parts.join(listSep()) : (j.display_name || null);
+    } catch {
+      await new Promise(r => setTimeout(r, 1200));
+    }
+  }
+  return null;
 }
 
 async function findMe() {
@@ -1446,7 +2085,7 @@ async function findMe() {
     const address = await addressFor(pos);
     lastPlace = { pos, address: address || T('nearCoords', { lat: pos.lat.toFixed(4), lng: pos.lng.toFixed(4) }) };
   }
-  if (currentRoute().split(':')[0] !== 'location') return; // they left while we were looking
+  if (screenNow() !== 'location') return; // they left while we were looking
   addrEl.textContent = lastPlace.address;
   noteEl.textContent = PREVIEW ? T('previewLocation') : T('accuracy', { m: Math.round(lastPlace.pos.acc).toLocaleString(locale()) });
   maps.href = mapsLink(lastPlace.pos);
@@ -1463,17 +2102,11 @@ document.getElementById('savePlace').addEventListener('click', () => {
   saveSettings({ ...settings, address: lastPlace.address });
   toast(T('homeSaved'));
 });
-document.getElementById('sendPlace').addEventListener('click', () => {
+document.getElementById('sendPlace').addEventListener('click', async () => {
   if (!settings.helperPhone) { toast(T('needHelperPhone')); return; }
   if (!lastPlace) { findMe(); return; }
-  const helperName = settings.helperName ? T('msgName', { name: settings.helperName }) : '';
-  const lines = [
-    settings.name ? T('msgHello', { name: helperName, me: settings.name }) : T('msgHelloAnon', { name: helperName }),
-    T('msgHere', { p: lastPlace.address }),
-    T('msgLocation', { l: mapsLink(lastPlace.pos) }),
-    T('msgFooter'),
-  ];
-  addHistory({ type: 'location', text: lastPlace.address });
+  const lines = [greetLine(), T('msgHere', { p: lastPlace.address }), T('msgLocation', { l: mapsLink(lastPlace.pos) }), T('msgFooter')];
+  await addHistory({ type: 'location', text: lastPlace.address });
   sendMessage(settings.helperPhone, lines.join('\n'));
 });
 
@@ -1527,11 +2160,12 @@ function callNumber(phone, name) {
 }
 
 /* ---------- History ---------- */
-function addHistory(item) {
-  requests.unshift({ ...item, at: Date.now() });
+async function addHistory(item, extra) {
+  requests.unshift({ ...item, status: 'sent', at: Date.now() });
   requests = requests.slice(0, 50);
   store.set('hh.history', requests);
-  if (Account.signedIn()) Account.addRequest(item).catch(() => {});
+  if (!Account.signedIn()) return null;
+  try { return await Account.addRequest(item, extra); } catch { return null; }
 }
 function historyTitle(type) { return type === 'location' ? T('locationShared') : req(type).title; }
 function drawHistory() {
@@ -1547,13 +2181,15 @@ function drawHistory() {
   requests.forEach(h => {
     const title = historyTitle(h.type);
     const when = new Date(h.at).toLocaleString(locale(), { weekday: 'long', hour: 'numeric', minute: '2-digit', day: 'numeric', month: 'short' });
-    const btn = document.createElement('button');
-    btn.className = 'btn btn-gray history-item';
+    const status = STATUSES.includes(h.status) ? h.status : 'sent';
+    const btn = makeBtn('btn-gray history-item', REQUEST_ICONS[h.type] || 'list', `${title}: ${h.text}`, when);
     btn.dataset.instant = '';
-    btn.innerHTML = `<span class="ico">${iconSVG(REQUEST_ICONS[h.type] || 'list')}</span><span><span class="h-title"></span><br><small></small></span>`;
-    btn.querySelector('.h-title').textContent = `${title}: ${h.text}`;
-    btn.querySelector('small').textContent = when;
-    btn.addEventListener('click', () => speak(T('sentAt', { title, text: h.text, when }), { force: true }));
+    const chip = document.createElement('span');
+    chip.className = 'chip-status';
+    chip.dataset.s = status;
+    chip.textContent = T(`status_${status}`);
+    btn.querySelector('.b-text').appendChild(chip);
+    btn.addEventListener('click', () => speak(`${T('sentAt', { title, text: h.text, when })} ${T(`status_${status}`)}.`, { force: true }));
     list.appendChild(btn);
   });
 }
@@ -1563,7 +2199,7 @@ function renderHistory() {
     Account.loadRequests().then(r => {
       requests = r;
       store.set('hh.history', requests);
-      if (currentRoute() === 'history') drawHistory();
+      if (screenNow() === 'history') drawHistory();
     }).catch(() => {});
   }
 }
@@ -1593,22 +2229,17 @@ function renderFamily() {
     const p = document.createElement('p');
     p.className = 'empty';
     p.textContent = T('noFamily');
-    const b = document.createElement('button');
-    b.className = 'btn btn-blue';
+    const b = makeBtn('btn-blue', 'gear', T('addFamily'));
     b.dataset.go = 'settings';
     b.dataset.say = 'addFamily';
-    b.innerHTML = `<span class="ico">${iconSVG('gear')}</span><span></span>`;
-    b.lastChild.textContent = T('addFamily');
     list.append(p, b);
     return;
   }
   people.forEach(p => {
     const label = T('callX', { name: p.name });
-    const b = document.createElement('button');
-    b.className = 'btn btn-green';
+    const b = makeBtn('btn-green btn-home', 'phone', label, p.phone);
     b.dataset.say = label;
-    b.innerHTML = `<span class="ico">${iconSVG('phone')}</span><span></span>`;
-    b.lastChild.textContent = label;
+    b.querySelector('.b-sub').dir = 'ltr';
     b.addEventListener('click', () => callNumber(p.phone, p.name));
     list.appendChild(b);
   });
@@ -1658,7 +2289,10 @@ document.getElementById('alertHelperBtn').addEventListener('click', async () => 
   const lines = [settings.name ? T('emergencyMsg', { name: settings.name }) : T('emergencyMsgAnon')];
   if (settings.address) lines.push(T('msgAddress', { a: settings.address }));
   if (pos) lines.push(T('msgLocation', { l: mapsLink(pos) }));
-  addHistory({ type: 'helper', text: T('emergencyAlert') });
+  const token = await addHistory({ type: 'helper', text: T('emergencyAlert') }, {
+    requester_name: settings.name || null, address: settings.address || null, location_url: pos ? mapsLink(pos) : null,
+  });
+  if (token) lines.push(T('replyLink', { url: helperLink(token) }));
   sendMessage(settings.helperPhone, lines.join('\n'));
 });
 
@@ -1703,13 +2337,10 @@ form.addEventListener('submit', e => {
 document.getElementById('accountBtn').addEventListener('click', async () => {
   if (Account.signedIn()) {
     await Account.signOut();
-    skippedSignIn = false;
-    store.set('hh.skipSignIn', false);
     toast(T('signedOut'));
-  } else {
-    skippedSignIn = false;
-    store.set('hh.skipSignIn', false);
   }
+  skippedSignIn = false;
+  store.set('hh.skipSignIn', false);
   go('signin');
 });
 document.getElementById('savePassword').addEventListener('click', async () => {
@@ -1736,12 +2367,13 @@ document.getElementById('langBtn').addEventListener('click', () => {
     ClaudeAccount.init().then(() => {
       if (ClaudeAccount.signedIn()) { afterSignIn(); render(); }
     });
-    // Clearly marked example contacts so every screen works in the preview.
+    // Clearly marked examples so every screen works in the preview.
     if (!store.get('hh.settings', null)) {
       const ex = STRINGS[settings.lang].example;
       Object.assign(settings, {
         helperName: `Sara ${ex}`, helperPhone: '+20 100 000 0000',
         fam1Name: `Omar ${ex}`, fam1Phone: '+20 111 000 0000', emergency: '123', countdown: '0',
+        meds: [{ id: 'ex1', name: `${settings.lang === 'ar' ? 'دواء الضغط' : 'Blood pressure tablet'} ${ex}`, times: ['08:00', '20:00'] }],
       });
     }
   }
@@ -1759,7 +2391,8 @@ document.getElementById('langBtn').addEventListener('click', () => {
     return;
   }
   render();
-  if (Account.signedIn()) afterSignIn().then(() => { if (currentRoute() === 'home') renderHome(); });
+  if (Account.signedIn()) afterSignIn().then(() => { if (screenNow() === 'home') renderHome(); checkReplies(); });
+  checkReminders();
 })();
 if (synth) synth.getVoices(); // starts loading voices early on Chrome
 

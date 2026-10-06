@@ -30,6 +30,13 @@ const ICONS = {
   map: '<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>',
   speaker: '<path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9.5 9.5 0 0 1 0 13"/>',
   home: '<path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/>',
+  hand: '<path d="M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v6M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-6-2.4l-3.6-3.6a2 2 0 0 1 2.8-2.8L7 15"/>',
+  camera: '<path d="M14.5 4h-5L7.5 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3.5z"/><circle cx="12" cy="13" r="3.5"/>',
+  clock: '<circle cx="12" cy="12" r="9.5"/><path d="M12 6.5V12l3.5 2"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  check: '<path d="M20 6 9 17l-5-5"/>',
+  chev: '<path d="m9 18 6-6-6-6"/>',
+  trash: '<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/>',
   logout: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>',
 };
 function iconSVG(name) {
@@ -157,6 +164,33 @@ const STRINGS = {
     previewMsgTitle: 'Message to send', previewCallTitle: 'Phone call',
     previewMsgSay: 'In the installed app this message opens in {via}, ready to send to {name}.',
     previewCallSay: 'In the installed app this calls {num}.',
+    heroSub: 'Say what you need', askHelpSub: 'Groceries, medicine, a ride', whereAmISub: 'Hear your street address',
+    emergencySub: 'Call for help now', readText: 'Read text', readTextSub: 'Point the camera at a letter or label',
+    readTextSay: 'Read text with the camera', meds: 'My medicines', medsSay: 'My medicines and reminders',
+    medsSubEmpty: 'Set reminders for your tablets', nextDose: 'Next: {name} at {time}',
+    familySubEmpty: 'Add family numbers in Settings',
+    readHow: 'Hold the phone about 30 cm (one foot) above the words, in good light.',
+    takePhoto: 'Take a photo', itSays: 'It says', stopReading: 'Stop reading',
+    readIntro: 'Read text. Tap take a photo, then point the camera at the words.',
+    readingNow: 'Reading the words. Please wait…',
+    readNothing: "I couldn't find any words. Hold the phone a little further away, in good light, and try again.",
+    readFail: "I couldn't read that photo. Please try again.",
+    readNeedsApp: 'Reading text works in the installed app.',
+    readLoading: 'Getting the reader ready. The first time takes a minute…',
+    medsIntro: 'My medicines. You have {n}. {next}', medsIntroNone: 'My medicines. You have none yet. Tap add a medicine.',
+    noMeds: 'No medicines yet.', addMed: 'Add a medicine', medName: 'Medicine name', speakName: 'Say the name',
+    medTimes: 'Times to take it', addTime: 'Add another time', saveMed: 'Save medicine', removeTime: 'Remove this time',
+    deleteMed: 'Remove {name}', medSaved: 'Saved. I will remind you at {times}.', medDeleted: '{name} removed.',
+    needMedName: 'Please say or type the medicine name.', needMedTime: 'Please add at least one time.',
+    medsHint: 'Reminders work while Helping Hand is open. Leave it open on your phone.',
+    remindTitle: 'Time for your medicine', remindSay: "It's time for {name}. Tap I took it, or remind me later.",
+    tookIt: 'I took it', later10: 'Remind me in 10 minutes', skipDose: 'Skip this one',
+    doseTaken: 'Well done. {name} marked as taken.', snoozed: 'I will remind you again in 10 minutes.', doseSkipped: 'Skipped.',
+    replyLink: 'Tap to answer: {url}',
+    status_sent: 'Sent', status_seen: 'Seen', status_coming: 'On the way', status_later: 'Coming later', status_cant: "Can't help", status_done: 'Done',
+    reply_seen: '{name} has seen your request. {what}.', reply_coming: '{name} is on the way. {what}.',
+    reply_later: '{name} will come later. {what}.', reply_cant: "{name} can't help with this one. {what}. You could ask someone else.",
+    reply_done: '{name} says it is done. {what}.',
     to: 'To: {name} {num}', example: '(example)', langSwitchTo: 'العربية',
   },
   ar: {
@@ -275,6 +309,33 @@ const STRINGS = {
     previewMsgTitle: 'الرسالة التي ستُرسل', previewCallTitle: 'مكالمة هاتفية',
     previewMsgSay: 'في التطبيق المثبّت تُفتح هذه الرسالة في {via} جاهزة للإرسال إلى {name}.',
     previewCallSay: 'في التطبيق المثبّت يتم الاتصال بالرقم {num}.',
+    heroSub: 'قل ما تحتاجه', askHelpSub: 'بقالة، دواء، توصيلة', whereAmISub: 'اسمع عنوانك',
+    emergencySub: 'اطلب النجدة الآن', readText: 'اقرأ لي', readTextSub: 'وجّه الكاميرا إلى رسالة أو ملصق',
+    readTextSay: 'اقرأ النص بالكاميرا', meds: 'أدويتي', medsSay: 'أدويتي ومواعيدها',
+    medsSubEmpty: 'اضبط تذكيرًا لأدويتك', nextDose: 'التالي: {name} الساعة {time}',
+    familySubEmpty: 'أضف أرقام العائلة من الإعدادات',
+    readHow: 'امسك الهاتف على بعد ٣٠ سم تقريبًا فوق الكلام، في مكان مضاء.',
+    takePhoto: 'التقط صورة', itSays: 'المكتوب', stopReading: 'أوقف القراءة',
+    readIntro: 'اقرأ لي. اضغط التقط صورة، ثم وجّه الكاميرا إلى الكلام.',
+    readingNow: 'جارٍ قراءة الكلام. انتظر قليلًا…',
+    readNothing: 'لم أجد كلامًا. أبعد الهاتف قليلًا في مكان مضاء وحاول مرة أخرى.',
+    readFail: 'لم أستطع قراءة الصورة. حاول مرة أخرى.',
+    readNeedsApp: 'قراءة النص تعمل في التطبيق المثبّت.',
+    readLoading: 'جارٍ تجهيز القارئ. المرة الأولى تأخذ دقيقة…',
+    medsIntro: 'أدويتي. لديك {n}. {next}', medsIntroNone: 'أدويتي. لا توجد أدوية بعد. اضغط أضف دواء.',
+    noMeds: 'لا توجد أدوية بعد.', addMed: 'أضف دواء', medName: 'اسم الدواء', speakName: 'قل الاسم',
+    medTimes: 'مواعيد الدواء', addTime: 'أضف موعدًا آخر', saveMed: 'احفظ الدواء', removeTime: 'احذف هذا الموعد',
+    deleteMed: 'احذف {name}', medSaved: 'تم الحفظ. سأذكّرك الساعة {times}.', medDeleted: 'تم حذف {name}.',
+    needMedName: 'من فضلك قل أو اكتب اسم الدواء.', needMedTime: 'من فضلك أضف موعدًا واحدًا على الأقل.',
+    medsHint: 'التذكير يعمل ما دام تطبيق يد العون مفتوحًا. اتركه مفتوحًا على هاتفك.',
+    remindTitle: 'موعد الدواء', remindSay: 'حان موعد {name}. اضغط أخذته، أو ذكّرني لاحقًا.',
+    tookIt: 'أخذته', later10: 'ذكّرني بعد ١٠ دقائق', skipDose: 'تخطَّ هذه المرة',
+    doseTaken: 'أحسنت. تم تسجيل {name}.', snoozed: 'سأذكّرك بعد ١٠ دقائق.', doseSkipped: 'تم التخطي.',
+    replyLink: 'اضغط للرد: {url}',
+    status_sent: 'أُرسل', status_seen: 'تمت رؤيته', status_coming: 'في الطريق', status_later: 'سيأتي لاحقًا', status_cant: 'لا يستطيع', status_done: 'تم',
+    reply_seen: '{name} رأى طلبك. {what}.', reply_coming: '{name} في الطريق إليك. {what}.',
+    reply_later: '{name} سيأتي لاحقًا. {what}.', reply_cant: '{name} لا يستطيع المساعدة في هذا الطلب. {what}. يمكنك أن تطلب من شخص آخر.',
+    reply_done: '{name} يقول إن الطلب تم. {what}.',
     to: 'إلى: {name} {num}', example: '(مثال)', langSwitchTo: 'English',
   },
 };
@@ -314,6 +375,7 @@ const REQUESTS = {
   },
 };
 const REQUEST_ICONS = { groceries: 'bag', medicine: 'pill', ride: 'car', helper: 'person', location: 'pin' };
+const STATUSES = ['sent', 'seen', 'coming', 'later', 'cant', 'done'];
 
 /* ---------- Local storage ---------- */
 const store = {
@@ -333,6 +395,7 @@ const DEFAULTS = {
   fam1Name: '', fam1Phone: '', fam2Name: '', fam2Phone: '', fam3Name: '', fam3Phone: '',
   emergency: '', countdown: '5',
   voice: true, confirmTap: true, rate: '0.9', size: '1', theme: 'dark',
+  meds: [], // [{ id, name, times: ['08:00', '20:00'] }]
 };
 let settings = { ...DEFAULTS, ...store.get('hh.settings', {}) };
 let requests = store.get('hh.history', []);
@@ -352,6 +415,12 @@ function speechLang() {
   const nav = navigator.language || 'en-US';
   if (settings.lang === 'ar') return /^ar/i.test(nav) ? nav : 'ar-EG';
   return /^ar/i.test(nav) ? 'en-US' : nav;
+}
+function listSep() { return settings.lang === 'ar' ? '، ' : ', '; }
+function fmtTime(hhmm) {
+  const [h, m] = hhmm.split(':').map(Number);
+  const d = new Date(); d.setHours(h, m, 0, 0);
+  return d.toLocaleTimeString(locale(), { hour: 'numeric', minute: '2-digit' });
 }
 
 function applyLanguage() {
@@ -373,18 +442,43 @@ function applyLook() {
   document.documentElement.style.setProperty('--scale', settings.size);
 }
 
+// Markup for buttons made in code, matching the ones in index.html.
+function btnInner(icon, title, sub, { chevron = false } = {}) {
+  const wrap = document.createElement('template');
+  wrap.innerHTML = `<span class="ico-tile"><span class="ico">${iconSVG(icon)}</span></span><span class="b-text"><span class="b-title"></span><span class="b-sub"></span></span>${chevron ? `<span class="chev">${iconSVG('chev')}</span>` : ''}`;
+  wrap.content.querySelector('.b-title').textContent = title;
+  wrap.content.querySelector('.b-sub').textContent = sub || '';
+  return wrap.content;
+}
+function makeBtn(cls, icon, title, sub, opts) {
+  const b = document.createElement('button');
+  b.className = `btn ${cls}`;
+  b.appendChild(btnInner(icon, title, sub, opts));
+  return b;
+}
+
 /* ---------- Speech out ---------- */
 const synth = window.speechSynthesis;
-function speak(text, { force = false } = {}) {
-  if (!synth || (!settings.voice && !force) || !text) return;
-  synth.cancel();
+function utter(text) {
   const u = new SpeechSynthesisUtterance(text);
   u.rate = parseFloat(settings.rate) || 0.9;
   u.lang = speechLang();
   const base = u.lang.slice(0, 2).toLowerCase();
   const voice = synth.getVoices().find(v => v.lang.toLowerCase().startsWith(base));
   if (voice) u.voice = voice;
-  synth.speak(u);
+  return u;
+}
+function speak(text, { force = false } = {}) {
+  if (!synth || (!settings.voice && !force) || !text) return;
+  synth.cancel();
+  synth.speak(utter(text));
+}
+// Long text in short pieces: some phones stop speaking a single long sentence after ~15 seconds.
+function speakLong(text) {
+  if (!synth || !text) return;
+  synth.cancel();
+  const pieces = text.replace(/\s*\n\s*/g, '\n').split(/(?<=[.!?؟\n])\s+/).flatMap(p => p.match(/.{1,180}(\s|$)|.{1,180}/g) || []);
+  pieces.filter(p => p.trim()).forEach(p => synth.speak(utter(p.trim())));
 }
 let toastTimer;
 function toast(text, { say = true } = {}) {
@@ -394,6 +488,11 @@ function toast(text, { say = true } = {}) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => el.classList.remove('show'), 4500);
   if (say) speak(text);
+}
+
+/* ---------- Platform capabilities (hosted preview only) ---------- */
+function useCapability(name) {
+  return window.claude && window.claude.use ? window.claude.use(name).catch(() => null) : Promise.resolve(null);
 }
 
 /* ---------- Speech in (typing when the mic isn't available) ---------- */
@@ -456,7 +555,7 @@ typed.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefau
 let armedEl = null, armedAt = 0;
 function labelOf(el) {
   const key = el.dataset.say;
-  return (key && T(key)) || el.getAttribute('aria-label') || el.textContent.trim();
+  return (key && T(key)) || el.getAttribute('aria-label') || el.textContent.trim().replace(/\s+/g, ' ');
 }
 document.addEventListener('click', e => {
   const el = e.target.closest('button, a.btn');
@@ -593,11 +692,21 @@ const SupabaseAccount = {
     });
   },
   async loadRequests() {
-    const rows = await this.rest('hh_requests?select=type,text,created_at&order=created_at.desc&limit=50');
-    return (rows || []).map(r => ({ type: r.type, text: r.text, at: Date.parse(r.created_at) }));
+    const rows = await this.rest('hh_requests?select=type,text,status,created_at&order=created_at.desc&limit=50');
+    return (rows || []).map(r => ({ type: r.type, text: r.text, status: r.status, at: Date.parse(r.created_at) }));
   },
-  async addRequest(r) { await this.rest('hh_requests', { method: 'POST', prefer: 'return=minimal', body: { type: r.type, text: r.text } }); },
+  // Returns the secret token for the helper's reply link.
+  async addRequest(r, extra = {}) {
+    const rows = await this.rest('hh_requests?select=token', {
+      method: 'POST', prefer: 'return=representation',
+      body: { type: r.type, text: r.text, ...extra },
+    });
+    return rows && rows[0] ? rows[0].token : null;
+  },
   async clearRequests() { await this.rest(`hh_requests?user_id=eq.${this.session.user.id}`, { method: 'DELETE' }); },
+  async repliesSince(iso) {
+    return this.rest(`hh_requests?select=type,text,status,status_at&status_at=gt.${encodeURIComponent(iso)}&order=status_at.asc`);
+  },
 };
 
 const ClaudeAccount = {
@@ -606,8 +715,7 @@ const ClaudeAccount = {
   signedIn() { return !!this.id && !!store.get('hh.claudeSignedIn', false); },
   who() { return this.name || T('continueAsYou'); },
   init() {
-    const use = window.claude && window.claude.use ? n => window.claude.use(n) : () => Promise.resolve(null);
-    this.ready = Promise.all([use('user'), use('db')]).then(async ([user, db]) => {
+    this.ready = Promise.all([useCapability('user'), useCapability('db')]).then(async ([user, db]) => {
       this.user = user; this.db = db;
       if (user) {
         this.id = await user.id();
@@ -623,8 +731,10 @@ const ClaudeAccount = {
   async loadSettings() { const s = await this.col().doc('profile').get(); return s.exists ? s.data().settings : null; },
   async saveSettings(s) { await this.col().doc('profile').set({ settings: s }); },
   async loadRequests() { const s = await this.col().doc('requests').get(); return s.exists ? (s.data().items || []) : []; },
-  async addRequest() { await this.col().doc('requests').set({ items: requests.slice(0, 50) }); },
+  async addRequest() { await this.saveRequests(); return null; },
+  async saveRequests() { await this.col().doc('requests').set({ items: requests.slice(0, 50) }); },
   async clearRequests() { await this.col().doc('requests').set({ items: [] }); },
+  async repliesSince() { return []; },
 };
 
 const Account = PREVIEW ? ClaudeAccount : SupabaseAccount;
@@ -641,6 +751,7 @@ async function afterSignIn() {
     const remoteReqs = await Account.loadRequests();
     if (remoteReqs.length) { requests = remoteReqs; store.set('hh.history', requests); }
   } catch { /* offline: keep what's on the phone */ }
+  if (!store.get('hh.lastReplyAt', null)) store.set('hh.lastReplyAt', new Date().toISOString());
   applyLook();
   applyLanguage();
 }
@@ -719,7 +830,6 @@ document.getElementById('skipSignIn').addEventListener('click', () => {
   store.set('hh.skipSignIn', true);
   go('home');
 });
-
 function renderSignin() {
   document.getElementById('authForm').hidden = PREVIEW;
   document.getElementById('previewAuth').hidden = !PREVIEW;
@@ -757,6 +867,11 @@ function go(route) {
   const hash = '#' + route;
   if (location.hash === hash) render(); else location.hash = hash;
 }
+// Go somewhere without leaving the current screen in the back history (after a form is done).
+function goReplace(route) {
+  if (PREVIEW) { memStack.pop(); memStack.push(route); render(); return; }
+  location.replace('#' + route);
+}
 backBtn.addEventListener('click', () => {
   if (PREVIEW) { memStack.pop(); render(); return; }
   if (navigatedInApp) window.history.back(); else location.replace('#home');
@@ -772,12 +887,14 @@ document.getElementById('skipLink').addEventListener('click', e => {
 });
 
 function needsSignIn() { return Account.configured() && !Account.signedIn() && !skippedSignIn; }
+function screenNow() { return currentRoute().split(':')[0]; }
 
 function render() {
   let [screen, arg] = currentRoute().split(':');
   if (needsSignIn() && screen !== 'signin') screen = 'signin';
   stopEmergency();
   disarm();
+  if (screen !== 'read' && synth && reading) { synth.cancel(); reading = false; }
 
   const section = document.getElementById(`screen-${screen}`);
   if (!section) { go('home'); return; }
@@ -795,6 +912,9 @@ function render() {
   if (screen === 'history') renderHistory();
   if (screen === 'settings') renderSettings();
   if (screen === 'emergency') startEmergency();
+  if (screen === 'read') renderRead();
+  if (screen === 'meds') renderMeds();
+  if (screen === 'medadd') renderMedAdd();
 
   titleEl.textContent = title;
   document.title = screen === 'home' || screen === 'signin' ? T('appName') : `${title} · ${T('appName')}`;
@@ -809,38 +929,65 @@ function render() {
   } else if (screen === 'family') speak(T('familyIntro'));
   else if (screen === 'history') speak(T('historyIntro', { n: requests.length }));
   else if (screen === 'settings') speak(T('settingsIntro'));
+  else if (screen === 'read') speak(T('readIntro'));
+  else if (screen === 'meds') speak(medsSummary());
+  else if (screen === 'medadd') speak(T('addMed'));
 }
 
 /* ---------- Home ---------- */
 let greeted = false;
-function greetingText() {
+function greetingParts() {
   const now = new Date();
   const h = now.getHours();
   const part = T(h < 12 ? 'morning' : h < 18 ? 'afternoon' : 'evening');
   const name = settings.name ? T('greetName', { name: settings.name }) : '';
-  const day = now.toLocaleDateString(locale(), { weekday: 'long', day: 'numeric', month: 'long' });
-  const time = now.toLocaleTimeString(locale(), { hour: 'numeric', minute: '2-digit' });
-  return T('greet', { part, name, day, time });
+  return {
+    hello: `${part}${name}`,
+    day: now.toLocaleDateString(locale(), { weekday: 'long', day: 'numeric', month: 'long' }),
+    time: now.toLocaleTimeString(locale(), { hour: 'numeric', minute: '2-digit' }),
+  };
+}
+function greetingText() {
+  const g = greetingParts();
+  return T('greet', { part: g.hello, name: '', day: g.day, time: g.time });
+}
+function renderToday() {
+  const g = greetingParts();
+  document.getElementById('todayHello').textContent = g.hello;
+  document.getElementById('todayTime').textContent = g.time;
+  document.getElementById('todayDate').textContent = g.day;
 }
 function renderHome() {
-  document.getElementById('greeting').textContent = greetingText();
-  const existing = document.getElementById('setupCard');
-  if (existing) existing.remove();
+  renderToday();
+  const next = nextDose();
+  document.getElementById('medsSub').textContent = next ? T('nextDose', { name: next.med.name, time: fmtTime(next.time) }) : T('medsSubEmpty');
+  const fam = familyContacts().map(c => c.name);
+  document.getElementById('familySub').textContent = fam.length ? fam.join(listSep()) : T('familySubEmpty');
+
+  const notices = document.getElementById('homeNotices');
+  notices.innerHTML = '';
+  const last = store.get('hh.lastReply', null);
+  if (last && Date.now() - last.at < 6 * 3600 * 1000) {
+    const n = document.createElement('button');
+    n.className = 'notice';
+    n.dataset.instant = '';
+    n.innerHTML = `<span class="ico">${iconSVG('check')}</span><span></span>`;
+    n.lastChild.textContent = replyText(last);
+    n.addEventListener('click', () => speak(replyText(last), { force: true }));
+    notices.appendChild(n);
+  }
   if (!settings.helperPhone) {
-    const btn = document.createElement('button');
-    btn.id = 'setupCard';
-    btn.className = 'btn btn-outline';
+    const btn = makeBtn('btn-outline', 'gear', T('setupFirst'));
     btn.dataset.go = 'settings';
     btn.dataset.say = 'setupFirstSay';
-    btn.innerHTML = `<span class="ico">${iconSVG('gear')}</span><span></span>`;
-    btn.lastChild.textContent = T('setupFirst');
-    document.getElementById('greeting').after(btn);
+    notices.appendChild(btn);
   }
   if (greeted) { speak(T('homeSay')); return; }
   greeted = true;
   // Browsers only allow speech after the first touch, so greet on it.
   document.addEventListener('pointerdown', () => speak(`${greetingText()} ${T('homeSay')}`), { once: true });
 }
+setInterval(() => { if (screenNow() === 'home') renderToday(); }, 30000);
 
 document.getElementById('heroMic').addEventListener('click', async () => {
   const said = await listen();
@@ -851,7 +998,9 @@ document.getElementById('heroMic').addEventListener('click', async () => {
 // Keyword matching in English and Arabic (Egyptian and Modern Standard words).
 const COMMANDS = [
   ['emergency', /emergenc|\bsos\b|ambulance|police|\bfire\b|i fell|fallen|i('m| am) hurt|help me now|طوارئ|طوارىء|اسعاف|إسعاف|نجدة|النجده|شرطة|بوليس|حريق|وقعت|الحقوني|إلحقوني/],
-  ['location', /where am i|where i am|my location|location|address|أنا فين|انا فين|أين أنا|اين انا|مكاني|موقعي|عنواني|أنا فين/],
+  ['location', /where am i|where i am|my location|location|address|أنا فين|انا فين|أين أنا|اين انا|مكاني|موقعي|عنواني/],
+  ['read', /read (this|it|text|the (label|letter|box|paper))|camera|photo|scan|what does (this|it) say|اقرأ لي|اقرا لي|اقرأ الورق|كاميرا|صورة|صوّر|ايه المكتوب|إيه المكتوب/],
+  ['meds', /remind|my medicines|my pills|medicine times|pill times|تذكير|ذكرني|ذكّرني|أدويتي|ادويتي|مواعيد الدوا|مواعيد العلاج/],
   ['call', /\b(call|phone|ring)\b|اتصل|إتصل|كلم|كلّم|رن على/],
   ['medicine', /medic|pharm|pill|tablet|drug|prescription|drops|دوا|دواء|صيدلي|حبوب|برشام|روشت|قطرة/],
   ['ride', /\bride\b|taxi|\bcar\b|drive|take me|go to|lift|uber|careem|مشوار|عربية|تاكسي|اوبر|أوبر|كريم|وصلني|وصّلني|وديني|ودّيني|خدني|توصيلة|اروح|أروح|أذهب/],
@@ -867,6 +1016,8 @@ function handleCommand(text) {
   switch (match) {
     case 'emergency': return go('emergency');
     case 'location': return go('location');
+    case 'read': return go('read');
+    case 'meds': return go('meds');
     case 'call': {
       const fam = familyContacts().find(c => t.includes(c.name.toLowerCase().replace(/\s*\(.*\)$/, '')));
       return fam ? callNumber(fam.phone, fam.name) : go('family');
@@ -911,31 +1062,344 @@ document.getElementById('dictateBtn').addEventListener('click', async () => {
   const said = await listen();
   if (!said) { speak(T('didntHear')); return; }
   const box = document.getElementById('reqText');
-  box.value = (box.value ? box.value + (settings.lang === 'ar' ? '، ' : ', ') : '') + said;
+  box.value = (box.value ? box.value + listSep() : '') + said;
   speak(T('wroteReady', { text: said }));
 });
+function helperLink(token) {
+  return `${location.origin}${location.pathname.replace(/[^/]*$/, '')}helper.html?r=${token}`;
+}
+function greetLine() {
+  const helperName = settings.helperName ? T('msgName', { name: settings.helperName }) : '';
+  return settings.name ? T('msgHello', { name: helperName, me: settings.name }) : T('msgHelloAnon', { name: helperName });
+}
 document.getElementById('sendReqBtn').addEventListener('click', async () => {
   const cfg = req(currentRequest);
-  const sep = settings.lang === 'ar' ? '، ' : ', ';
   const picked = [...document.querySelectorAll('#quickChips .chip[aria-pressed="true"]')].map(b => b.textContent);
   const typedText = document.getElementById('reqText').value.trim();
-  const details = [...picked, typedText].filter(Boolean).join(sep);
+  const details = [...picked, typedText].filter(Boolean).join(listSep());
   if (!details) { toast(T('needDetails')); return; }
   if (!settings.helperPhone) { toast(T('needHelperPhone')); go('settings'); return; }
 
   speak(T('sending'));
   const pos = document.getElementById('shareLoc').checked ? await getPosition() : null;
-  const helperName = settings.helperName ? T('msgName', { name: settings.helperName }) : '';
-  const lines = [
-    settings.name ? T('msgHello', { name: helperName, me: settings.name }) : T('msgHelloAnon', { name: helperName }),
-    `${cfg.intro} ${details}.`,
-  ];
+  const lines = [greetLine(), `${cfg.intro} ${details}.`];
   if (settings.address) lines.push(T('msgAddress', { a: settings.address }));
   if (pos) lines.push(T('msgLocation', { l: mapsLink(pos) }));
+  const token = await addHistory({ type: currentRequest, text: details }, {
+    requester_name: settings.name || null, address: settings.address || null, location_url: pos ? mapsLink(pos) : null,
+  });
+  if (token) lines.push(T('replyLink', { url: helperLink(token) }));
   lines.push(T('msgFooter'));
-  addHistory({ type: currentRequest, text: details });
   sendMessage(settings.helperPhone, lines.join('\n'));
+  if (PREVIEW) simulateReply(currentRequest, details);
 });
+
+/* ---------- Helper replies ---------- */
+function replyText(r) {
+  const name = settings.helperName || T('yourHelper');
+  const what = r.type === 'location' ? `${T('locationShared')}` : `${req(r.type).title}: ${r.text}`;
+  return T(`reply_${r.status}`, { name, what });
+}
+function announceReply(r) {
+  store.set('hh.lastReply', { type: r.type, text: r.text, status: r.status, at: Date.now() });
+  const msg = replyText(r);
+  toast(msg, { say: false });
+  speak(msg, { force: true });
+  if (navigator.vibrate) navigator.vibrate([80, 60, 80]);
+  notify(T('appName'), msg);
+  if (screenNow() === 'home') renderHome();
+  if (screenNow() === 'history') renderHistory();
+}
+let polling = false;
+async function checkReplies() {
+  if (polling || PREVIEW || !Account.signedIn() || document.hidden) return;
+  polling = true;
+  try {
+    const since = store.get('hh.lastReplyAt', new Date().toISOString());
+    const rows = await Account.repliesSince(since);
+    if (rows && rows.length) {
+      store.set('hh.lastReplyAt', rows[rows.length - 1].status_at);
+      requests = await Account.loadRequests();
+      store.set('hh.history', requests);
+      rows.forEach(announceReply);
+    }
+  } catch { /* try again next time */ }
+  polling = false;
+}
+setInterval(checkReplies, 20000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) { checkReplies(); checkReminders(); } });
+
+// The preview has no server, so it plays out an example reply.
+function simulateReply(type, text) {
+  setTimeout(() => {
+    const item = requests.find(r => r.text === text && r.type === type);
+    if (item) { item.status = 'coming'; store.set('hh.history', requests); if (Account.signedIn()) Account.saveRequests().catch(() => {}); }
+    announceReply({ type, text, status: 'coming' });
+  }, 9000);
+}
+
+/* ---------- Read text with the camera ---------- */
+let reading = false;
+let ocrWorker = null;
+const photoInput = document.getElementById('photoInput');
+function renderRead() {
+  document.getElementById('readStatus').textContent = '';
+  document.getElementById('readResult').hidden = true;
+  document.getElementById('readActions').hidden = true;
+}
+document.getElementById('photoBtn').addEventListener('click', () => { photoInput.value = ''; photoInput.click(); });
+photoInput.addEventListener('change', () => { if (photoInput.files[0]) readPhoto(photoInput.files[0]); });
+
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src; s.onload = resolve; s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+// Phone photos are huge; a smaller copy reads just as well and much faster.
+async function shrink(file, max = 1800) {
+  const img = await createImageBitmap(file);
+  const scale = Math.min(1, max / Math.max(img.width, img.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.round(img.width * scale);
+  canvas.height = Math.round(img.height * scale);
+  canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+  return canvas;
+}
+async function ocrOnPhone(file) {
+  if (!window.Tesseract) {
+    setReadStatus(T('readLoading'));
+    await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js');
+  }
+  if (!ocrWorker) {
+    const langs = settings.lang === 'ar' ? ['ara', 'eng'] : ['eng', 'ara'];
+    ocrWorker = await window.Tesseract.createWorker(langs);
+  }
+  setReadStatus(T('readingNow'));
+  const { data } = await ocrWorker.recognize(await shrink(file));
+  return data.text || '';
+}
+async function ocrWithClaude(file) {
+  const sample = await useCapability('sample');
+  const limits = sample ? await sample.limits().catch(() => null) : null;
+  if (!sample || !limits || !limits.images) throw new Error('unavailable');
+  const blob = await shrinkToBlob(file);
+  const res = await sample(
+    'This photo was taken by a blind or elderly person who wants to hear what it says. ' +
+    'Write out all the readable text in reading order, in its original language. ' +
+    'If it is a medicine box or label, give the medicine name, strength and any warnings first. ' +
+    'Reply with only the text. If there is no readable text, reply exactly NO_TEXT.',
+    { images: [blob] },
+  );
+  return res.text === 'NO_TEXT' ? '' : res.text;
+}
+async function shrinkToBlob(file) {
+  const canvas = await shrink(file, 1600);
+  return new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.85));
+}
+function setReadStatus(text) {
+  document.getElementById('readStatus').textContent = text;
+  speak(text, { force: true });
+}
+function cleanText(text) {
+  return text.split('\n').map(l => l.replace(/\s+/g, ' ').trim()).filter(l => /[\p{L}\p{N}]{2,}/u.test(l)).join('\n');
+}
+async function readPhoto(file) {
+  document.getElementById('readResult').hidden = true;
+  document.getElementById('readActions').hidden = true;
+  setReadStatus(T('readingNow'));
+  let text = '';
+  try {
+    text = cleanText(PREVIEW ? await ocrWithClaude(file) : await ocrOnPhone(file));
+  } catch (e) {
+    setReadStatus(T(PREVIEW && e.message === 'unavailable' ? 'readNeedsApp' : 'readFail'));
+    return;
+  }
+  if (!text) { setReadStatus(T('readNothing')); return; }
+  document.getElementById('readStatus').textContent = '';
+  document.getElementById('readText').textContent = text;
+  document.getElementById('readResult').hidden = false;
+  document.getElementById('readActions').hidden = false;
+  reading = true;
+  speakLong(text);
+}
+document.getElementById('readAgainBtn').addEventListener('click', () => {
+  reading = true;
+  speakLong(document.getElementById('readText').textContent);
+});
+document.getElementById('stopReadBtn').addEventListener('click', () => { reading = false; synth && synth.cancel(); });
+
+/* ---------- Medicines and reminders ---------- */
+function todayKey(d = new Date()) { return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; }
+function doseKey(med, time, d) { return `${todayKey(d)}|${med.id}|${time}`; }
+function getDoses() { return store.get('hh.doses', {}); }
+function setDose(key, value) {
+  const doses = getDoses();
+  doses[key] = value;
+  // Keep about two weeks.
+  const keys = Object.keys(doses);
+  if (keys.length > 300) keys.slice(0, keys.length - 300).forEach(k => delete doses[k]);
+  store.set('hh.doses', doses);
+}
+function nextDose() {
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  let best = null;
+  (settings.meds || []).forEach(med => med.times.forEach(time => {
+    const [h, m] = time.split(':').map(Number);
+    let mins = h * 60 + m - nowMin;
+    if (mins < 0) mins += 24 * 60;
+    if (!best || mins < best.mins) best = { med, time, mins };
+  }));
+  return best;
+}
+function medsSummary() {
+  const meds = settings.meds || [];
+  if (!meds.length) return T('medsIntroNone');
+  const next = nextDose();
+  return T('medsIntro', { n: meds.length, next: next ? T('nextDose', { name: next.med.name, time: fmtTime(next.time) }) + '.' : '' });
+}
+function renderMeds() {
+  const list = document.getElementById('medList');
+  list.innerHTML = '';
+  const meds = settings.meds || [];
+  if (!meds.length) {
+    const p = document.createElement('p');
+    p.className = 'empty';
+    p.textContent = T('noMeds');
+    list.appendChild(p);
+    return;
+  }
+  meds.forEach(med => {
+    const card = document.createElement('div');
+    card.className = 'card med';
+    const main = document.createElement('div');
+    main.className = 'med-main';
+    const name = document.createElement('p');
+    name.className = 'med-name';
+    name.textContent = med.name;
+    const times = document.createElement('p');
+    times.className = 'med-times';
+    times.textContent = med.times.map(fmtTime).join(' · ');
+    main.append(name, times);
+    const del = document.createElement('button');
+    del.className = 'iconbtn iconbtn-lg';
+    del.dataset.say = T('deleteMed', { name: med.name });
+    del.setAttribute('aria-label', T('deleteMed', { name: med.name }));
+    del.innerHTML = `<span class="ico">${iconSVG('trash')}</span>`;
+    del.addEventListener('click', () => {
+      saveSettings({ ...settings, meds: settings.meds.filter(m => m.id !== med.id) });
+      toast(T('medDeleted', { name: med.name }));
+      renderMeds();
+    });
+    card.append(main, del);
+    list.appendChild(card);
+  });
+}
+function addTimeRow(value) {
+  const wrap = document.getElementById('medTimes');
+  const row = document.createElement('div');
+  row.className = 'time-row';
+  const input = document.createElement('input');
+  input.type = 'time';
+  input.className = 'field';
+  input.value = value;
+  input.setAttribute('aria-label', T('medTimes'));
+  const del = document.createElement('button');
+  del.type = 'button';
+  del.className = 'iconbtn iconbtn-lg';
+  del.dataset.instant = '';
+  del.setAttribute('aria-label', T('removeTime'));
+  del.innerHTML = `<span class="ico">${iconSVG('trash')}</span>`;
+  del.addEventListener('click', () => { row.remove(); });
+  row.append(input, del);
+  wrap.appendChild(row);
+}
+function renderMedAdd() {
+  document.getElementById('medName').value = '';
+  document.getElementById('medTimes').innerHTML = '';
+  addTimeRow('08:00');
+}
+document.getElementById('addTimeBtn').addEventListener('click', () => {
+  if (document.querySelectorAll('#medTimes input').length < 6) addTimeRow('20:00');
+});
+document.getElementById('medNameMic').addEventListener('click', async () => {
+  const said = await listen();
+  if (said) { document.getElementById('medName').value = said; speak(said, { force: true }); }
+});
+document.getElementById('saveMedBtn').addEventListener('click', () => {
+  const name = document.getElementById('medName').value.trim();
+  const times = [...new Set([...document.querySelectorAll('#medTimes input')].map(i => i.value).filter(Boolean))].sort();
+  if (!name) { toast(T('needMedName')); document.getElementById('medName').focus(); return; }
+  if (!times.length) { toast(T('needMedTime')); return; }
+  const med = { id: Date.now().toString(36), name, times };
+  saveSettings({ ...settings, meds: [...(settings.meds || []), med] });
+  askNotificationPermission();
+  toast(T('medSaved', { times: times.map(fmtTime).join(listSep()) }));
+  goReplace('meds');
+});
+
+// Reminders: checked every 20 seconds while the app is open.
+const reminderEl = document.getElementById('reminder');
+let reminderNow = null; // { med, time, key }
+let reminderRepeat = null;
+function checkReminders() {
+  if (reminderNow || needsSignIn()) return;
+  const now = new Date();
+  const doses = getDoses();
+  for (const med of settings.meds || []) {
+    for (const time of med.times) {
+      const [h, m] = time.split(':').map(Number);
+      const due = new Date(now); due.setHours(h, m, 0, 0);
+      const late = now - due;
+      if (late < 0 || late > 3 * 3600 * 1000) continue; // due within the last 3 hours
+      const key = doseKey(med, time, now);
+      const state = doses[key];
+      if (state === 'taken' || state === 'skipped') continue;
+      if (state && state.snooze && Date.now() < state.snooze) continue;
+      showReminder(med, time, key);
+      return;
+    }
+  }
+}
+function showReminder(med, time, key) {
+  reminderNow = { med, time, key };
+  document.getElementById('reminderWhat').textContent = `${med.name} · ${fmtTime(time)}`;
+  reminderEl.hidden = false;
+  document.getElementById('tookItBtn').focus();
+  const say = () => speak(T('remindSay', { name: med.name }), { force: true });
+  say();
+  reminderRepeat = setInterval(say, 45000);
+  if (navigator.vibrate) navigator.vibrate([300, 150, 300, 150, 300]);
+  notify(T('remindTitle'), T('remindSay', { name: med.name }));
+}
+function closeReminder(value, messageKey) {
+  if (!reminderNow) return;
+  setDose(reminderNow.key, value);
+  const name = reminderNow.med.name;
+  reminderNow = null;
+  clearInterval(reminderRepeat);
+  reminderEl.hidden = true;
+  speak(T(messageKey, { name }), { force: true });
+  if (screenNow() === 'home') renderHome();
+}
+document.getElementById('tookItBtn').addEventListener('click', () => closeReminder('taken', 'doseTaken'));
+document.getElementById('snoozeBtn').addEventListener('click', () => closeReminder({ snooze: Date.now() + 10 * 60000 }, 'snoozed'));
+document.getElementById('skipDoseBtn').addEventListener('click', () => closeReminder('skipped', 'doseSkipped'));
+setInterval(checkReminders, 20000);
+
+function askNotificationPermission() {
+  if (PREVIEW || !('Notification' in window) || Notification.permission !== 'default') return;
+  Notification.requestPermission().catch(() => {});
+}
+// A phone notification as well, for when the screen is off or another app is open.
+function notify(title, body) {
+  if (PREVIEW || !document.hidden || !('Notification' in window) || Notification.permission !== 'granted') return;
+  if (navigator.serviceWorker && navigator.serviceWorker.ready) {
+    navigator.serviceWorker.ready.then(reg => reg.showNotification(title, { body, icon: 'icons/icon.svg', tag: 'helping-hand', renotify: true, vibrate: [300, 150, 300] })).catch(() => {});
+  }
+}
 
 /* ---------- Location ---------- */
 let lastPlace = null; // { pos, address }
@@ -952,21 +1416,25 @@ function getPosition() {
 }
 function mapsLink(pos) { return `https://maps.google.com/?q=${pos.lat.toFixed(5)},${pos.lng.toFixed(5)}`; }
 
-// Street address from OpenStreetMap (free, no key needed).
+// Street address from OpenStreetMap (free, no key needed). Tries twice; the service is sometimes busy.
 async function addressFor(pos) {
-  try {
-    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=18&addressdetails=1&lat=${pos.lat}&lon=${pos.lng}&accept-language=${settings.lang}`;
-    const res = await fetch(url, { headers: { Accept: 'application/json' } });
-    if (!res.ok) throw new Error();
-    const j = await res.json();
-    const a = j.address || {};
-    const street = [a.house_number, a.road || a.pedestrian || a.footway].filter(Boolean).join(' ');
-    const area = a.neighbourhood || a.suburb || a.quarter || a.city_district;
-    const city = a.city || a.town || a.village || a.state;
-    const parts = [street, area, city].filter(Boolean);
-    const sep = settings.lang === 'ar' ? '، ' : ', ';
-    return parts.length ? parts.join(sep) : (j.display_name || null);
-  } catch { return null; }
+  const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=18&addressdetails=1&lat=${pos.lat}&lon=${pos.lng}&accept-language=${settings.lang}`;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(url, { headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error();
+      const j = await res.json();
+      const a = j.address || {};
+      const street = [a.house_number, a.road || a.pedestrian || a.footway].filter(Boolean).join(' ');
+      const area = a.neighbourhood || a.suburb || a.quarter || a.city_district;
+      const city = a.city || a.town || a.village || a.state;
+      const parts = [street, area, city].filter(Boolean);
+      return parts.length ? parts.join(listSep()) : (j.display_name || null);
+    } catch {
+      await new Promise(r => setTimeout(r, 1200));
+    }
+  }
+  return null;
 }
 
 async function findMe() {
@@ -991,7 +1459,7 @@ async function findMe() {
     const address = await addressFor(pos);
     lastPlace = { pos, address: address || T('nearCoords', { lat: pos.lat.toFixed(4), lng: pos.lng.toFixed(4) }) };
   }
-  if (currentRoute().split(':')[0] !== 'location') return; // they left while we were looking
+  if (screenNow() !== 'location') return; // they left while we were looking
   addrEl.textContent = lastPlace.address;
   noteEl.textContent = PREVIEW ? T('previewLocation') : T('accuracy', { m: Math.round(lastPlace.pos.acc).toLocaleString(locale()) });
   maps.href = mapsLink(lastPlace.pos);
@@ -1008,17 +1476,11 @@ document.getElementById('savePlace').addEventListener('click', () => {
   saveSettings({ ...settings, address: lastPlace.address });
   toast(T('homeSaved'));
 });
-document.getElementById('sendPlace').addEventListener('click', () => {
+document.getElementById('sendPlace').addEventListener('click', async () => {
   if (!settings.helperPhone) { toast(T('needHelperPhone')); return; }
   if (!lastPlace) { findMe(); return; }
-  const helperName = settings.helperName ? T('msgName', { name: settings.helperName }) : '';
-  const lines = [
-    settings.name ? T('msgHello', { name: helperName, me: settings.name }) : T('msgHelloAnon', { name: helperName }),
-    T('msgHere', { p: lastPlace.address }),
-    T('msgLocation', { l: mapsLink(lastPlace.pos) }),
-    T('msgFooter'),
-  ];
-  addHistory({ type: 'location', text: lastPlace.address });
+  const lines = [greetLine(), T('msgHere', { p: lastPlace.address }), T('msgLocation', { l: mapsLink(lastPlace.pos) }), T('msgFooter')];
+  await addHistory({ type: 'location', text: lastPlace.address });
   sendMessage(settings.helperPhone, lines.join('\n'));
 });
 
@@ -1072,11 +1534,12 @@ function callNumber(phone, name) {
 }
 
 /* ---------- History ---------- */
-function addHistory(item) {
-  requests.unshift({ ...item, at: Date.now() });
+async function addHistory(item, extra) {
+  requests.unshift({ ...item, status: 'sent', at: Date.now() });
   requests = requests.slice(0, 50);
   store.set('hh.history', requests);
-  if (Account.signedIn()) Account.addRequest(item).catch(() => {});
+  if (!Account.signedIn()) return null;
+  try { return await Account.addRequest(item, extra); } catch { return null; }
 }
 function historyTitle(type) { return type === 'location' ? T('locationShared') : req(type).title; }
 function drawHistory() {
@@ -1092,13 +1555,15 @@ function drawHistory() {
   requests.forEach(h => {
     const title = historyTitle(h.type);
     const when = new Date(h.at).toLocaleString(locale(), { weekday: 'long', hour: 'numeric', minute: '2-digit', day: 'numeric', month: 'short' });
-    const btn = document.createElement('button');
-    btn.className = 'btn btn-gray history-item';
+    const status = STATUSES.includes(h.status) ? h.status : 'sent';
+    const btn = makeBtn('btn-gray history-item', REQUEST_ICONS[h.type] || 'list', `${title}: ${h.text}`, when);
     btn.dataset.instant = '';
-    btn.innerHTML = `<span class="ico">${iconSVG(REQUEST_ICONS[h.type] || 'list')}</span><span><span class="h-title"></span><br><small></small></span>`;
-    btn.querySelector('.h-title').textContent = `${title}: ${h.text}`;
-    btn.querySelector('small').textContent = when;
-    btn.addEventListener('click', () => speak(T('sentAt', { title, text: h.text, when }), { force: true }));
+    const chip = document.createElement('span');
+    chip.className = 'chip-status';
+    chip.dataset.s = status;
+    chip.textContent = T(`status_${status}`);
+    btn.querySelector('.b-text').appendChild(chip);
+    btn.addEventListener('click', () => speak(`${T('sentAt', { title, text: h.text, when })} ${T(`status_${status}`)}.`, { force: true }));
     list.appendChild(btn);
   });
 }
@@ -1108,7 +1573,7 @@ function renderHistory() {
     Account.loadRequests().then(r => {
       requests = r;
       store.set('hh.history', requests);
-      if (currentRoute() === 'history') drawHistory();
+      if (screenNow() === 'history') drawHistory();
     }).catch(() => {});
   }
 }
@@ -1138,22 +1603,17 @@ function renderFamily() {
     const p = document.createElement('p');
     p.className = 'empty';
     p.textContent = T('noFamily');
-    const b = document.createElement('button');
-    b.className = 'btn btn-blue';
+    const b = makeBtn('btn-blue', 'gear', T('addFamily'));
     b.dataset.go = 'settings';
     b.dataset.say = 'addFamily';
-    b.innerHTML = `<span class="ico">${iconSVG('gear')}</span><span></span>`;
-    b.lastChild.textContent = T('addFamily');
     list.append(p, b);
     return;
   }
   people.forEach(p => {
     const label = T('callX', { name: p.name });
-    const b = document.createElement('button');
-    b.className = 'btn btn-green';
+    const b = makeBtn('btn-green btn-home', 'phone', label, p.phone);
     b.dataset.say = label;
-    b.innerHTML = `<span class="ico">${iconSVG('phone')}</span><span></span>`;
-    b.lastChild.textContent = label;
+    b.querySelector('.b-sub').dir = 'ltr';
     b.addEventListener('click', () => callNumber(p.phone, p.name));
     list.appendChild(b);
   });
@@ -1203,7 +1663,10 @@ document.getElementById('alertHelperBtn').addEventListener('click', async () => 
   const lines = [settings.name ? T('emergencyMsg', { name: settings.name }) : T('emergencyMsgAnon')];
   if (settings.address) lines.push(T('msgAddress', { a: settings.address }));
   if (pos) lines.push(T('msgLocation', { l: mapsLink(pos) }));
-  addHistory({ type: 'helper', text: T('emergencyAlert') });
+  const token = await addHistory({ type: 'helper', text: T('emergencyAlert') }, {
+    requester_name: settings.name || null, address: settings.address || null, location_url: pos ? mapsLink(pos) : null,
+  });
+  if (token) lines.push(T('replyLink', { url: helperLink(token) }));
   sendMessage(settings.helperPhone, lines.join('\n'));
 });
 
@@ -1248,13 +1711,10 @@ form.addEventListener('submit', e => {
 document.getElementById('accountBtn').addEventListener('click', async () => {
   if (Account.signedIn()) {
     await Account.signOut();
-    skippedSignIn = false;
-    store.set('hh.skipSignIn', false);
     toast(T('signedOut'));
-  } else {
-    skippedSignIn = false;
-    store.set('hh.skipSignIn', false);
   }
+  skippedSignIn = false;
+  store.set('hh.skipSignIn', false);
   go('signin');
 });
 document.getElementById('savePassword').addEventListener('click', async () => {
@@ -1281,12 +1741,13 @@ document.getElementById('langBtn').addEventListener('click', () => {
     ClaudeAccount.init().then(() => {
       if (ClaudeAccount.signedIn()) { afterSignIn(); render(); }
     });
-    // Clearly marked example contacts so every screen works in the preview.
+    // Clearly marked examples so every screen works in the preview.
     if (!store.get('hh.settings', null)) {
       const ex = STRINGS[settings.lang].example;
       Object.assign(settings, {
         helperName: `Sara ${ex}`, helperPhone: '+20 100 000 0000',
         fam1Name: `Omar ${ex}`, fam1Phone: '+20 111 000 0000', emergency: '123', countdown: '0',
+        meds: [{ id: 'ex1', name: `${settings.lang === 'ar' ? 'دواء الضغط' : 'Blood pressure tablet'} ${ex}`, times: ['08:00', '20:00'] }],
       });
     }
   }
@@ -1304,7 +1765,8 @@ document.getElementById('langBtn').addEventListener('click', () => {
     return;
   }
   render();
-  if (Account.signedIn()) afterSignIn().then(() => { if (currentRoute() === 'home') renderHome(); });
+  if (Account.signedIn()) afterSignIn().then(() => { if (screenNow() === 'home') renderHome(); checkReplies(); });
+  checkReminders();
 })();
 if (synth) synth.getVoices(); // starts loading voices early on Chrome
 

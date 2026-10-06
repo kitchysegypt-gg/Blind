@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Helping Hand · Reply</title>
+  <meta name="theme-color" content="#0e1116">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Kufi+Arabic:wght@500;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1 id="title">Helping Hand</h1>
+    <button id="langBtn" class="iconbtn langbtn" lang="ar" aria-label="العربية">ع</button>
+  </header>
+
+  <main id="main">
+    <section class="screen">
+      <p id="loading" class="status-line"></p>
+
+      <div id="requestBox" class="stack" hidden>
+        <div class="card">
+          <p class="card-label" id="whoNeeds"></p>
+          <p class="place-address" id="what"></p>
+          <p class="hint" id="when"></p>
+        </div>
+        <div class="card" id="whereBox" hidden>
+          <p class="card-label" data-t="where"></p>
+          <p class="lead" id="address"></p>
+          <a class="btn btn-gray" id="mapLink" href="#" target="_blank" rel="noopener" hidden>
+            <span class="ico-tile"><span class="ico" data-icon="map"></span></span><span class="b-text"><span class="b-title" data-t="openMap"></span></span>
+          </a>
+        </div>
+
+        <p class="lead" data-t="yourAnswer"></p>
+        <button class="btn btn-green btn-home" data-status="coming">
+          <span class="ico-tile"><span class="ico" data-icon="car"></span></span><span class="b-text"><span class="b-title" data-t="coming"></span></span>
+        </button>
+        <button class="btn btn-orange" data-status="later">
+          <span class="ico-tile"><span class="ico" data-icon="clock"></span></span><span class="b-text"><span class="b-title" data-t="later"></span></span>
+        </button>
+        <button class="btn btn-blue" data-status="done">
+          <span class="ico-tile"><span class="ico" data-icon="check"></span></span><span class="b-text"><span class="b-title" data-t="done"></span></span>
+        </button>
+        <button class="btn btn-outline btn-center" data-status="cant"><span class="b-title" data-t="cant"></span></button>
+        <p id="result" class="msg" role="status"></p>
+      </div>
+    </section>
+  </main>
+  <script src="helper.js"></script>
+</body>
+</html>

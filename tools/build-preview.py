@@ -17,7 +17,10 @@ js = (root / "app.js").read_text(encoding="utf-8")
 title = re.search(r"<title>.*?</title>", html, re.S).group(0)
 body = re.search(r"<!-- BODY:START -->(.*)<!-- BODY:END -->", html, re.S).group(1)
 
+FONTS = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Kufi+Arabic:wght@500;700&display=swap">'
+
 out = f"""{title}
+{FONTS}
 <style>
 {css}
 </style>
