@@ -1,51 +1,39 @@
 # Helping Hand
 
-A simple, voice-guided phone app for **blind and elderly people** to get everyday help: groceries, medicine, a ride, a helper, calling family, and emergencies.
+A simple, voice-guided phone app for **blind and elderly people**. It works in English and Arabic (العربية).
 
-It's a web app (PWA). Open it in a phone browser and choose **"Add to Home screen"**. It then works like a normal app, including offline. You don't need an app store or a build step.
+It's a web app: open it in the phone's browser and choose **Add to Home screen**. It then works like a normal app.
 
-## What it does
+## The home screen
 
-| Button | What happens |
+Five big buttons, top to bottom:
+
+| Button | What it does |
 |---|---|
-| 🎤 **Tap and say what you need** | Speak normally ("I need milk and bread", "take me to the doctor", "call Ahmed", "emergency"). The app works out what you mean and opens the right screen with your words already filled in. |
-| 🛍 **Groceries** / 💊 **Medicine** / 🚗 **Ride** / ❤️ **Helper** | Say or pick what you need, then press **Send request**. A ready-written WhatsApp or SMS message goes to your helper (a relative, carer, neighbour or local shop) with your name, your address and a map link to where you are. |
-| 📞 **Call family** | Big buttons that call each saved family member. |
-| 📋 **My requests** | A list of what you've asked for. Tap one to hear it read aloud. |
-| 🚨 **EMERGENCY** | Counts down out loud and then calls your emergency number. You can cancel the countdown or call straight away. It can also send your live location to your helper. |
+| **Speak** | Say what you need ("I need milk and bread", "where am I", "call Omar", «وديني للدكتور»). The app opens the right screen. |
+| **Ask for help** | Groceries, medicine, a ride, or someone to help. The app writes a WhatsApp or SMS message to your helper with your name, address and location, and you press Send. |
+| **Where am I?** | Says your street address out loud. You can send it to your helper, open it in Maps, or save it as your home address. |
+| **Call family** | One big button for each saved family member. |
+| **Emergency** | Calls your emergency number (with a countdown you can cancel) or sends your location to your helper. |
 
-## Made for blind and low-vision users
+Everything is read aloud. By default you tap once to hear a button and tap again to choose it; people who use VoiceOver or TalkBack can turn that off in Settings.
 
-- **Everything is spoken aloud** using the phone's own voice.
-- **Tap once to hear, tap again to choose.** Nothing happens by accident. Turn this off in Settings if you use VoiceOver or TalkBack.
-- Works with screen readers: real buttons, labels and live announcements.
-- Huge buttons, very large text (3 sizes), and 3 colour themes, including yellow-on-black high contrast.
-- Vibration feedback on each tap.
-- 3D-style icons with strong shapes and colours that are easy to tell apart with low vision.
+## Sign in
 
-## English and Arabic (العربية)
+The first screen asks you to sign in with an email and password, or to create an account. Your helper, family numbers, settings and requests are saved to your account, so they come back on a new phone. You can also choose **Use without an account**; then everything stays on that phone only.
 
-Tap the **ع / EN** button in the top bar to switch languages at any time. Arabic mode includes:
-- A full right-to-left layout with every word translated
-- Arabic speech using the phone's Arabic voice
-- Arabic voice commands in everyday Egyptian and Modern Standard words, for example «عايز عيش ولبن», «وديني للدكتور», «محتاج دوا الضغط», «اتصل بأحمد», «الحقوني»
-- Messages to the helper written in Arabic
+Accounts are stored in the Supabase project `ggg` (`sjlgitmupecmqhfmuyds`), in two tables:
 
-The app starts in Arabic automatically when the phone's language is Arabic.
+- `hh_profiles`: one row per person with their settings
+- `hh_requests`: their request history
 
-## First-time setup
+Row-level security means each person can read and change only their own rows. The SQL is in `supabase/migrations/`.
 
-Open **Settings** (the gear at the top right) and fill in:
-1. Your name and home address
-2. Your helper's name and phone number, and whether to use WhatsApp or SMS
-3. Up to 3 family numbers
-4. Your local emergency number (for example 123 for an ambulance in Egypt, 112 in Europe, 911 in the US) and the countdown length
+## Location
 
-Settings are saved only on the phone. Nothing is sent to any server.
+"Where am I?" uses the phone's GPS. It turns the position into a street address with OpenStreetMap's free Nominatim service, which needs no key.
 
 ## Running it
-
-Any static web server works:
 
 ```bash
 python3 -m http.server 8000
@@ -54,28 +42,25 @@ python3 -m http.server 8000
 
 ### Put it online with GitHub Pages
 
-The workflow `.github/workflows/pages.yml` publishes the app each time `main` changes. One-time setup:
+`.github/workflows/pages.yml` publishes the app each time `main` changes. One-time setup:
 
 1. Merge this branch into `main`.
 2. On GitHub, open **Settings → Pages** and set **Source** to **GitHub Actions**.
-3. Open the **Actions** tab and run **Deploy to GitHub Pages** (or push to `main`).
+3. Open the **Actions** tab and run **Deploy to GitHub Pages**.
 
-The app will then be at `https://<your-username>.github.io/<repo-name>/`. Open that link on the phone, then use **Add to Home screen**. The microphone, location and install features need HTTPS, and GitHub Pages provides it.
+The app will be at `https://<user>.github.io/<repo>/`. The microphone, GPS and install features need HTTPS, and GitHub Pages provides it.
+
+If you later turn on "Confirm email" in Supabase, add the Pages address under **Authentication → URL Configuration** so the email link opens the app.
 
 ### Preview build
 
-`python3 tools/build-preview.py` writes `dist/helping-hand-preview.html`, a single-file preview for places that block device features, like a claude.ai artifact. In the preview, calls and messages appear on screen instead of being sent, you type instead of speaking, and the contacts are marked as examples.
+`python3 tools/build-preview.py` writes `dist/helping-hand-preview.html`, a single-file preview for claude.ai artifacts. Artifacts can't make calls, send texts, use the microphone or read GPS, so the preview shows those on screen instead, with an example location. Sign-in there uses the viewer's claude.ai account.
 
 ## Files
 
-- `index.html` – screens and layout
-- `styles.css` – large, high-contrast, 3D button styling and themes
-- `app.js` – voice in and out, commands, requests, calling, emergency, settings, and the 3D SVG icons
-- `sw.js`, `manifest.webmanifest`, `icons/` – offline support and installable app
-- `tools/build-preview.py` – builds the single-file preview
-- `.github/workflows/pages.yml` – publishes to GitHub Pages
-
-## Notes
-
-- Voice commands use the browser's speech recognition (Chrome on Android, Safari on iOS 14.5+). If it isn't available or the microphone is off, the listening screen shows a box to type in instead.
-- Requests go through your own WhatsApp or SMS app, so you press **Send** once to finish. Sending messages and calls with no tap at all would need a backend service; that could be added later.
+- `index.html`: the screens
+- `styles.css`: the look (3 colour options and 3 text sizes)
+- `app.js`: voice, sign-in, location, requests, calling and settings
+- `sw.js`, `manifest.webmanifest`, `icons/`: offline support and install
+- `supabase/migrations/`: the database tables
+- `tools/build-preview.py`: builds the artifact preview

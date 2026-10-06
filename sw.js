@@ -1,5 +1,5 @@
 // Offline cache for the app shell.
-const CACHE = 'helping-hand-v2';
+const CACHE = 'helping-hand-v3';
 const FILES = ['./', 'index.html', 'styles.css', 'app.js', 'manifest.webmanifest', 'icons/icon.svg'];
 
 self.addEventListener('install', e => {
