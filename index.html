@@ -4,16 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Easy Help</title>
-  <meta name="description" content="A simple, voice-guided helper app for blind and elderly people.">
-  <meta name="theme-color" content="#fbf6f1">
+  <meta name="description" content="Easy Help for elders: groceries, pharmacy, rides, help at home, medicine reminders, family calls and location in one simple app.">
+  <meta name="theme-color" content="#2e5e4a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Easy Help">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icons/icon.svg">
+  <link rel="apple-touch-icon" href="icons/logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Kufi+Arabic:wght@500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Cairo:wght@500;600;700;800&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -21,350 +21,334 @@
   <a class="skip" href="#main" id="skipLink" data-t="skip">Skip to main content</a>
   <div id="previewBanner" class="preview-banner" hidden data-t="previewBanner"></div>
 
-  <header class="topbar">
-    <button id="backBtn" class="iconbtn" hidden data-say="back" data-t-aria="back" aria-label="Back">
+  <header class="topbar" id="topbar">
+    <button id="backBtn" class="iconbtn" hidden data-t-aria="back" aria-label="Back">
       <span class="ico" data-icon="back"></span>
     </button>
+    <span class="brandmark" id="brandmark" aria-hidden="true"><span class="ico" data-icon="homeheart"></span></span>
     <h1 id="screenTitle" tabindex="-1">Easy Help</h1>
-    <button id="langBtn" class="iconbtn langbtn" data-instant aria-label="العربية" lang="ar">ع</button>
-    <button id="settingsBtn" class="iconbtn" data-go="settings" data-say="settings" data-t-aria="settings" aria-label="Settings">
-      <span class="ico" data-icon="gear"></span>
-    </button>
+    <button id="langBtn" class="langbtn" aria-label="العربية" lang="ar">ع</button>
   </header>
 
   <main id="main" tabindex="-1">
     <!-- SIGN IN -->
     <section id="screen-signin" class="screen" hidden data-title="appName">
       <div class="welcome">
-        <span class="mark"><span class="ico" data-icon="hand"></span></span>
-        <p class="welcome-title" data-t="appName">Easy Help</p>
-        <p class="welcome-sub" data-t="signinIntro">Sign in so your helper, family and requests are saved.</p>
+        <img class="welcome-logo" src="icons/logo.jpg" alt="Easy Help for Elders. A little help, a lot of care." width="220" height="220">
+        <p class="welcome-sub" data-t="signinIntro"></p>
       </div>
 
-      <form id="authForm" class="stack" novalidate>
-        <div id="nameRow" hidden>
-          <label class="field-label" for="authName" data-t="myName">My name</label>
-          <input class="field" id="authName" autocomplete="name">
-        </div>
-        <div>
-          <label class="field-label" for="authEmail" data-t="email">Email</label>
-          <input class="field" id="authEmail" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false">
-        </div>
-        <div>
-          <label class="field-label" for="authPassword" data-t="password">Password</label>
-          <input class="field" id="authPassword" type="password" autocomplete="current-password">
-        </div>
-        <p id="authMsg" class="msg" role="alert"></p>
-        <button type="submit" class="btn btn-green btn-center" id="authSubmit" data-instant>
-          <span class="b-title" id="authSubmitLabel" data-t="signIn">Sign in</span>
-        </button>
-        <button type="button" class="btn btn-outline btn-center" id="authToggle" data-instant><span class="b-title" id="authToggleLabel" data-t="newHere">I'm new. Create an account</span></button>
-        <button type="button" class="linkbtn" id="authForgot" data-instant data-t="forgot">I forgot my password</button>
-      </form>
+      <div class="card pad">
+        <form id="authForm" class="stack" novalidate>
+          <div id="nameRow" hidden>
+            <label class="field-label" for="authName" data-t="myName"></label>
+            <input class="field" id="authName" autocomplete="name">
+          </div>
+          <div>
+            <label class="field-label" for="authEmail" data-t="email"></label>
+            <input class="field" id="authEmail" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false">
+          </div>
+          <div>
+            <label class="field-label" for="authPassword" data-t="password"></label>
+            <input class="field" id="authPassword" type="password" autocomplete="current-password">
+          </div>
+          <p id="authMsg" class="msg" role="alert"></p>
+          <button type="submit" class="btn btn-primary" id="authSubmit"><span id="authSubmitLabel"></span></button>
+          <button type="button" class="btn btn-secondary" id="authToggle"><span id="authToggleLabel"></span></button>
+          <button type="button" class="linkbtn" id="authForgot" data-t="forgot"></button>
+        </form>
 
-      <div id="previewAuth" class="stack" hidden>
-        <button type="button" class="btn btn-green btn-center" id="continueAs" data-instant>
-          <span class="b-title" id="continueAsLabel"></span>
-        </button>
+        <div id="previewAuth" class="stack" hidden>
+          <button type="button" class="btn btn-primary" id="continueAs"><span id="continueAsLabel"></span></button>
+        </div>
       </div>
 
-      <button type="button" class="linkbtn" id="skipSignIn" data-instant data-t="noAccount">Use without an account</button>
+      <button type="button" class="linkbtn center" id="skipSignIn" data-t="noAccount"></button>
     </section>
 
     <!-- HOME -->
     <section id="screen-home" class="screen" hidden data-title="appName">
-      <div class="today">
-        <p class="today-hello" id="todayHello"></p>
-        <p class="today-time" id="todayTime"></p>
-        <p class="today-date" id="todayDate"></p>
+      <div class="hero">
+        <p class="hero-hello" id="todayHello"></p>
+        <p class="hero-time" id="todayTime"></p>
+        <p class="hero-date" id="todayDate"></p>
       </div>
+
       <div id="homeNotices" class="stack"></div>
 
-      <button class="btn btn-purple btn-home" id="heroMic" data-say="heroSay">
-        <span class="ico-tile"><span class="ico" data-icon="mic"></span></span>
-        <span class="b-text"><span class="b-title" data-t="heroText"></span><span class="b-sub" data-t="heroSub"></span></span>
-      </button>
-      <button class="btn btn-orange btn-home" data-go="help" data-say="askHelpSay">
-        <span class="ico-tile"><span class="ico" data-icon="heart"></span></span>
-        <span class="b-text"><span class="b-title" data-t="askHelp"></span><span class="b-sub" data-t="askHelpSub"></span></span>
+      <button class="sos" data-go="emergency">
+        <span class="sos-ico"><span class="ico" data-icon="alert"></span></span>
+        <span class="sos-text"><span class="sos-title" data-t="emergency"></span><span class="sos-sub" data-t="emergencySub"></span></span>
         <span class="chev" data-icon="chev"></span>
       </button>
-      <button class="btn btn-teal btn-home" data-go="read" data-say="readTextSay">
-        <span class="ico-tile"><span class="ico" data-icon="camera"></span></span>
-        <span class="b-text"><span class="b-title" data-t="readText"></span><span class="b-sub" data-t="readTextSub"></span></span>
-        <span class="chev" data-icon="chev"></span>
-      </button>
-      <button class="btn btn-pink btn-home" data-go="meds" data-say="medsSay">
-        <span class="ico-tile"><span class="ico" data-icon="clock"></span></span>
-        <span class="b-text"><span class="b-title" data-t="meds"></span><span class="b-sub" id="medsSub"></span></span>
-        <span class="chev" data-icon="chev"></span>
-      </button>
-      <button class="btn btn-blue btn-home" data-go="location" data-say="whereAmISay">
-        <span class="ico-tile"><span class="ico" data-icon="pin"></span></span>
-        <span class="b-text"><span class="b-title" data-t="whereAmI"></span><span class="b-sub" data-t="whereAmISub"></span></span>
-        <span class="chev" data-icon="chev"></span>
-      </button>
-      <button class="btn btn-pale btn-home" data-go="family" data-say="family">
-        <span class="ico-tile"><span class="ico" data-icon="phone"></span></span>
-        <span class="b-text"><span class="b-title" data-t="family"></span><span class="b-sub" id="familySub"></span></span>
-        <span class="chev" data-icon="chev"></span>
-      </button>
-      <button class="btn btn-red btn-home" data-go="emergency" data-say="emergencySay">
-        <span class="ico-tile"><span class="ico" data-icon="alert"></span></span>
-        <span class="b-text"><span class="b-title" data-t="emergency"></span><span class="b-sub" data-t="emergencySub"></span></span>
-      </button>
-    </section>
 
-    <!-- ASK FOR HELP -->
-    <section id="screen-help" class="screen" hidden data-title="askHelp">
-      <button class="btn btn-orange" data-go="request:groceries" data-say="groceriesSay">
-        <span class="ico-tile"><span class="ico" data-icon="bag"></span></span><span class="b-text"><span class="b-title" data-t="groceries"></span></span><span class="chev" data-icon="chev"></span>
-      </button>
-      <button class="btn btn-orange" data-go="request:medicine" data-say="medicineSay">
-        <span class="ico-tile"><span class="ico" data-icon="pill"></span></span><span class="b-text"><span class="b-title" data-t="medicine"></span></span><span class="chev" data-icon="chev"></span>
-      </button>
-      <button class="btn btn-orange" data-go="request:ride" data-say="rideSay">
-        <span class="ico-tile"><span class="ico" data-icon="car"></span></span><span class="b-text"><span class="b-title" data-t="ride"></span></span><span class="chev" data-icon="chev"></span>
-      </button>
-      <button class="btn btn-orange" data-go="request:helper" data-say="helperSay">
-        <span class="ico-tile"><span class="ico" data-icon="person"></span></span><span class="b-text"><span class="b-title" data-t="helper"></span></span><span class="chev" data-icon="chev"></span>
-      </button>
-      <button class="btn btn-gray" data-go="history" data-say="history">
-        <span class="ico-tile"><span class="ico" data-icon="list"></span></span><span class="b-text"><span class="b-title" data-t="history"></span></span><span class="chev" data-icon="chev"></span>
-      </button>
-    </section>
-
-    <!-- REQUEST -->
-    <section id="screen-request" class="screen" hidden data-title="appName">
-      <p id="reqPrompt" class="lead"></p>
-      <button class="btn btn-purple" id="dictateBtn" data-say="speakRequest">
-        <span class="ico-tile"><span class="ico" data-icon="mic"></span></span><span class="b-text"><span class="b-title" data-t="speakRequest"></span></span>
-      </button>
-      <label for="reqText" class="field-label" data-t="typeHere">Or type it here</label>
-      <textarea id="reqText" rows="3" class="field"></textarea>
-      <p class="field-label" id="quickLabel" data-t="quick">Quick choices</p>
-      <div id="quickChips" class="chips" role="group" aria-labelledby="quickLabel"></div>
-      <label class="check">
-        <input type="checkbox" id="shareLoc" checked>
-        <span data-t="shareLoc">Include my location</span>
-      </label>
-      <button class="btn btn-green" id="sendReqBtn" data-say="send">
-        <span class="ico-tile"><span class="ico" data-icon="send"></span></span><span class="b-text"><span class="b-title" data-t="send"></span></span>
-      </button>
-      <p class="hint" id="sendHint"></p>
-    </section>
-
-    <!-- READ TEXT -->
-    <section id="screen-read" class="screen" hidden data-title="readText">
-      <p class="lead" data-t="readHow">Hold the phone about 30 cm (one foot) above the words, in good light.</p>
-      <button class="btn btn-teal btn-home" id="photoBtn" data-say="takePhoto">
-        <span class="ico-tile"><span class="ico" data-icon="camera"></span></span>
-        <span class="b-text"><span class="b-title" data-t="takePhoto">Take a photo</span></span>
-      </button>
-      <input id="photoInput" class="visually-hidden" type="file" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
-      <p id="readStatus" class="status-line" aria-live="polite"></p>
-      <div id="readResult" class="card" hidden>
-        <p class="card-label" data-t="itSays">It says</p>
-        <p id="readText" class="read-text"></p>
-      </div>
-      <div id="readActions" class="stack" hidden>
-        <button class="btn btn-teal" id="readAgainBtn" data-say="readAgain">
-          <span class="ico-tile"><span class="ico" data-icon="speaker"></span></span><span class="b-text"><span class="b-title" data-t="readAgain"></span></span>
+      <h2 class="section-title" data-t="needSomething"></h2>
+      <div class="tiles">
+        <button class="tile" data-go="service:groceries" data-tone="green">
+          <span class="tile-ico"><span class="ico" data-icon="bag"></span></span>
+          <span class="tile-title" data-t="groceries"></span>
+          <span class="tile-sub" data-t="groceriesSub"></span>
         </button>
-        <button class="btn btn-outline btn-center" id="stopReadBtn" data-instant><span class="b-title" data-t="stopReading">Stop reading</span></button>
+        <button class="tile" data-go="service:medicine" data-tone="blue">
+          <span class="tile-ico"><span class="ico" data-icon="pill"></span></span>
+          <span class="tile-title" data-t="medicine"></span>
+          <span class="tile-sub" data-t="medicineSub"></span>
+        </button>
+        <button class="tile" data-go="service:ride" data-tone="amber">
+          <span class="tile-ico"><span class="ico" data-icon="car"></span></span>
+          <span class="tile-title" data-t="ride"></span>
+          <span class="tile-sub" data-t="rideSub"></span>
+        </button>
+        <button class="tile" data-go="service:helper" data-tone="purple">
+          <span class="tile-ico"><span class="ico" data-icon="hands"></span></span>
+          <span class="tile-title" data-t="helper"></span>
+          <span class="tile-sub" data-t="helperSub"></span>
+        </button>
       </div>
+
+      <div class="section-head">
+        <h2 class="section-title" data-t="nextMedTitle"></h2>
+        <button class="textbtn" data-go="meds" data-t="seeAll"></button>
+      </div>
+      <button class="card row-card" data-go="meds" id="homeMed">
+        <span class="row-ico" data-tone="blue"><span class="ico" data-icon="clock"></span></span>
+        <span class="row-text"><span class="row-title" id="homeMedTitle"></span><span class="row-sub" id="homeMedSub"></span></span>
+        <span class="chev" data-icon="chev"></span>
+      </button>
+
+      <div class="section-head">
+        <h2 class="section-title" data-t="familyTitle"></h2>
+        <button class="textbtn" data-go="profile" data-t="edit"></button>
+      </div>
+      <div id="familyList" class="card list-card"></div>
+    </section>
+
+    <!-- ONE SERVICE: groceries, pharmacy, ride or help at home -->
+    <section id="screen-service" class="screen" hidden data-title="appName">
+      <div class="service-head" id="serviceHead">
+        <span class="service-ico"><span class="ico" id="serviceIcon"></span></span>
+        <div>
+          <p class="service-title" id="serviceTitle"></p>
+          <p class="service-lead" id="serviceLead"></p>
+        </div>
+      </div>
+
+      <div class="card pad stack">
+        <p class="field-label" id="servicePrompt"></p>
+        <div id="quickChips" class="chips"></div>
+        <div>
+          <label class="field-label" for="reqText" data-t="otherLabel"></label>
+          <textarea class="field" id="reqText" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="card pad stack">
+        <p class="field-label" data-t="whenLabel"></p>
+        <div class="segmented" role="radiogroup" id="whenGroup">
+          <label><input type="radio" name="when" value="now" checked><span data-t="whenNow"></span></label>
+          <label><input type="radio" name="when" value="today"><span data-t="whenToday"></span></label>
+          <label><input type="radio" name="when" value="tomorrow"><span data-t="whenTomorrow"></span></label>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="shareLoc" checked>
+          <span class="toggle-track" aria-hidden="true"></span>
+          <span id="shareLocLabel"></span>
+        </label>
+      </div>
+
+      <button class="btn btn-primary btn-lg" id="sendReqBtn">
+        <span class="ico" data-icon="send"></span><span id="sendReqLabel"></span>
+      </button>
+      <p class="hint center" id="sendHint"></p>
+    </section>
+
+    <!-- REQUESTS -->
+    <section id="screen-requests" class="screen" hidden data-title="tabRequests">
+      <p class="lead" data-t="requestsLead"></p>
+      <div id="historyList" class="stack"></div>
+      <button class="btn btn-secondary" id="clearHistory"><span class="ico" data-icon="trash"></span><span data-t="clearList"></span></button>
     </section>
 
     <!-- MEDICINES -->
-    <section id="screen-meds" class="screen" hidden data-title="meds">
+    <section id="screen-meds" class="screen" hidden data-title="tabMeds">
+      <p class="lead" data-t="medsLead"></p>
       <div id="medList" class="stack"></div>
-      <button class="btn btn-pink" data-go="medadd" data-say="addMed">
-        <span class="ico-tile"><span class="ico" data-icon="plus"></span></span><span class="b-text"><span class="b-title" data-t="addMed"></span></span>
-      </button>
+      <button class="btn btn-primary" data-go="medadd"><span class="ico" data-icon="plus"></span><span data-t="addMed"></span></button>
       <p class="hint" data-t="medsHint"></p>
     </section>
 
-    <!-- ADD MEDICINE -->
     <section id="screen-medadd" class="screen" hidden data-title="addMed">
-      <label class="field-label" for="medName" data-t="medName">Medicine name</label>
-      <div class="field-row">
-        <input class="field" id="medName" autocomplete="off">
-        <button type="button" class="iconbtn iconbtn-lg" id="medNameMic" data-say="speakName" data-t-aria="speakName"><span class="ico" data-icon="mic"></span></button>
+      <div class="card pad stack">
+        <div>
+          <label class="field-label" for="medName" data-t="medName"></label>
+          <input class="field" id="medName" autocomplete="off" data-t-ph="medNamePh">
+        </div>
+        <div>
+          <p class="field-label" data-t="medTimes"></p>
+          <div id="medTimes" class="stack"></div>
+        </div>
+        <button type="button" class="btn btn-secondary" id="addTimeBtn"><span class="ico" data-icon="plus"></span><span data-t="addTime"></span></button>
       </div>
-      <p class="field-label" id="medTimesLabel" data-t="medTimes">Times to take it</p>
-      <div id="medTimes" class="stack" role="group" aria-labelledby="medTimesLabel"></div>
-      <button type="button" class="btn btn-outline btn-center" id="addTimeBtn" data-instant><span class="b-title" data-t="addTime">Add another time</span></button>
-      <button type="button" class="btn btn-green" id="saveMedBtn" data-instant>
-        <span class="ico-tile"><span class="ico" data-icon="check"></span></span><span class="b-text"><span class="b-title" data-t="saveMed"></span></span>
-      </button>
+      <button class="btn btn-primary btn-lg" id="saveMedBtn"><span class="ico" data-icon="check"></span><span data-t="saveMed"></span></button>
     </section>
 
-    <!-- WHERE AM I -->
-    <section id="screen-location" class="screen" hidden data-title="whereAmI">
-      <div class="card place" aria-live="polite">
-        <p class="card-label" data-t="youAreAt">You are at</p>
-        <p class="place-address" id="placeAddress"></p>
-        <p class="hint" id="placeNote"></p>
+    <!-- LOCATION -->
+    <section id="screen-location" class="screen" hidden data-title="tabLocation">
+      <div class="card map-card">
+        <div class="map" id="map" role="img" data-t-aria="mapAlt">
+          <div class="map-tiles" id="mapTiles"></div>
+          <span class="map-pin" aria-hidden="true"><span class="ico" data-icon="pin"></span></span>
+          <span class="map-credit">© OpenStreetMap</span>
+        </div>
+        <div class="pad">
+          <p class="card-label" data-t="youAreAt"></p>
+          <p class="place-address" id="placeAddress" aria-live="polite"></p>
+          <p class="hint" id="placeNote"></p>
+        </div>
       </div>
-      <button class="btn btn-blue" id="readPlace" data-say="readAgain">
-        <span class="ico-tile"><span class="ico" data-icon="speaker"></span></span><span class="b-text"><span class="b-title" data-t="readAgain"></span></span>
-      </button>
-      <button class="btn btn-green" id="sendPlace" data-say="sendLocation">
-        <span class="ico-tile"><span class="ico" data-icon="send"></span></span><span class="b-text"><span class="b-title" data-t="sendLocation"></span></span>
-      </button>
-      <a class="btn btn-gray" id="openMaps" href="#" target="_blank" rel="noopener">
-        <span class="ico-tile"><span class="ico" data-icon="map"></span></span><span class="b-text"><span class="b-title" data-t="openMaps"></span></span>
-      </a>
-      <button class="btn btn-gray" id="savePlace" data-say="saveHome">
-        <span class="ico-tile"><span class="ico" data-icon="home"></span></span><span class="b-text"><span class="b-title" data-t="saveHome"></span></span>
-      </button>
-      <button class="btn btn-outline btn-center" id="refreshPlace" data-instant><span class="b-title" data-t="tryAgain">Find me again</span></button>
+
+      <button class="btn btn-primary btn-lg" id="sendPlace"><span class="ico" data-icon="send"></span><span id="sendPlaceLabel"></span></button>
+      <div class="btn-grid">
+        <a class="btn btn-secondary" id="openMaps" href="#" target="_blank" rel="noopener"><span class="ico" data-icon="map"></span><span data-t="openMaps"></span></a>
+        <button class="btn btn-secondary" id="refreshPlace"><span class="ico" data-icon="refresh"></span><span data-t="refresh"></span></button>
+      </div>
+
+      <div class="card pad stack">
+        <p class="card-label" data-t="homeAddress"></p>
+        <p class="lead" id="homeAddressText"></p>
+        <p class="hint" id="homeDistance"></p>
+        <div class="btn-grid">
+          <a class="btn btn-secondary" id="directionsHome" href="#" target="_blank" rel="noopener"><span class="ico" data-icon="home"></span><span data-t="directionsHome"></span></a>
+          <button class="btn btn-secondary" id="savePlace"><span class="ico" data-icon="check"></span><span data-t="saveHome"></span></button>
+        </div>
+      </div>
     </section>
 
-    <!-- FAMILY -->
-    <section id="screen-family" class="screen" hidden data-title="family">
-      <div id="familyList" class="stack"></div>
-    </section>
+    <!-- PROFILE -->
+    <section id="screen-profile" class="screen" hidden data-title="tabProfile">
+      <div class="card pad profile-head">
+        <span class="avatar" id="avatar"></span>
+        <div class="profile-who">
+          <p class="row-title" id="profileName"></p>
+          <p class="row-sub" id="accountLine"></p>
+        </div>
+      </div>
+      <div class="btn-grid">
+        <button type="button" class="btn btn-secondary" id="accountBtn"><span class="ico" data-icon="logout"></span><span id="accountBtnLabel"></span></button>
+      </div>
+      <div id="passwordChange" class="card pad stack" hidden>
+        <label class="field-label" for="newPassword" data-t="newPassword"></label>
+        <input class="field" id="newPassword" type="password" autocomplete="new-password">
+        <button type="button" class="btn btn-secondary" id="savePassword"><span data-t="changePassword"></span></button>
+      </div>
 
-    <!-- HISTORY -->
-    <section id="screen-history" class="screen" hidden data-title="history">
-      <div id="historyList" class="stack"></div>
-      <button class="btn btn-outline btn-center" id="clearHistory" data-say="clearSay"><span class="b-title" data-t="clearList">Clear list</span></button>
+      <form id="settingsForm" class="stack" novalidate>
+        <fieldset class="card pad stack">
+          <legend class="card-label" data-t="aboutMe"></legend>
+          <div><label class="field-label" for="s-name" data-t="myName"></label><input class="field" id="s-name" name="name" autocomplete="name"></div>
+          <div><label class="field-label" for="s-address" data-t="myAddress"></label><textarea class="field" id="s-address" name="address" rows="2" autocomplete="street-address"></textarea></div>
+        </fieldset>
+
+        <fieldset class="card pad stack">
+          <legend class="card-label" data-t="myHelper"></legend>
+          <p class="hint" data-t="helperHint"></p>
+          <div><label class="field-label" for="s-helperName" data-t="helperName"></label><input class="field" id="s-helperName" name="helperName"></div>
+          <div><label class="field-label" for="s-helperPhone" data-t="helperPhone"></label><input class="field" id="s-helperPhone" name="helperPhone" type="tel" inputmode="tel" dir="ltr"></div>
+          <div>
+            <label class="field-label" for="s-sendVia" data-t="sendVia"></label>
+            <select class="field" id="s-sendVia" name="sendVia">
+              <option value="whatsapp" data-t="whatsapp"></option>
+              <option value="sms" data-t="sms"></option>
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset class="card pad stack">
+          <legend class="card-label" data-t="familyTitle"></legend>
+          <div class="pair"><div><label class="field-label" for="s-fam1Name" data-t="fam1"></label><input class="field" id="s-fam1Name" name="fam1Name" data-t-ph="famName"></div><div><label class="field-label" for="s-fam1Phone" data-t="famPhone"></label><input class="field" id="s-fam1Phone" name="fam1Phone" type="tel" inputmode="tel" dir="ltr"></div></div>
+          <div class="pair"><div><label class="field-label" for="s-fam2Name" data-t="fam2"></label><input class="field" id="s-fam2Name" name="fam2Name" data-t-ph="famName"></div><div><label class="field-label" for="s-fam2Phone" data-t="famPhone"></label><input class="field" id="s-fam2Phone" name="fam2Phone" type="tel" inputmode="tel" dir="ltr"></div></div>
+          <div class="pair"><div><label class="field-label" for="s-fam3Name" data-t="fam3"></label><input class="field" id="s-fam3Name" name="fam3Name" data-t-ph="famName"></div><div><label class="field-label" for="s-fam3Phone" data-t="famPhone"></label><input class="field" id="s-fam3Phone" name="fam3Phone" type="tel" inputmode="tel" dir="ltr"></div></div>
+        </fieldset>
+
+        <fieldset class="card pad stack">
+          <legend class="card-label" data-t="emergency"></legend>
+          <div><label class="field-label" for="s-emergency" data-t="emergencyNumber"></label><input class="field" id="s-emergency" name="emergency" type="tel" inputmode="tel" dir="ltr" data-t-ph="emergencyPh"></div>
+          <div>
+            <label class="field-label" for="s-countdown" data-t="countdownLabel"></label>
+            <select class="field" id="s-countdown" name="countdown">
+              <option value="0" data-t="noAuto"></option>
+              <option value="5" data-t="sec5"></option>
+              <option value="10" data-t="sec10"></option>
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset class="card pad stack">
+          <legend class="card-label" data-t="display"></legend>
+          <div>
+            <label class="field-label" for="s-lang" data-t="language"></label>
+            <select class="field" id="s-lang" name="lang">
+              <option value="en">English</option>
+              <option value="ar" lang="ar">العربية</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="s-size" data-t="size"></label>
+            <select class="field" id="s-size" name="size">
+              <option value="1" data-t="normal"></option>
+              <option value="1.15" data-t="large"></option>
+              <option value="1.3" data-t="xl"></option>
+            </select>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary btn-lg"><span class="ico" data-icon="check"></span><span data-t="save"></span></button>
+      </form>
     </section>
 
     <!-- EMERGENCY -->
-    <section id="screen-emergency" class="screen" hidden data-title="emergencyTitle">
-      <p id="countdownText" class="countdown-text" aria-live="assertive"></p>
-      <button class="btn btn-red btn-home" id="callEmergencyNow" data-say="callNow">
-        <span class="ico-tile"><span class="ico" data-icon="phone"></span></span><span class="b-text"><span class="b-title" data-t="callNow"></span></span>
-      </button>
-      <button class="btn btn-blue" id="alertHelperBtn" data-say="sendLocation">
-        <span class="ico-tile"><span class="ico" data-icon="pin"></span></span><span class="b-text"><span class="b-title" data-t="sendLocation"></span></span>
-      </button>
-      <button class="btn btn-outline btn-center" id="cancelEmergency" data-say="cancelSay" data-instant><span class="b-title" data-t="cancel">Cancel</span></button>
-    </section>
-
-    <!-- SETTINGS -->
-    <section id="screen-settings" class="screen" hidden data-title="settings">
-      <fieldset>
-        <legend data-t="account">Account</legend>
-        <p id="accountLine" class="lead-sm"></p>
-        <div id="passwordChange" class="stack" hidden>
-          <label class="field-label" for="newPassword" data-t="newPassword">New password</label>
-          <input class="field" id="newPassword" type="password" autocomplete="new-password">
-          <button type="button" class="btn btn-gray btn-center" id="savePassword" data-instant><span class="b-title" data-t="changePassword"></span></button>
-        </div>
-        <button type="button" class="btn btn-outline btn-center" id="accountBtn" data-instant><span class="b-title" id="accountBtnLabel"></span></button>
-      </fieldset>
-
-      <form id="settingsForm" class="stack" autocomplete="on">
-        <fieldset>
-          <legend data-t="aboutMe">About me</legend>
-          <label class="field-label" for="s-name" data-t="myName">My name</label>
-          <input class="field" id="s-name" name="name" autocomplete="name">
-          <label class="field-label" for="s-address" data-t="myAddress">My home address</label>
-          <textarea class="field" id="s-address" name="address" rows="2" autocomplete="street-address"></textarea>
-        </fieldset>
-
-        <fieldset>
-          <legend data-t="myHelper">My helper</legend>
-          <p class="hint" data-t="helperHint"></p>
-          <label class="field-label" for="s-helperName" data-t="helperName">Helper's name</label>
-          <input class="field" id="s-helperName" name="helperName">
-          <label class="field-label" for="s-helperPhone" data-t="helperPhone">Helper's phone number</label>
-          <input class="field" id="s-helperPhone" name="helperPhone" type="tel" inputmode="tel" placeholder="+20 100 000 0000">
-          <label class="field-label" for="s-sendVia" data-t="sendVia">Send messages by</label>
-          <select class="field" id="s-sendVia" name="sendVia">
-            <option value="whatsapp" data-t="whatsapp">WhatsApp</option>
-            <option value="sms" data-t="sms">Text message (SMS)</option>
-          </select>
-        </fieldset>
-
-        <fieldset>
-          <legend data-t="familyToCall">Family to call</legend>
-          <div class="pair"><input class="field" id="s-fam1Name" name="fam1Name" data-t-aria="fam1Name" data-t-ph="name"><input class="field" id="s-fam1Phone" name="fam1Phone" type="tel" inputmode="tel" data-t-aria="fam1Phone" data-t-ph="phone"></div>
-          <div class="pair"><input class="field" id="s-fam2Name" name="fam2Name" data-t-aria="fam2Name" data-t-ph="name"><input class="field" id="s-fam2Phone" name="fam2Phone" type="tel" inputmode="tel" data-t-aria="fam2Phone" data-t-ph="phone"></div>
-          <div class="pair"><input class="field" id="s-fam3Name" name="fam3Name" data-t-aria="fam3Name" data-t-ph="name"><input class="field" id="s-fam3Phone" name="fam3Phone" type="tel" inputmode="tel" data-t-aria="fam3Phone" data-t-ph="phone"></div>
-        </fieldset>
-
-        <fieldset>
-          <legend data-t="emergencyTitle">Emergency</legend>
-          <label class="field-label" for="s-emergency" data-t="emergencyNumber">Emergency number</label>
-          <input class="field" id="s-emergency" name="emergency" type="tel" inputmode="tel" data-t-ph="emergencyPh">
-          <label class="field-label" for="s-countdown" data-t="countdownLabel">Seconds before calling automatically</label>
-          <select class="field" id="s-countdown" name="countdown">
-            <option value="0" data-t="noAuto">Don't call automatically</option>
-            <option value="5" data-t="sec5">5 seconds</option>
-            <option value="10" data-t="sec10">10 seconds</option>
-          </select>
-        </fieldset>
-
-        <fieldset>
-          <legend data-t="seeing">Seeing and hearing</legend>
-          <label class="field-label" for="s-lang" data-t="language">Language</label>
-          <select class="field" id="s-lang" name="lang">
-            <option value="en">English</option>
-            <option value="ar" lang="ar">العربية</option>
-          </select>
-          <label class="check"><input type="checkbox" id="s-voice" name="voice"> <span data-t="readAloud">Read everything aloud</span></label>
-          <label class="check"><input type="checkbox" id="s-confirmTap" name="confirmTap"> <span data-t="confirmTap">Tap once to hear, tap again to choose</span></label>
-          <p class="hint" data-t="srHint"></p>
-          <label class="field-label" for="s-rate" data-t="rate">Voice speed</label>
-          <select class="field" id="s-rate" name="rate">
-            <option value="0.7" data-t="slow">Slow</option>
-            <option value="0.9" data-t="normal">Normal</option>
-            <option value="1.15" data-t="fast">Fast</option>
-          </select>
-          <label class="field-label" for="s-size" data-t="size">Text size</label>
-          <select class="field" id="s-size" name="size">
-            <option value="1" data-t="large">Large</option>
-            <option value="1.2" data-t="xl">Extra large</option>
-            <option value="1.4" data-t="huge">Huge</option>
-          </select>
-          <label class="field-label" for="s-theme" data-t="colours">Colours</label>
-          <select class="field" id="s-theme" name="theme">
-            <option value="light" data-t="themeLight">Cream and blue</option>
-            <option value="dark" data-t="themeDark">Dark</option>
-            <option value="yellow" data-t="themeYellow">Yellow on black</option>
-          </select>
-        </fieldset>
-
-        <button type="submit" class="btn btn-green btn-center" data-instant><span class="b-title" data-t="save">Save</span></button>
-      </form>
+    <section id="screen-emergency" class="screen screen-sos" hidden data-title="emergency">
+      <div class="sos-panel">
+        <span class="sos-ring"><span class="ico" data-icon="alert"></span></span>
+        <p class="sos-count" id="countdownNum" aria-hidden="true"></p>
+        <p class="sos-msg" id="countdownText" role="status"></p>
+      </div>
+      <button class="btn btn-danger btn-lg" id="callEmergencyNow"><span class="ico" data-icon="phone"></span><span data-t="callNow"></span></button>
+      <button class="btn btn-light btn-lg" id="alertHelperBtn"><span class="ico" data-icon="send"></span><span id="alertHelperLabel"></span></button>
+      <button class="btn btn-ghost-light btn-lg" id="cancelEmergency"><span data-t="cancel"></span></button>
     </section>
   </main>
 
-  <!-- Listening: speak, or type if the microphone isn't available -->
-  <div id="listening" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="listeningTitle">
-    <span class="mark mark-lg pulse"><span class="ico" data-icon="mic"></span></span>
-    <p class="overlay-title" id="listeningTitle" data-t="listening">Listening…</p>
-    <p id="heard" class="heard" aria-live="polite"></p>
-    <label for="typedCmd" class="field-label" data-t="listenType">Or type here</label>
-    <input id="typedCmd" class="field" autocomplete="off">
-    <button class="btn btn-green btn-center" id="stopListening" data-instant><span class="b-title" data-t="done">Done</span></button>
-  </div>
+  <nav class="tabbar" id="tabbar" data-t-aria="tabsLabel">
+    <button class="tab" data-tab="home"><span class="ico" data-icon="home"></span><span data-t="tabHome"></span></button>
+    <button class="tab" data-tab="requests"><span class="ico" data-icon="list"></span><span data-t="tabRequests"></span></button>
+    <button class="tab" data-tab="meds"><span class="ico" data-icon="pill"></span><span data-t="tabMeds"></span></button>
+    <button class="tab" data-tab="location"><span class="ico" data-icon="pin"></span><span data-t="tabLocation"></span></button>
+    <button class="tab" data-tab="profile"><span class="ico" data-icon="user"></span><span data-t="tabProfile"></span></button>
+  </nav>
 
   <!-- Medicine reminder -->
-  <div id="reminder" class="overlay" hidden role="alertdialog" aria-modal="true" aria-labelledby="reminderTitle" aria-describedby="reminderWhat">
-    <span class="mark mark-lg mark-pink pulse"><span class="ico" data-icon="clock"></span></span>
-    <p class="overlay-title" id="reminderTitle" data-t="remindTitle">Time for your medicine</p>
-    <p class="reminder-what" id="reminderWhat"></p>
-    <button class="btn btn-green btn-home" id="tookItBtn" data-instant>
-      <span class="ico-tile"><span class="ico" data-icon="check"></span></span><span class="b-text"><span class="b-title" data-t="tookIt"></span></span>
-    </button>
-    <button class="btn btn-blue" id="snoozeBtn" data-instant>
-      <span class="ico-tile"><span class="ico" data-icon="clock"></span></span><span class="b-text"><span class="b-title" data-t="later10"></span></span>
-    </button>
-    <button class="btn btn-outline-light btn-center" id="skipDoseBtn" data-instant><span class="b-title" data-t="skipDose">Skip this one</span></button>
+  <div id="reminder" class="overlay" hidden role="alertdialog" aria-modal="true" aria-labelledby="reminderTitle">
+    <div class="dialog">
+      <span class="dialog-ico"><span class="ico" data-icon="pill"></span></span>
+      <p class="dialog-title" id="reminderTitle" data-t="remindTitle"></p>
+      <p class="dialog-what" id="reminderWhat"></p>
+      <button class="btn btn-primary btn-lg" id="tookItBtn"><span class="ico" data-icon="check"></span><span data-t="tookIt"></span></button>
+      <button class="btn btn-secondary" id="snoozeBtn"><span class="ico" data-icon="clock"></span><span data-t="later10"></span></button>
+      <button class="linkbtn center" id="skipDoseBtn" data-t="skipDose"></button>
+    </div>
   </div>
 
-  <!-- Preview only: shows the message or call instead of sending it -->
+  <!-- Preview only: what would be sent or called -->
   <div id="sheet" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
-    <p class="overlay-title" id="sheetTitle"></p>
-    <p class="sheet-to" id="sheetTo"></p>
-    <pre class="sheet-body" id="sheetBody"></pre>
-    <button class="btn btn-blue btn-center" id="sheetCopy" data-instant><span class="b-title" data-t="copy">Copy</span></button>
-    <button class="btn btn-outline-light btn-center" id="sheetClose" data-instant><span class="b-title" data-t="close">Close</span></button>
+    <div class="dialog">
+      <p class="dialog-title" id="sheetTitle"></p>
+      <p class="hint" id="sheetTo" dir="auto"></p>
+      <pre class="sheet-body" id="sheetBody" dir="auto"></pre>
+      <p class="hint" id="sheetNote"></p>
+      <button class="btn btn-secondary" id="sheetCopy"><span data-t="copy"></span></button>
+      <button class="btn btn-primary" id="sheetClose"><span data-t="close"></span></button>
+    </div>
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>

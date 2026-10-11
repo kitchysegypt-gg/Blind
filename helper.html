@@ -4,18 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Easy Help · Reply</title>
-  <meta name="theme-color" content="#fbf6f1">
+  <meta name="theme-color" content="#2e5e4a">
   <meta name="robots" content="noindex">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Kufi+Arabic:wght@500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Cairo:wght@500;600;700;800&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="helper-page no-tabs">
   <header class="topbar">
+    <span class="brandmark" aria-hidden="true"><span class="ico" data-icon="homeheart"></span></span>
     <h1 id="title">Easy Help</h1>
-    <button id="langBtn" class="iconbtn langbtn" lang="ar" aria-label="العربية">ع</button>
+    <button id="langBtn" class="langbtn" lang="ar" aria-label="العربية">ع</button>
   </header>
 
   <main id="main">
@@ -23,31 +24,25 @@
       <p id="loading" class="status-line"></p>
 
       <div id="requestBox" class="stack" hidden>
-        <div class="card">
+        <div class="card pad">
           <p class="card-label" id="whoNeeds"></p>
           <p class="place-address" id="what"></p>
           <p class="hint" id="when"></p>
         </div>
-        <div class="card" id="whereBox" hidden>
+        <div class="card pad stack" id="whereBox" hidden>
           <p class="card-label" data-t="where"></p>
           <p class="lead" id="address"></p>
-          <a class="btn btn-gray" id="mapLink" href="#" target="_blank" rel="noopener" hidden>
-            <span class="ico-tile"><span class="ico" data-icon="map"></span></span><span class="b-text"><span class="b-title" data-t="openMap"></span></span>
+          <a class="btn btn-secondary" id="mapLink" href="#" target="_blank" rel="noopener" hidden>
+            <span class="ico" data-icon="map"></span><span data-t="openMap"></span>
           </a>
         </div>
 
-        <p class="lead" data-t="yourAnswer"></p>
-        <button class="btn btn-green btn-home" data-status="coming">
-          <span class="ico-tile"><span class="ico" data-icon="car"></span></span><span class="b-text"><span class="b-title" data-t="coming"></span></span>
-        </button>
-        <button class="btn btn-orange" data-status="later">
-          <span class="ico-tile"><span class="ico" data-icon="clock"></span></span><span class="b-text"><span class="b-title" data-t="later"></span></span>
-        </button>
-        <button class="btn btn-blue" data-status="done">
-          <span class="ico-tile"><span class="ico" data-icon="check"></span></span><span class="b-text"><span class="b-title" data-t="done"></span></span>
-        </button>
-        <button class="btn btn-outline btn-center" data-status="cant"><span class="b-title" data-t="cant"></span></button>
-        <p id="result" class="msg" role="status"></p>
+        <h2 class="section-title" data-t="yourAnswer"></h2>
+        <button class="btn btn-primary btn-lg" data-status="coming"><span class="ico" data-icon="car"></span><span data-t="coming"></span></button>
+        <button class="btn btn-secondary btn-lg" data-status="later"><span class="ico" data-icon="clock"></span><span data-t="later"></span></button>
+        <button class="btn btn-secondary btn-lg" data-status="done"><span class="ico" data-icon="check"></span><span data-t="done"></span></button>
+        <button class="linkbtn center" data-status="cant"><span data-t="cant"></span></button>
+        <p id="result" class="lead center" role="status"></p>
       </div>
     </section>
   </main>

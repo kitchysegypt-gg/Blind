@@ -1,14 +1,25 @@
 {
   "name": "Easy Help",
   "short_name": "Easy Help",
-  "description": "Voice-guided help for blind and elderly people: groceries, medicine, rides, a helper, family calls and emergency.",
+  "description": "Easy Help for elders: groceries, pharmacy, rides, help at home, medicine reminders, family calls and location.",
   "start_url": "./#home",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#fbf6f1",
-  "theme_color": "#fbf6f1",
+  "background_color": "#f6f2ea",
+  "theme_color": "#2e5e4a",
   "icons": [
-    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/logo.jpg",
+      "sizes": "1254x1254",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
   ]
 }

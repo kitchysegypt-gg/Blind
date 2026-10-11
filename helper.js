@@ -7,6 +7,7 @@ const SUPABASE_URL = 'https://sjlgitmupecmqhfmuyds.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_sgYgEuoQbf1UhuED29P3zg_TQRm_mZF';
 
 const ICONS = {
+  homeheart: '<path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/><path d="M12 17.5s-3-1.8-3-3.8a1.6 1.6 0 0 1 3-.9 1.6 1.6 0 0 1 3 .9c0 2-3 3.8-3 3.8z"/>',
   map: '<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>',
   car: '<path d="M4 16.5V12l2-5h12l2 5v4.5"/><path d="M3 16.5h18M4 12h16"/><circle cx="7.5" cy="16.5" r="1.8"/><circle cx="16.5" cy="16.5" r="1.8"/>',
   clock: '<circle cx="12" cy="12" r="9.5"/><path d="M12 6.5V12l3.5 2"/>',
@@ -19,10 +20,10 @@ const STRINGS = {
     notFound: "This link doesn't work. It may be old or copied wrongly.",
     offline: 'No internet connection. Please try again.',
     needs: '{name} needs', someone: 'Someone',
-    groceries: 'Groceries', medicine: 'Medicine', ride: 'A ride', helper: 'Help', location: 'Location',
+    groceries: 'Groceries', medicine: 'Pharmacy', ride: 'A ride', helper: 'Help at home', location: 'Location',
     where: 'Where', openMap: 'Open the map', yourAnswer: 'Your answer',
     coming: "I'm on my way", later: "I'll come later", done: "It's done", cant: "Sorry, I can't",
-    sent: 'Thank you. {name} will hear: "{answer}".',
+    sent: 'Thank you. {name} will see: "{answer}".',
     sentAt: 'Sent {when}', langSwitchTo: 'العربية',
   },
   ar: {
@@ -30,10 +31,10 @@ const STRINGS = {
     notFound: 'هذا الرابط لا يعمل. ربما يكون قديمًا أو منسوخًا بشكل خاطئ.',
     offline: 'لا يوجد اتصال بالإنترنت. حاول مرة أخرى.',
     needs: '{name} يحتاج', someone: 'شخص',
-    groceries: 'بقالة', medicine: 'دواء', ride: 'توصيلة', helper: 'مساعدة', location: 'الموقع',
+    groceries: 'بقالة', medicine: 'صيدلية', ride: 'توصيلة', helper: 'مساعدة في البيت', location: 'الموقع',
     where: 'المكان', openMap: 'افتح الخريطة', yourAnswer: 'ردّك',
     coming: 'أنا في الطريق', later: 'سآتي لاحقًا', done: 'تم', cant: 'آسف، لا أستطيع',
-    sent: 'شكرًا. سيسمع {name}: «{answer}».',
+    sent: 'شكرًا. سيرى {name}: «{answer}».',
     sentAt: 'أُرسل {when}', langSwitchTo: 'English',
   },
 };

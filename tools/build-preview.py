@@ -2,10 +2,11 @@
 """Build a single-file preview of the app (dist/helping-hand-preview.html).
 
 The preview inlines the CSS and JS and sets HH_PREVIEW so that calls,
-messages, the microphone and location are shown on screen instead of used.
+messages and location are shown on screen instead of used.
 It's for hosted previews (like a claude.ai artifact) where those device
 features aren't allowed. The real app is index.html.
 """
+import base64
 import pathlib
 import re
 
@@ -17,7 +18,11 @@ js = (root / "app.js").read_text(encoding="utf-8")
 title = re.search(r"<title>.*?</title>", html, re.S).group(0)
 body = re.search(r"<!-- BODY:START -->(.*)<!-- BODY:END -->", html, re.S).group(1)
 
-FONTS = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Kufi+Arabic:wght@500;700&display=swap">'
+FONTS = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Cairo:wght@500;600;700;800&display=swap">'
+
+# The logo goes inside the page, since a single-file preview has no icons folder.
+logo = base64.b64encode((root / "icons" / "logo.jpg").read_bytes()).decode()
+body = body.replace('src="icons/logo.jpg"', f'src="data:image/jpeg;base64,{logo}"')
 
 out = f"""{title}
 {FONTS}
