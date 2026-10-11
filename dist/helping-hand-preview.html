@@ -698,6 +698,10 @@ body.no-tabs main { padding-bottom: calc(32px + env(safe-area-inset-bottom)); }
    ========================================================= */
 
 const PREVIEW = !!window.HH_PREVIEW; // hosted preview: no calls, texts or GPS
+// The Android app (Capacitor) serves these files from inside the APK.
+const NATIVE = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+// Where the website copy lives, for links that leave the phone (helper replies, email links).
+const PUBLIC_URL = 'https://kitchysegypt-gg.github.io/Blind/';
 
 // Supabase project for accounts. The publishable key is safe to ship in an app;
 // row-level security keeps each person's data private.
@@ -801,6 +805,7 @@ const STRINGS = {
     reply_done: '{name} says it is done: {what}.',
 
     medsLead: 'You will get a reminder at each time while Easy Help is open.',
+    medsLeadApp: 'Your phone shows a reminder at each time, even when Easy Help is closed.',
     noMeds: 'No medicines yet. Tap "Add a medicine" to set your first reminder.',
     addMed: 'Add a medicine', medName: 'Medicine name', medNamePh: 'For example: Concor 5 mg',
     medTimes: 'Times to take it', addTime: 'Add another time', saveMed: 'Save medicine', removeTime: 'Remove this time',
@@ -911,6 +916,7 @@ const STRINGS = {
     reply_done: '{name} يقول إن الطلب تم: {what}.',
 
     medsLead: 'سيظهر لك تذكير في كل موعد ما دام إيزي هيلب مفتوحًا.',
+    medsLeadApp: 'سيظهر تذكير على هاتفك في كل موعد، حتى لو كان إيزي هيلب مغلقًا.',
     noMeds: 'لا توجد أدوية بعد. اضغط "أضف دواء" لضبط أول تذكير.',
     addMed: 'أضف دواء', medName: 'اسم الدواء', medNamePh: 'مثال: كونكور ٥ مجم',
     medTimes: 'مواعيد الدواء', addTime: 'أضف موعدًا آخر', saveMed: 'احفظ الدواء', removeTime: 'احذف هذا الموعد',
@@ -1156,7 +1162,7 @@ const SupabaseAccount = {
     return res.status === 204 ? null : res.json().catch(() => null);
   },
 
-  redirect() { return encodeURIComponent(location.origin + location.pathname); },
+  redirect() { return encodeURIComponent(NATIVE ? PUBLIC_URL : location.origin + location.pathname); },
   async signIn(email, password) {
     this.keep(await this.auth('token?grant_type=password', { email, password }));
   },
@@ -1265,6 +1271,7 @@ async function afterSignIn() {
   if (!store.get('hh.lastReplyAt', null)) store.set('hh.lastReplyAt', new Date().toISOString());
   applySize();
   applyLanguage();
+  scheduleMedReminders();
 }
 
 /* ---------- Sign-in screen ---------- */
@@ -1398,6 +1405,15 @@ document.querySelectorAll('[data-tab]').forEach(tab => {
     TABS.includes(screenNow()) ? goReplace(tab.dataset.tab) : go(tab.dataset.tab);
   });
 });
+// In the Android app, links that open a new window (Maps, directions) go to the phone's own apps.
+if (NATIVE) {
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[target="_blank"]');
+    if (!a || !a.href || a.href.endsWith('#')) return;
+    e.preventDefault();
+    location.href = a.href;
+  });
+}
 document.getElementById('skipLink').addEventListener('click', e => {
   e.preventDefault();
   document.getElementById('main').focus();
@@ -1559,7 +1575,8 @@ function renderService(type) {
   return s.title;
 }
 function helperLink(token) {
-  return `${location.origin}${location.pathname.replace(/[^/]*$/, '')}helper.html?r=${token}`;
+  const base = NATIVE ? PUBLIC_URL : `${location.origin}${location.pathname.replace(/[^/]*$/, '')}`;
+  return `${base}helper.html?r=${token}`;
 }
 function greetLine() {
   const helperName = settings.helperName ? T('msgName', { name: settings.helperName }) : '';
@@ -1721,6 +1738,10 @@ function doseState(med, time) {
   return late < 0 ? 'later' : late > 3 * 3600 * 1000 ? 'missed' : 'due';
 }
 function renderMeds() {
+  if (NATIVE) {
+    document.querySelector('#screen-meds .lead').textContent = T('medsLeadApp');
+    document.querySelector('#screen-meds .hint').hidden = true;
+  }
   const list = document.getElementById('medList');
   list.innerHTML = '';
   const meds = settings.meds || [];
@@ -1831,7 +1852,37 @@ document.getElementById('snoozeBtn').addEventListener('click', () => closeRemind
 document.getElementById('skipDoseBtn').addEventListener('click', () => closeReminder('skipped', 'doseSkipped'));
 setInterval(checkReminders, 20000);
 
+// In the Android app, reminders are also set as phone notifications every day,
+// so they come even when Easy Help is closed.
+let lastSchedule = '';
+async function scheduleMedReminders() {
+  const LN = NATIVE && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications;
+  if (!LN) return;
+  const meds = settings.meds || [];
+  const plan = JSON.stringify([settings.lang, meds]);
+  if (plan === lastSchedule) return;
+  lastSchedule = plan;
+  try {
+    const pending = await LN.getPending();
+    if (pending.notifications.length) await LN.cancel({ notifications: pending.notifications.map(n => ({ id: n.id })) });
+    if (!meds.length) return;
+    let perm = await LN.checkPermissions();
+    if (perm.display !== 'granted') perm = await LN.requestPermissions();
+    if (perm.display !== 'granted') return;
+    const notifications = [];
+    meds.forEach(med => med.times.forEach(time => {
+      const [hour, minute] = time.split(':').map(Number);
+      notifications.push({
+        id: notifications.length + 1, title: T('remindTitle'), body: `${med.name} · ${fmtTime(time)}`,
+        schedule: { on: { hour, minute }, allowWhileIdle: true },
+      });
+    }));
+    await LN.schedule({ notifications });
+  } catch { lastSchedule = ''; }
+}
+
 function askNotificationPermission() {
+  if (NATIVE) return; // scheduleMedReminders asks
   if (PREVIEW || !('Notification' in window) || Notification.permission !== 'default') return;
   Notification.requestPermission().catch(() => {});
 }
@@ -2114,6 +2165,7 @@ function saveSettings(next) {
   applySize();
   applyLanguage();
   if (Account.signedIn()) Account.saveSettings(settings).catch(() => {});
+  scheduleMedReminders();
 }
 form.addEventListener('submit', e => {
   e.preventDefault();
@@ -2192,7 +2244,7 @@ document.getElementById('langBtn').addEventListener('click', () => {
   checkReminders();
 })();
 
-if (!PREVIEW && 'serviceWorker' in navigator && location.protocol !== 'file:') {
+if (!PREVIEW && !NATIVE && 'serviceWorker' in navigator && location.protocol !== 'file:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
 

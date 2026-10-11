@@ -1,0 +1,13 @@
+{
+  "appId": "com.easyhelp.elders",
+  "appName": "Easy Help",
+  "webDir": "www",
+  "android": {
+    "backgroundColor": "#f6f2ea"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "iconColor": "#2e5e4a"
+    }
+  }
+}

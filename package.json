@@ -1,0 +1,18 @@
+{
+  "name": "easy-help",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Easy Help for elders, packaged as an Android app with Capacitor.",
+  "scripts": {
+    "www": "node tools/build-www.mjs",
+    "apk": "npm run www && npx cap sync android && cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.6.9",
+    "@capacitor/core": "^7.6.9",
+    "@capacitor/local-notifications": "^7.0.7"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.6.9"
+  }
+}

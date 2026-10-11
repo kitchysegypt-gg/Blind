@@ -66,6 +66,21 @@ The app will be at `https://<user>.github.io/<repo>/`. GPS and the install featu
 
 If you later turn on "Confirm email" in Supabase, add the Pages address under **Authentication → URL Configuration** so the email link opens the app.
 
+### Android app (APK)
+
+`dist/EasyHelp.apk` is the app for Android phones (Android 6 or newer). Copy it to the phone, open it, and allow "Install unknown apps" when asked. The app's files are inside the APK, so it opens without internet; sending requests, sign-in, the map and addresses still need internet.
+
+In the Android app, medicine reminders are real phone notifications every day, so they come even when Easy Help is closed. Helper reply links point to the GitHub Pages copy (`https://kitchysegypt-gg.github.io/Blind/helper.html`), so GitHub Pages must be turned on (see above) for helpers to answer.
+
+It is built with Capacitor (`capacitor.config.json`, `android/`). To build it yourself you need Node, Java 21 and the Android SDK:
+
+```bash
+npm ci
+npm run apk   # copies the app into www/, syncs, and builds android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+The **Build Android APK** GitHub Action does the same on every push to `main` and attaches the APK to the run. This APK is signed with a debug key, which is fine for installing directly; publishing on Google Play needs a release key.
+
 ### Preview build
 
 `python3 tools/build-preview.py` writes `dist/helping-hand-preview.html`, a single-file preview for claude.ai artifacts. Artifacts can't make calls, send texts or read GPS, so the preview shows those on screen instead, with an example location. Sign-in there uses the viewer's claude.ai account, and helper replies are acted out with an example reply.
@@ -84,3 +99,5 @@ If you later turn on "Confirm email" in Supabase, add the Pages address under **
 - `supabase/migrations/`: the database tables
 - `website/index.html`: the business-plan website
 - `tools/build-preview.py`: builds the artifact previews of the app and the website
+- `package.json`, `capacitor.config.json`, `android/`, `assets/`, `tools/build-www.mjs`: the Android app
+- `dist/EasyHelp.apk`: the built Android app
