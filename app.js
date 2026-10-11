@@ -1,7 +1,7 @@
 'use strict';
 
 /* =========================================================
-   Helping Hand — voice-first helper app for blind & elderly
+   Easy Help — voice-first helper app for blind & elderly
    ========================================================= */
 
 const PREVIEW = !!window.HH_PREVIEW; // hosted preview: no calls, texts, mic or GPS
@@ -49,7 +49,7 @@ function paintIcons(root = document) {
 /* ---------- Words in each language ---------- */
 const STRINGS = {
   en: {
-    appName: 'Helping Hand', skip: 'Skip to main content',
+    appName: 'Easy Help', skip: 'Skip to main content',
     previewBanner: 'Preview. Calls, messages and location are shown here instead of used. Install the app on a phone for the real thing.',
     back: 'Back', settings: 'Settings',
     heroSay: 'Speak. Tell me what you need.', heroText: 'Speak',
@@ -73,7 +73,7 @@ const STRINGS = {
     newHere: "I'm new. Create an account", haveAccount: 'I already have an account',
     forgot: 'I forgot my password', noAccount: 'Use without an account',
     continueAs: 'Continue as {name}', continueAsYou: 'Continue with my Claude account',
-    signinSay: 'Welcome to Helping Hand. Type your email and password, then tap sign in. New here? Tap create an account.',
+    signinSay: 'Welcome to Easy Help. Type your email and password, then tap sign in. New here? Tap create an account.',
     signinBusy: 'One moment…',
     needEmail: 'Please type your email address.',
     needPassword: 'Please type a password with at least 6 characters.',
@@ -146,7 +146,7 @@ const STRINGS = {
     sending: 'Sending your request.',
     msgHello: 'Hello{name}, this is {me}.', msgHelloAnon: 'Hello{name}.', msgName: ' {name}',
     msgAddress: 'My address: {a}', msgLocation: 'My location: {l}', msgHere: 'I am at: {p}',
-    msgFooter: '(Sent with Helping Hand)',
+    msgFooter: '(Sent with Easy Help)',
     opening: 'Opening your messages. Press send to finish.',
     noRequests: 'No requests yet.', sentAt: '{title}. {text}. Sent {when}.', listEmpty: 'Your list is now empty.',
     noFamily: 'No family numbers saved yet.', addFamily: 'Add family numbers',
@@ -182,7 +182,7 @@ const STRINGS = {
     medTimes: 'Times to take it', addTime: 'Add another time', saveMed: 'Save medicine', removeTime: 'Remove this time',
     deleteMed: 'Remove {name}', medSaved: 'Saved. I will remind you at {times}.', medDeleted: '{name} removed.',
     needMedName: 'Please say or type the medicine name.', needMedTime: 'Please add at least one time.',
-    medsHint: 'Reminders work while Helping Hand is open. Leave it open on your phone.',
+    medsHint: 'Reminders work while Easy Help is open. Leave it open on your phone.',
     remindTitle: 'Time for your medicine', remindSay: "It's time for {name}. Tap I took it, or remind me later.",
     tookIt: 'I took it', later10: 'Remind me in 10 minutes', skipDose: 'Skip this one',
     doseTaken: 'Well done. {name} marked as taken.', snoozed: 'I will remind you again in 10 minutes.', doseSkipped: 'Skipped.',
@@ -194,7 +194,7 @@ const STRINGS = {
     to: 'To: {name} {num}', example: '(example)', langSwitchTo: 'العربية',
   },
   ar: {
-    appName: 'يد العون', skip: 'انتقل إلى المحتوى',
+    appName: 'إيزي هيلب', skip: 'انتقل إلى المحتوى',
     previewBanner: 'معاينة. تظهر المكالمات والرسائل والموقع هنا بدلًا من استخدامها. ثبّت التطبيق على الهاتف للاستخدام الحقيقي.',
     back: 'رجوع', settings: 'الإعدادات',
     heroSay: 'تكلّم. قل لي ماذا تحتاج.', heroText: 'تكلّم',
@@ -218,7 +218,7 @@ const STRINGS = {
     newHere: 'أنا جديد. أنشئ حسابًا', haveAccount: 'لدي حساب بالفعل',
     forgot: 'نسيت كلمة المرور', noAccount: 'الاستخدام بدون حساب',
     continueAs: 'المتابعة باسم {name}', continueAsYou: 'المتابعة بحساب Claude',
-    signinSay: 'أهلًا بك في يد العون. اكتب بريدك الإلكتروني وكلمة المرور ثم اضغط تسجيل الدخول. إذا كنت جديدًا اضغط أنشئ حسابًا.',
+    signinSay: 'أهلًا بك في إيزي هيلب. اكتب بريدك الإلكتروني وكلمة المرور ثم اضغط تسجيل الدخول. إذا كنت جديدًا اضغط أنشئ حسابًا.',
     signinBusy: 'لحظة من فضلك…',
     needEmail: 'من فضلك اكتب بريدك الإلكتروني.',
     needPassword: 'من فضلك اكتب كلمة مرور من ٦ أحرف على الأقل.',
@@ -291,7 +291,7 @@ const STRINGS = {
     sending: 'جارٍ إرسال طلبك.',
     msgHello: 'مرحبًا{name}، معك {me}.', msgHelloAnon: 'مرحبًا{name}.', msgName: ' يا {name}',
     msgAddress: 'عنواني: {a}', msgLocation: 'موقعي: {l}', msgHere: 'أنا الآن في: {p}',
-    msgFooter: '(أُرسلت عبر تطبيق يد العون)',
+    msgFooter: '(أُرسلت عبر تطبيق إيزي هيلب)',
     opening: 'جارٍ فتح الرسائل. اضغط إرسال لإتمام الطلب.',
     noRequests: 'لا توجد طلبات بعد.', sentAt: '{title}. {text}. أُرسل {when}.', listEmpty: 'تم مسح القائمة.',
     noFamily: 'لم تُحفظ أرقام للعائلة بعد.', addFamily: 'أضف أرقام العائلة',
@@ -327,7 +327,7 @@ const STRINGS = {
     medTimes: 'مواعيد الدواء', addTime: 'أضف موعدًا آخر', saveMed: 'احفظ الدواء', removeTime: 'احذف هذا الموعد',
     deleteMed: 'احذف {name}', medSaved: 'تم الحفظ. سأذكّرك الساعة {times}.', medDeleted: 'تم حذف {name}.',
     needMedName: 'من فضلك قل أو اكتب اسم الدواء.', needMedTime: 'من فضلك أضف موعدًا واحدًا على الأقل.',
-    medsHint: 'التذكير يعمل ما دام تطبيق يد العون مفتوحًا. اتركه مفتوحًا على هاتفك.',
+    medsHint: 'التذكير يعمل ما دام تطبيق إيزي هيلب مفتوحًا. اتركه مفتوحًا على هاتفك.',
     remindTitle: 'موعد الدواء', remindSay: 'حان موعد {name}. اضغط أخذته، أو ذكّرني لاحقًا.',
     tookIt: 'أخذته', later10: 'ذكّرني بعد ١٠ دقائق', skipDose: 'تخطَّ هذه المرة',
     doseTaken: 'أحسنت. تم تسجيل {name}.', snoozed: 'سأذكّرك بعد ١٠ دقائق.', doseSkipped: 'تم التخطي.',
@@ -1399,7 +1399,7 @@ function askNotificationPermission() {
 function notify(title, body) {
   if (PREVIEW || !document.hidden || !('Notification' in window) || Notification.permission !== 'granted') return;
   if (navigator.serviceWorker && navigator.serviceWorker.ready) {
-    navigator.serviceWorker.ready.then(reg => reg.showNotification(title, { body, icon: 'icons/icon.svg', tag: 'helping-hand', renotify: true, vibrate: [300, 150, 300] })).catch(() => {});
+    navigator.serviceWorker.ready.then(reg => reg.showNotification(title, { body, icon: 'icons/icon.svg', tag: 'easy-help', renotify: true, vibrate: [300, 150, 300] })).catch(() => {});
   }
 }
 

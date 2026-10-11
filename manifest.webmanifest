@@ -1,6 +1,6 @@
 {
-  "name": "Helping Hand",
-  "short_name": "Helping Hand",
+  "name": "Easy Help",
+  "short_name": "Easy Help",
   "description": "Voice-guided help for blind and elderly people: groceries, medicine, rides, a helper, family calls and emergency.",
   "start_url": "./#home",
   "scope": "./",

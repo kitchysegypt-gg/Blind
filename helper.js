@@ -15,7 +15,7 @@ const ICONS = {
 
 const STRINGS = {
   en: {
-    title: 'Helping Hand', loading: 'Loading the request…',
+    title: 'Easy Help', loading: 'Loading the request…',
     notFound: "This link doesn't work. It may be old or copied wrongly.",
     offline: 'No internet connection. Please try again.',
     needs: '{name} needs', someone: 'Someone',
@@ -26,7 +26,7 @@ const STRINGS = {
     sentAt: 'Sent {when}', langSwitchTo: 'العربية',
   },
   ar: {
-    title: 'يد العون', loading: 'جارٍ تحميل الطلب…',
+    title: 'إيزي هيلب', loading: 'جارٍ تحميل الطلب…',
     notFound: 'هذا الرابط لا يعمل. ربما يكون قديمًا أو منسوخًا بشكل خاطئ.',
     offline: 'لا يوجد اتصال بالإنترنت. حاول مرة أخرى.',
     needs: '{name} يحتاج', someone: 'شخص',

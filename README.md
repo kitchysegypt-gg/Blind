@@ -1,4 +1,4 @@
-# Helping Hand
+# Easy Help
 
 A simple, voice-guided phone app for **blind and elderly people**. It works in English and Arabic (العربية).
 
