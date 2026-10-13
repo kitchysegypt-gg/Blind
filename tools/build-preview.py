@@ -48,5 +48,8 @@ head = re.search(r"<head>(.*)</head>", site, re.S).group(1)
 body = re.search(r"<body>(.*)</body>", site, re.S).group(1)
 head = re.sub(r'\s*<meta[^>]*>|\s*<link rel="(icon|preconnect)"[^>]*>', "", head)
 body = body.replace('href="../" data-app-link', f'href="{APP_PREVIEW_URL}" target="_blank" rel="noopener" data-app-link')
+# Publish the page with these files next to it: logo.jpg (icons/logo.jpg),
+# app-mockup.png, ad.mp4 and ad-poster.jpg (all from website/).
+body = body.replace('src="../icons/logo.jpg"', 'src="logo.jpg"')
 (dist / "website-preview.html").write_text(head.strip() + "\n" + body.strip() + "\n", encoding="utf-8")
 print("wrote", dist / "website-preview.html")

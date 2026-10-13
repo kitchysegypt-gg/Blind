@@ -83,11 +83,15 @@ The **Build Android APK** GitHub Action does the same on every push to `main` an
 
 ### Preview build
 
-`python3 tools/build-preview.py` writes `dist/helping-hand-preview.html`, a single-file preview for claude.ai artifacts. Artifacts can't make calls, send texts or read GPS, so the preview shows those on screen instead, with an example location. Sign-in there uses the viewer's claude.ai account, and helper replies are acted out with an example reply.
+`python3 tools/build-preview.py` writes `dist/helping-hand-preview.html`, a single-file preview of the app for claude.ai artifacts, and `dist/website-preview.html`, the website preview (publish it with `icons/logo.jpg` as `logo.jpg` and the files in `website/` next to it). Artifacts can't make calls, send texts or read GPS, so the preview shows those on screen instead, with an example location. Sign-in there uses the viewer's claude.ai account, and helper replies are acted out with an example reply.
 
 ## Website
 
-`website/index.html` is the business plan as a one-page website, in the same design as the "Easy help" Canva presentation. It is published with the app at `/website/`, and its "Try the app" buttons open the app.
+`website/index.html` is the business plan as a one-page website, with one section for each of the 18 slides of the "Easy Help" Canva pitch deck (team, problem, market, solution, how it works, app design, value, audience, competitors, marketing, the video ad, plans and pricing, revenue, plan, the ask, conclusion). It is published with the app at `/website/`, and its "Try the app" buttons open the app.
+
+Prices: 1 month 250 EGP, 3 months 650 EGP, 6 months 1,200 EGP, 1 year 2,000 EGP.
+
+`website/ad.mp4` is the 32-second 2D animated video ad (voice-over and music), shown in the "Our Ad" section. `website/app-mockup.png` is the app-design picture.
 
 ## Files
 
@@ -97,7 +101,7 @@ The **Build Android APK** GitHub Action does the same on every push to `main` an
 - `app.js`: tabs, sign-in, the help screens and replies, medicine reminders, location, calling and profile
 - `sw.js`, `manifest.webmanifest`, `icons/`: offline support, install and the Easy Help logo
 - `supabase/migrations/`: the database tables
-- `website/index.html`: the business-plan website
+- `website/index.html`: the business-plan website; `website/ad.mp4`, `website/ad-poster.jpg`, `website/app-mockup.png`: its video ad and pictures
 - `tools/build-preview.py`: builds the artifact previews of the app and the website
 - `package.json`, `capacitor.config.json`, `android/`, `assets/`, `tools/build-www.mjs`: the Android app
 - `dist/EasyHelp.apk`: the built Android app

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Easy Help</title>
-<meta name="description" content="Easy Help: a voice-first app that helps blind and elderly people get everyday help. Business plan 2026.">
+<meta name="description" content="Easy Help: a simple app that gets elders everyday help in one tap. Business plan 2026.">
 <link rel="icon" href="../icons/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -203,6 +203,30 @@ footer { padding-block: 28px 40px; border-top: 1px solid rgba(24, 80, 121, .14);
   .nav .btn { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Short bullets, as on the slides */
+.bullets { margin: 0; padding-left: 1.2em; display: grid; gap: 10px; font-family: var(--head); font-weight: 700; font-size: clamp(1.15rem, 2.2vw, 1.5rem); line-height: 1.3; }
+.bullets li::marker { color: var(--blue); }
+.bullets.small { font-size: 1.05rem; gap: 6px; }
+.logo { width: 40px; height: 40px; border-radius: 12px; flex: none; }
+.tile h3 { font-size: 2rem; }
+/* App design */
+.mockup { margin: 40px 0 0; }
+.mockup img { width: 100%; height: auto; display: block; }
+.captions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); text-align: center; font-family: var(--head); font-weight: 700; font-size: 1.2rem; margin-top: 8px; }
+/* Our ad */
+.headline { font-family: var(--head); font-weight: 700; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.15; letter-spacing: -.02em; }
+.ad-video { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; border-radius: 26px; background: #0d2a3f; box-shadow: 0 24px 60px rgba(16, 64, 95, .25); }
+.ad-split { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+/* Pricing */
+.prices.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.price .amount { font-variant-numeric: tabular-nums; }
+/* Conclusion */
+.steps.two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+@media (max-width: 900px) {
+  .prices.four, .steps.two, .ad-split { grid-template-columns: minmax(0, 1fr); }
+  .captions { font-size: .95rem; }
+}
 </style>
 </head>
 <body>
@@ -210,14 +234,15 @@ footer { padding-block: 28px 40px; border-top: 1px solid rgba(24, 80, 121, .14);
 <header class="nav">
   <div class="wrap">
     <a class="brand" href="#top">
-      <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fbf6f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v6M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-6-2.4l-3.6-3.6a2 2 0 0 1 2.8-2.8L7 15"/></svg></span>
+      <img class="logo" src="../icons/logo.jpg" alt="" width="40" height="40">
       Easy Help
     </a>
     <nav class="nav-links" aria-label="Sections">
       <a href="#problem">Problem</a>
       <a href="#solution">Solution</a>
-      <a href="#market">Market</a>
-      <a href="#plan">Plan</a>
+      <a href="#ad">Our ad</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#ask">The ask</a>
     </nav>
     <a class="btn" href="../" data-app-link>Try the app</a>
   </div>
@@ -229,33 +254,31 @@ footer { padding-block: 28px 40px; border-top: 1px solid rgba(24, 80, 121, .14);
     <div class="wrap">
       <p class="eyebrow"><svg viewBox="0 0 44 26" fill="none" stroke="#3885ab" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14l7 7L24 4M18 21L35 4"/></svg>2026</p>
       <h1>Easy Help <strong>Business Plan</strong></h1>
-      <p class="tag">Voice-first help for blind and elderly people</p>
+      <p class="tag">Easy help for elders · A little help, a lot of care</p>
       <div class="actions">
         <a class="btn" href="../" data-app-link>Try the app</a>
-        <a class="btn btn-ghost" href="#market">Read the plan</a>
+        <a class="btn btn-ghost" href="#ad">Watch our ad</a>
       </div>
     </div>
   </section>
 
-  <!-- 2 · Market opportunity -->
-  <section class="slide" id="market" aria-labelledby="market-h">
+  <!-- 2 · Our team -->
+  <section class="slide" id="team" aria-labelledby="team-h">
     <div class="wrap split">
-      <div>
-        <h2 id="market-h">Market Opportunity</h2>
-        <div class="points">
-          <div class="point"><span class="num">01</span><p>Egypt first: about 9 million people aged 60+, plus several hundred thousand blind and low-vision adults. Almost all can be reached by smartphone and WhatsApp.</p></div>
-          <div class="point"><span class="num">02</span><p>Then the region and the world: about 30 million people aged 60+ in the Arab world, and 2.2 billion people with a vision impairment.</p></div>
-        </div>
+      <div class="stack">
+        <h2 id="team-h">Our Team</h2>
+        <ul class="bullets">
+          <li>CEO: Omar Ehab</li>
+          <li>6 people, 5 roles</li>
+          <li>One goal: easy help for elders</li>
+        </ul>
       </div>
-      <div class="stat-panel" role="list" aria-label="Market size">
-        <div class="stat" role="listitem"><b>~9 million</b><span>people aged 60+ in Egypt</span></div>
-        <div class="stat" role="listitem"><b>~30 million</b><span>people aged 60+ in the Arab world</span></div>
-        <div class="stat" role="listitem"><b>2.2 billion</b><span>people with a vision impairment worldwide</span></div>
-        <p class="note">Approximate figures from public estimates (WHO, UN, CAPMAS). To be checked before sharing with investors.</p>
+      <div class="tiles">
+        <div class="tile t1"><h3>Marketing</h3><p><b>Moaz Eid</b><br><b>Ali Alnokrashy</b></p></div>
+        <div class="tile t2"><h3>Finance</h3><p><b>Mohamed Eid</b></p></div>
+        <div class="tile t3"><h3>Research</h3><p><b>Yahia Radwan</b></p></div>
+        <div class="tile t4"><h3>Developer</h3><p><b>Hamza Mansour</b></p></div>
       </div>
-    </div>
-    <div class="wrap">
-      <p class="note"><strong>Why now:</strong> most older Egyptians already own a smartphone and use WhatsApp daily; phones have good built-in speech and cameras; more children live in another city or abroad; and delivery, pharmacy and ride services keep growing but aren't built for people who can't see the screen.</p>
     </div>
   </section>
 
@@ -264,154 +287,263 @@ footer { padding-block: 28px 40px; border-top: 1px solid rgba(24, 80, 121, .14);
     <div class="wrap split">
       <div class="stack">
         <h2 id="problem-h">Problem Statement</h2>
-        <p class="lead">Blind and elderly people depend on others for everyday tasks, but today's apps were built for young people who can see a screen. Delivery, pharmacy and ride apps rely on small buttons, maps and long menus, and most work in English first.</p>
-        <p class="lead">The result: lost independence, loneliness, and a heavy, disorganised load on families.</p>
+        <ul class="bullets">
+          <li>Apps are built for the young</li>
+          <li>Small text, maps, long menus</li>
+          <li>Mostly English first</li>
+          <li>Result: lonely elders, stressed families</li>
+        </ul>
       </div>
       <div class="rows">
-        <div class="row"><span class="dot c1">01</span><p class="box c1">Groceries, medicine, rides and reading letters all need sight or mobility. Few older people can use a screen reader.</p></div>
-        <div class="row"><span class="dot c2">02</span><p class="box c2">Requests for help go through scattered calls and voice notes. Nobody knows if help is coming.</p></div>
-        <div class="row"><span class="dot c3">03</span><p class="box c3">A missed dose or getting lost can become an emergency, and families far away can't tell.</p></div>
+        <div class="row"><span class="dot c1">01</span><p class="box c1">Daily tasks get harder with age.</p></div>
+        <div class="row"><span class="dot c2">02</span><p class="box c2">Help requests get lost in calls and voice notes.</p></div>
+        <div class="row"><span class="dot c3">03</span><p class="box c3">A missed dose can become an emergency.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- 4 · Solution -->
+  <!-- 4 · Market opportunity -->
+  <section class="slide" id="market" aria-labelledby="market-h">
+    <div class="wrap split">
+      <div>
+        <h2 id="market-h">Market Opportunity</h2>
+        <div class="points">
+          <div class="point"><span class="num">01</span><ul class="bullets small"><li>Egypt: 9M people aged 60+</li><li>Their children use WhatsApp daily</li></ul></div>
+          <div class="point"><span class="num">02</span><ul class="bullets small"><li>Arab world: 30M people aged 60+</li><li>Growing every year</li></ul></div>
+        </div>
+      </div>
+      <div class="stat-panel" role="list" aria-label="Market size">
+        <div class="stat" role="listitem"><b>~9 million</b><span>people aged 60+ in Egypt</span></div>
+        <div class="stat" role="listitem"><b>~30 million</b><span>people aged 60+ in the Arab world</span></div>
+        <p class="note">Approximate figures from public estimates (UN, CAPMAS).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · Solution -->
   <section class="slide" id="solution" aria-labelledby="solution-h">
     <div class="wrap">
       <div class="panel split">
         <div class="stack">
           <h2 id="solution-h">Our Solution</h2>
-          <p class="lead">Easy Help is a voice-first phone app in Arabic and English with a few large buttons. Say what you need and it opens the right screen.</p>
-          <p class="lead">It works with VoiceOver and TalkBack, and opens straight from the web, with no app store needed.</p>
+          <ul class="bullets">
+            <li>Simple app, Arabic + English</li>
+            <li>Big text, big buttons</li>
+            <li>One button per need</li>
+          </ul>
+          <div><a class="btn" href="../" data-app-link>Try the app</a></div>
         </div>
         <div class="timeline">
-          <div class="tl-item"><p class="num">01</p><p><strong>Ask for help:</strong> groceries, medicine, a ride or a helper. The helper replies with one tap ("I'm on my way"), and the app reads the answer aloud.</p></div>
-          <div class="tl-item"><p class="num">02</p><p><strong>Read text:</strong> photograph a letter or medicine box and hear it. <strong>Medicine reminders</strong> speak at the right time.</p></div>
-          <div class="tl-item"><p class="num">03</p><p><strong>Where am I?</strong> speaks your street address. One-tap family calls and an emergency button that shares your location.</p></div>
+          <div class="tl-item"><p class="num">01</p><p>Groceries, pharmacy, rides, help at home</p></div>
+          <div class="tl-item"><p class="num">02</p><p>Medicine reminders, even when the app is closed</p></div>
+          <div class="tl-item"><p class="num">03</p><p>Live location, family calls, SOS button</p></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 5 · Value proposition -->
+  <!-- 6 · How it works -->
+  <section class="slide" id="how" aria-labelledby="how-h">
+    <div class="wrap split">
+      <div class="stack">
+        <h2 id="how-h">How It Works</h2>
+        <ul class="bullets">
+          <li>No typing, no menus</li>
+          <li>3 steps from need to help</li>
+          <li>Arabic and English</li>
+          <li>Helpers need no app</li>
+        </ul>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="dot c1">01</span><p class="box c1">Tap what you need: groceries, pharmacy, a ride or help at home.</p></div>
+        <div class="row"><span class="dot c2">02</span><p class="box c2">Your helper gets a WhatsApp message and answers with one tap.</p></div>
+        <div class="row"><span class="dot c3">03</span><p class="box c3">You see "On the way" in the app. Help arrives.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · App design -->
+  <section class="slide" id="design" aria-labelledby="design-h">
+    <div class="wrap">
+      <h2 id="design-h" class="center">App Design</h2>
+      <figure class="mockup">
+        <img src="app-mockup.png" alt="Four Easy Help app screens: Home, Groceries, Medicines and Emergency" width="3400" height="1640">
+        <figcaption class="captions"><span>Home</span><span>Groceries</span><span>Medicines</span><span>Emergency</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 8 · Value proposition -->
   <section class="slide" aria-labelledby="value-h" style="overflow: hidden;">
     <div class="wrap">
       <h2 id="value-h" class="center">Value Proposition</h2>
       <div class="value-line">
-        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">01.</p><p>For users: ask for anything by voice, in your own language, and know help is coming.</p></div>
-        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">02.</p><p>For families: know your parent is safe, took their medicine and has help, even from abroad.</p></div>
-        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">03.</p><p>For partners: reach a large, underserved group of customers through an app they can actually use.</p></div>
-        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">04.</p><p>Our edge: Arabic voice first, big simple buttons, help from people you trust, no install for helpers.</p></div>
+        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">01.</p><ul class="bullets small"><li>Users</li><li>Help in one tap</li><li>In their own language</li></ul></div>
+        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">02.</p><ul class="bullets small"><li>Families</li><li>Peace of mind</li><li>Even from abroad</li></ul></div>
+        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">03.</p><ul class="bullets small"><li>Partners</li><li>New customers</li><li>Easy orders</li></ul></div>
+        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">04.</p><ul class="bullets small"><li>Our edge</li><li>Simple, Arabic first</li><li>Trusted helpers</li></ul></div>
       </div>
     </div>
   </section>
 
-  <!-- 6 · Target audience -->
+  <!-- 9 · Target audience -->
   <section class="slide" aria-labelledby="audience-h">
     <div class="wrap split">
       <div class="stack">
         <h2 id="audience-h">Target Audience</h2>
-        <p class="lead">Our users are older people living alone and blind or low-vision adults. Their families usually set the app up and pay for it.</p>
-        <p class="persona">Hagga Fatma, 72, Cairo. Her eyesight is weak and her son works in Dubai. She needs medicine delivered and reminders.<br><br>Ahmed, 34, Alexandria. Blind since birth, he uses TalkBack and wants to read his mail and get rides on his own.</p>
+        <ul class="bullets">
+          <li>Elders 60+, often living alone</li>
+          <li>Families set it up and pay</li>
+          <li>Example: Hagga Fatma, 72, Cairo</li>
+          <li>Her son works in Dubai</li>
+        </ul>
       </div>
       <div class="tiles">
-        <div class="tile t1"><h3>Users</h3><p>People aged 60+ and blind or low-vision adults who use the app every day.</p></div>
-        <div class="tile t2"><h3>Helpers</h3><p>Adult children, neighbours, carers, local shops and pharmacies.</p></div>
-        <div class="tile t3"><h3>Payers</h3><p>Families, especially those working abroad or in the Gulf.</p></div>
-        <div class="tile t4"><h3>Partners</h3><p>Pharmacies, supermarkets, NGOs, insurers and the Ministry of Social Solidarity.</p></div>
+        <div class="tile t1"><h3>Users</h3><p>Elders 60+ who use the app daily</p></div>
+        <div class="tile t2"><h3>Helpers</h3><p>Children, neighbours, carers, shops</p></div>
+        <div class="tile t3"><h3>Payers</h3><p>Families, often abroad</p></div>
+        <div class="tile t4"><h3>Partners</h3><p>Pharmacies, supermarkets, NGOs</p></div>
       </div>
     </div>
   </section>
 
-  <!-- 7 · Competitive analysis -->
+  <!-- 10 · Competitive analysis -->
   <section class="slide" aria-labelledby="comp-h">
     <div class="wrap stack">
       <h2 id="comp-h">Competitive Analysis</h2>
-      <p class="lead">Others solve one piece: reading, video help from strangers, or delivery. None combine everyday help, reading, reminders and family in one simple Arabic voice app.</p>
       <div class="table-wrap">
         <table>
-          <thead><tr><th scope="col">Who</th><th scope="col">What it does</th><th scope="col">Gap for our users</th></tr></thead>
+          <thead><tr><th scope="col">Who</th><th scope="col">Gap for elders</th></tr></thead>
           <tbody>
-            <tr><td>Be My Eyes</td><td>Volunteers help over video; AI describes images</td><td>Not built for everyday errands; helpers are strangers</td></tr>
-            <tr><td>Seeing AI / Lookout</td><td>Reads text and describes surroundings</td><td>Reading only; no help requests, reminders or family link</td></tr>
-            <tr><td>Envision</td><td>Paid AI reader and smart glasses</td><td>Expensive and English-first</td></tr>
-            <tr><td>Talabat, Breadfast, Careem</td><td>Delivery and rides</td><td>Visual, complex menus that most older users can't manage</td></tr>
-            <tr><td>Medicine reminder apps</td><td>Reminders</td><td>Mostly English, small text, no family link</td></tr>
-            <tr><td>WhatsApp and calls</td><td>What families use today</td><td>No structure; easy to miss; no spoken status</td></tr>
-            <tr class="us"><td>Easy Help</td><td>Help, reading, reminders, location and family in one voice app</td><td>Arabic and English, built for people who can't see the screen</td></tr>
+            <tr><td>Talabat, Breadfast, Careem</td><td>Busy screens, small text</td></tr>
+            <tr><td>Pharmacy apps</td><td>Orders only</td></tr>
+            <tr><td>Reminder apps</td><td>Medicine only</td></tr>
+            <tr><td>WhatsApp and calls</td><td>No structure</td></tr>
+            <tr class="us"><td>Easy Help</td><td>All in one simple Arabic app</td></tr>
           </tbody>
         </table>
       </div>
-      <ul class="edge">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="#3885ab" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Everything in one simple, voice-first app, in Arabic</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="#3885ab" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Help from family and local shops people already trust</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="#3885ab" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Helpers reply with one tap and install nothing</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="#3885ab" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Cheap to run: a web app, with the key features working on the phone</li>
-      </ul>
     </div>
   </section>
 
-  <!-- 8 · Marketing and sales -->
+  <!-- 11 · Marketing and sales -->
   <section class="slide" aria-labelledby="mkt-h">
     <div class="wrap">
       <h2 id="mkt-h">Marketing &amp; Sales Strategy</h2>
-      <div class="prices">
-        <div class="price"><h3>Free</h3><p class="amount">0 EGP</p><ul><li>Ask for help</li><li>Read text</li><li>Medicine reminders</li><li>Where am I and emergency</li></ul></div>
-        <div class="price featured"><h3>Family Plus</h3><p class="amount">49–79 EGP / month</p><p>About $3–5 for families abroad</p><ul><li>Family dashboard</li><li>Several helpers</li><li>Missed-dose alerts to family</li><li>Weekly summary</li></ul></div>
-        <div class="price"><h3>Partners</h3><p class="amount">Per order / plan</p><ul><li>Pharmacies and shops pay per order received</li><li>NGOs and insurers pay to give the app to members</li></ul></div>
-      </div>
       <ol class="channels">
-        <li>Families first<span>Ads to Egyptians abroad and adults 30–55: "Your parents can ask for help by voice."</span></li>
-        <li>Pharmacies<span>Local pharmacies set the app up for older customers and become the first helpers.</span></li>
-        <li>NGOs and communities<span>Associations for blind people, care homes, mosque and church groups.</span></li>
-        <li>Healthcare<span>Eye hospitals and diabetes and blood-pressure clinics.</span></li>
-        <li>Word of mouth<span>Every helper link shows the app; an "Invite your parent" link.</span></li>
-        <li>Media<span>Human stories around Ramadan and International Day of Older Persons (1 October).</span></li>
+        <li>From 250 EGP a month<span>Monthly, 3-month, 6-month and yearly plans.</span></li>
+        <li>Partners pay per order<span>Pharmacies and shops pay a small fee per order.</span></li>
+        <li>Ads to Egyptians abroad<span>Facebook, Instagram and TikTok.</span></li>
+        <li>Pharmacies sign up their elders<span>They set up the app and become the first helpers.</span></li>
+        <li>NGOs and clinics<span>Groups and clinics for older people.</span></li>
+        <li>Every helper link is a free ad<span>Each reply link shows the app to someone new.</span></li>
       </ol>
     </div>
   </section>
 
-  <!-- 9 · Implementation plan -->
+  <!-- 12 · Our ad -->
+  <section class="slide" id="ad" aria-labelledby="ad-h">
+    <div class="wrap split ad-split">
+      <div class="stack">
+        <h2 id="ad-h">Our Ad</h2>
+        <p class="headline">Far from Mom?<br>Easy Help is one tap away.</p>
+        <ul class="bullets">
+          <li>Groceries, pharmacy, rides, help at home</li>
+          <li>Medicine reminders and an SOS button</li>
+          <li>You see when help is on the way</li>
+          <li>From 250 EGP a month</li>
+        </ul>
+      </div>
+      <video class="ad-video" src="ad.mp4" poster="ad-poster.jpg" controls playsinline preload="metadata" aria-label="Easy Help video ad, 32 seconds, with voice-over"></video>
+    </div>
+  </section>
+
+  <!-- 13 · Plans & pricing -->
+  <section class="slide" id="pricing" aria-labelledby="pricing-h">
+    <div class="wrap">
+      <h2 id="pricing-h" class="center">Plans &amp; Pricing</h2>
+      <div class="prices four">
+        <div class="price"><h3>1 month</h3><p class="amount">250 EGP</p><ul><li>Pay month by month</li></ul></div>
+        <div class="price"><h3>3 months</h3><p class="amount">650 EGP</p><ul><li>About 217 EGP/month</li><li>Save 13%</li></ul></div>
+        <div class="price"><h3>6 months</h3><p class="amount">1,200 EGP</p><ul><li>200 EGP/month</li><li>Save 20%</li></ul></div>
+        <div class="price featured"><h3>1 year</h3><p class="amount">2,000 EGP</p><ul><li>About 167 EGP/month</li><li>Save 33%, best value</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 · Revenue forecast -->
+  <section class="slide" aria-labelledby="rev-h" style="overflow: hidden;">
+    <div class="wrap">
+      <h2 id="rev-h" class="center">Revenue Forecast</h2>
+      <div class="value-line">
+        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">4.8M EGP</p><ul class="bullets small"><li>Year 1</li><li>2,000 paying families</li><li>Cairo and Giza</li></ul></div>
+        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">24M EGP</p><ul class="bullets small"><li>Year 2</li><li>10,000 paying families</li><li>Break-even</li></ul></div>
+        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">72M EGP</p><ul class="bullets small"><li>Year 3</li><li>30,000 paying families</li><li>Egypt + Gulf</li></ul></div>
+        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">2 streams</p><ul class="bullets small"><li>Subscriptions: 90%</li><li>Partner orders (5% fee): 10%</li></ul></div>
+      </div>
+      <p class="note center">Estimates. About 180 EGP per paying family each month on average.</p>
+    </div>
+  </section>
+
+  <!-- 15 · Implementation plan -->
   <section class="slide" id="plan" aria-labelledby="plan-h">
     <div class="wrap">
       <h2 id="plan-h" class="center">Implementation Plan</h2>
       <div class="phases">
-        <div class="phase"><p class="when">Months 0–3 · Pilot</p><ul><li>Go live on GitHub Pages</li><li>1 NGO and 5 pharmacies</li><li>Fix what real users find hard</li></ul><p class="goal">30–50 users</p></div>
-        <div class="phase"><p class="when">Months 3–6 · Launch</p><ul><li>Reminders with the app closed</li><li>Google Play and App Store</li><li>Family Plus, 50 pharmacies</li></ul><p class="goal">2,000 users</p></div>
-        <div class="phase"><p class="when">Months 6–12 · Growth</p><ul><li>Direct pharmacy and grocery ordering</li><li>Family dashboard</li><li>NGO and insurer contracts</li></ul><p class="goal">20,000 users</p></div>
-        <div class="phase"><p class="when">Year 2 · Expand</p><ul><li>Saudi Arabia, UAE, Jordan</li><li>Gulf dialects</li><li>Government and insurance partners</li></ul><p class="goal">The region</p></div>
+        <div class="phase"><p class="when">Months 0–3 · Pilot</p><ul><li>50 users</li><li>5 pharmacies</li></ul><p class="goal">Pilot</p></div>
+        <div class="phase"><p class="when">Months 3–6 · Launch</p><ul><li>App stores</li><li>Paid plans</li></ul><p class="goal">2,000 users</p></div>
+        <div class="phase"><p class="when">Months 6–12 · Growth</p><ul><li>Direct ordering</li><li>Pharmacies and groceries</li></ul><p class="goal">20,000 users</p></div>
+        <div class="phase"><p class="when">Year 2 · Expand</p><ul><li>Saudi Arabia</li><li>UAE, Jordan</li></ul><p class="goal">The region</p></div>
       </div>
-      <div class="facts"><span class="fact">Team of 6</span><span class="fact">Year-one budget about $60–100k</span><span class="fact">Cairo and Alexandria first</span></div>
     </div>
   </section>
 
-  <!-- 10 · Conclusion and next steps -->
+  <!-- 16 · The ask -->
+  <section class="slide" id="ask" aria-labelledby="ask-h">
+    <div class="wrap split">
+      <div class="stack">
+        <h2 id="ask-h">The Ask</h2>
+        <ul class="bullets">
+          <li>3M EGP for 10% equity</li>
+          <li>Valuation: 30M EGP</li>
+          <li>Break-even in year 2</li>
+          <li>10,000 families by year 2</li>
+        </ul>
+      </div>
+      <div class="tiles">
+        <div class="tile t1"><h3>40%</h3><p><b>Marketing and ads</b></p></div>
+        <div class="tile t2"><h3>30%</h3><p><b>App development</b></p></div>
+        <div class="tile t3"><h3>20%</h3><p><b>Team and support</b></p></div>
+        <div class="tile t4"><h3>10%</h3><p><b>Pharmacy and NGO partners</b></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 · Conclusion and next steps -->
   <section class="slide closing" aria-labelledby="close-h">
     <div class="wrap">
       <div class="panel">
         <h2 id="close-h">Conclusion &amp; Next Steps</h2>
-        <p class="lead" style="margin-inline: auto;">Millions of older and blind people in Egypt and the Arab world need everyday help that today's apps don't give. Easy Help already works, with voice, Arabic and English, helper replies, reading and reminders, and families are ready to pay.</p>
-        <div class="steps">
-          <div class="step"><b>Next 30 days</b><ul><li>Go live with a public link</li><li>Sign 1 NGO and 5 pharmacies</li><li>Recruit 30 pilot users</li></ul></div>
-          <div class="step"><b>Next 60 days</b><ul><li>Fix the top 10 pilot problems</li><li>Push-notification reminders</li><li>Check the market figures</li></ul></div>
-          <div class="step"><b>Next 90 days</b><ul><li>App stores and Family Plus</li><li>Ads to Egyptians abroad</li><li>Apply to accelerators and grants</li></ul></div>
+        <div class="steps two">
+          <ul class="bullets"><li>Big need: 30M+ elders</li><li>The app already works</li><li>Families are ready to pay</li></ul>
+          <ul class="bullets"><li>30 days: go live, 1 NGO, 5 pharmacies</li><li>60 days: improve from the pilot</li><li>90 days: app stores, first ads</li></ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 11 · Thank you -->
+  <!-- 18 · Thank you -->
   <section class="thanks" aria-labelledby="thanks-h">
     <div class="wrap">
       <h2 id="thanks-h">Thank you <strong>very much</strong></h2>
-      <p class="tag" style="margin-top: 28px; font-family: var(--head); font-weight: 700; text-transform: uppercase;">Easy Help · Voice-first help for blind and elderly people</p>
-      <div style="margin-top: 32px;"><a class="btn" href="../" data-app-link>Try the app</a></div>
+      <p class="tag" style="margin-top: 28px; font-family: var(--head); font-weight: 700; text-transform: uppercase;">Easy Help · A little help, a lot of care</p>
+      <div style="margin-top: 32px;"><a class="btn" href="../" data-app-link>Try the app online</a></div>
     </div>
   </section>
 </main>
 
 <footer>
-  <div class="wrap">Easy Help · Business plan 2026 · Market figures are approximate.</div>
+  <div class="wrap">Easy Help · Business plan 2026 · Market figures and forecasts are estimates.</div>
 </footer>
 </body>
 </html>
