@@ -19,7 +19,7 @@ const SUPABASE_KEY = 'sb_publishable_sgYgEuoQbf1UhuED29P3zg_TQRm_mZF';
 // Easy Help team (helpers and professionals) once its WhatsApp number is set here,
 // in international format, e.g. '+20 100 000 0000'. Until then they go to the helper.
 const TEAM_PHONE = '';
-const PLANS = ['free', 'm1', 'm3', 'm6', 'y1'];
+const PLANS = ['free', 'm1', 'm3', 'm6', 'y1', 'life'];
 
 /* ---------- Icons: plain line symbols ---------- */
 const ICONS = {
@@ -98,9 +98,13 @@ const STRINGS = {
     proFreeNote: 'Nurses and doctors come with a paid plan. On the Free plan this request goes to your family helper.',
     teamName: 'the Easy Help team',
     myPlan: 'My plan', planLabel: 'Plan',
-    plan_free: 'Free · 0 EGP', plan_m1: '1 month · 250 EGP', plan_m3: '3 months · 650 EGP', plan_m6: '6 months · 1,200 EGP', plan_y1: '1 year · 2,000 EGP',
+    plan_free: 'Free · 0 EGP', plan_m1: '1 month · 250 EGP', plan_m3: '3 months · 650 EGP', plan_m6: '6 months · 1,200 EGP', plan_y1: '1 year · 2,000 EGP', plan_life: 'Lifetime · 6,000 EGP once',
     planFree: 'Free: your family are your helpers. Send them requests, plus medicine reminders, SOS and location.',
-    planPaid: 'Paid: Easy Help helpers and professionals (nurses, doctors at home, physiotherapy), alerts to family when a dose is missed, and a support line.',
+    tier_m1: '1 month: Easy Help helpers, nurses and doctors at home, and a support line.',
+    tier_m3: '3 months: all of that, plus alerts to your family when a dose is missed.',
+    tier_m6: '6 months: plus a weekly report for your family and a helper within 1 hour.',
+    tier_y1: '1 year: plus 2 free nurse check-ups at home and support day and night.',
+    tier_life: 'Lifetime: everything in 1 year, forever, plus your own regular helper.',
     planPayHint: 'Paying in the app comes with the Google Play launch.',
     shareApp: 'Share Easy Help', shareAppSub: 'Your family scans this code with their phone camera to open Easy Help.', qrAlt: 'QR code that opens Easy Help',
     nextMedTitle: 'Next medicine', seeAll: 'See all', edit: 'Edit',
@@ -221,9 +225,13 @@ const STRINGS = {
     proFreeNote: 'الممرضات والأطباء متاحون في الباقات المدفوعة. في الباقة المجانية يُرسل هذا الطلب إلى مساعدك من العائلة.',
     teamName: 'فريق إيزي هيلب',
     myPlan: 'باقتي', planLabel: 'الباقة',
-    plan_free: 'مجانية · 0 جنيه', plan_m1: 'شهر · 250 جنيه', plan_m3: '3 شهور · 650 جنيه', plan_m6: '6 شهور · 1200 جنيه', plan_y1: 'سنة · 2000 جنيه',
+    plan_free: 'مجانية · 0 جنيه', plan_m1: 'شهر · 250 جنيه', plan_m3: '3 شهور · 650 جنيه', plan_m6: '6 شهور · 1200 جنيه', plan_y1: 'سنة · 2000 جنيه', plan_life: 'مدى الحياة · 6000 جنيه مرة واحدة',
     planFree: 'المجانية: عائلتك هم مساعدوك. أرسل لهم طلباتك، مع تذكير الدواء والطوارئ والموقع.',
-    planPaid: 'المدفوعة: مساعدون ومتخصصون من إيزي هيلب (ممرضات وأطباء في البيت وعلاج طبيعي)، وتنبيه للعائلة عند نسيان جرعة، وخط دعم.',
+    tier_m1: 'شهر: مساعدون من إيزي هيلب، وممرضات وأطباء في البيت، وخط دعم.',
+    tier_m3: '3 شهور: كل ما سبق، مع تنبيه لعائلتك عند نسيان جرعة.',
+    tier_m6: '6 شهور: مع تقرير أسبوعي لعائلتك ومساعد يصل خلال ساعة.',
+    tier_y1: 'سنة: مع زيارتين مجانيتين من ممرضة للكشف في البيت ودعم ليلًا ونهارًا.',
+    tier_life: 'مدى الحياة: كل مزايا السنة للأبد، مع مساعد ثابت خاص بك.',
     planPayHint: 'الدفع داخل التطبيق يبدأ مع إطلاقه على جوجل بلاي.',
     shareApp: 'شارك إيزي هيلب', shareAppSub: 'عائلتك تصوّر هذا الرمز بكاميرا الهاتف لفتح إيزي هيلب.', qrAlt: 'رمز QR يفتح إيزي هيلب',
     nextMedTitle: 'الدواء التالي', seeAll: 'عرض الكل', edit: 'تعديل',
@@ -580,6 +588,13 @@ const SupabaseAccount = {
     return rows && rows[0] ? rows[0].token : null;
   },
   async clearRequests() { await this.rest(`hh_requests?user_id=eq.${this.session.user.id}`, { method: 'DELETE' }); },
+  // The phone's Firebase token, so notifications can be sent to this person.
+  async savePushToken(token) {
+    await this.rest('hh_push_tokens', {
+      method: 'POST', prefer: 'resolution=merge-duplicates,return=minimal',
+      body: { token, platform: 'android', lang: settings.lang, updated_at: new Date().toISOString() },
+    });
+  },
   async repliesSince(iso) {
     return this.rest(`hh_requests?select=type,text,status,status_at&status_at=gt.${encodeURIComponent(iso)}&order=status_at.asc`);
   },
@@ -611,6 +626,7 @@ const ClaudeAccount = {
   async saveRequests() { await this.col().doc('requests').set({ items: requests.slice(0, 50) }); },
   async clearRequests() { await this.col().doc('requests').set({ items: [] }); },
   async repliesSince() { return []; },
+  async savePushToken() {},
 };
 
 const Account = PREVIEW ? ClaudeAccount : SupabaseAccount;
@@ -631,6 +647,8 @@ async function afterSignIn() {
   applySize();
   applyLanguage();
   scheduleMedReminders();
+  const pushToken = store.get('hh.pushToken', null);
+  if (pushToken) Account.savePushToken(pushToken).catch(() => {});
 }
 
 /* ---------- Sign-in screen ---------- */
@@ -1258,6 +1276,31 @@ async function scheduleMedReminders() {
   } catch { lastSchedule = ''; }
 }
 
+// Push notifications from Firebase (Android app only, and only when the build
+// found google-services.json; see tools/build-www.mjs). Messages can carry a
+// "screen" value in their custom data, e.g. screen = requests, to open that tab.
+async function setupPush() {
+  const PN = NATIVE && window.HH_PUSH && window.Capacitor.Plugins && window.Capacitor.Plugins.PushNotifications;
+  if (!PN) return;
+  try {
+    PN.addListener('registration', ({ value }) => {
+      store.set('hh.pushToken', value);
+      if (Account.signedIn()) Account.savePushToken(value).catch(() => {});
+    });
+    PN.addListener('pushNotificationReceived', n => {
+      toast([n.title, n.body].filter(Boolean).join(': '));
+      if (Account.signedIn()) checkReplies();
+    });
+    PN.addListener('pushNotificationActionPerformed', a => {
+      const screen = a.notification && a.notification.data && a.notification.data.screen;
+      go(screen && (TABS.includes(screen) || screen === 'emergency') ? screen : 'requests');
+    });
+    let perm = await PN.checkPermissions();
+    if (perm.receive === 'prompt' || perm.receive === 'prompt-with-rationale') perm = await PN.requestPermissions();
+    if (perm.receive === 'granted') await PN.register();
+  } catch { /* notifications stay off; the rest of the app works */ }
+}
+
 function askNotificationPermission() {
   if (NATIVE) return; // scheduleMedReminders asks
   if (PREVIEW || !('Notification' in window) || Notification.permission !== 'default') return;
@@ -1619,6 +1662,7 @@ document.getElementById('langBtn').addEventListener('click', () => {
   render();
   if (Account.signedIn()) afterSignIn().then(() => { if (screenNow() === 'home') renderHome(); checkReplies(); });
   checkReminders();
+  setupPush();
 })();
 
 if (!PREVIEW && !NATIVE && 'serviceWorker' in navigator && location.protocol !== 'file:') {

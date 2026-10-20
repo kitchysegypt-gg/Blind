@@ -1,5 +1,5 @@
 // Offline cache for the app shell, and opening the app from a reminder notification.
-const CACHE = 'easy-help-v8';
+const CACHE = 'easy-help-v9';
 const FILES = ['./', 'index.html', 'styles.css', 'app.js', 'helper.html', 'helper.js', 'manifest.webmanifest', 'icons/icon.svg', 'icons/logo.jpg'];
 
 self.addEventListener('install', e => {
