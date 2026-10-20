@@ -137,6 +137,8 @@ th { font-family: var(--head); text-transform: uppercase; font-size: .85rem; let
 tbody tr:last-child td { border-bottom: 0; }
 td:first-child { font-weight: 700; white-space: nowrap; }
 tr.us td { background: var(--navy); color: #fff; }
+.money td:not(:first-child), .money th:not(:first-child) { text-align: center; }
+tr.profit-row td { background: var(--blue-pale); font-weight: 800; }
 .edge { margin-top: 28px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 28px; padding: 0; list-style: none; font-weight: 700; }
 .edge li { display: flex; gap: 12px; }
 .edge svg { width: 24px; height: 24px; flex: none; margin-top: 2px; }
@@ -479,7 +481,7 @@ footer { padding-block: 28px 40px; border-top: 1px solid rgba(24, 80, 121, .14);
         <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">4.2M EGP</p><ul class="bullets small"><li>Year 1</li><li>1,750 paying families</li><li>9,000 free users</li></ul></div>
         <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">9M EGP</p><ul class="bullets small"><li>Year 2</li><li>3,800 paying families</li><li>20,000 free users</li></ul></div>
         <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">22M EGP</p><ul class="bullets small"><li>Year 3</li><li>9,000 paying families</li><li>7M EGP profit</li></ul></div>
-        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">2 streams</p><ul class="bullets small"><li>Subscriptions: 90%</li><li>Partner fees: 10%</li></ul></div>
+        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">3 streams</p><ul class="bullets small"><li>Subscriptions</li><li>Partner fees</li><li>10% of donations</li></ul></div>
       </div>
       <p class="note center">Estimates. About 1 in 5 families upgrade to a paid plan; a paying family brings about 180 EGP a month on average.</p>
     </div>
@@ -542,13 +544,19 @@ footer { padding-block: 28px 40px; border-top: 1px solid rgba(24, 80, 121, .14);
   <section class="slide" id="profit" aria-labelledby="profit-h" style="overflow: hidden;">
     <div class="wrap">
       <h2 id="profit-h" class="center">Profit</h2>
-      <div class="value-line">
-        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">-7M EGP</p><ul class="bullets small"><li>Year 1</li><li>Sales 4.2M</li><li>Costs 11.2M</li></ul></div>
-        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">-1.5M EGP</p><ul class="bullets small"><li>Year 2</li><li>Sales 9M</li><li>Costs 10.5M</li></ul></div>
-        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">+7M EGP</p><ul class="bullets small"><li>Year 3</li><li>Sales 22M</li><li>Costs 15M</li></ul></div>
-        <div class="value"><svg class="star" viewBox="0 0 64 64" aria-hidden="true"><path fill="#185079" d="M32 0l9.2 9.8 13.4-.4-.4 13.4L64 32l-9.8 9.2.4 13.4-13.4-.4L32 64l-9.2-9.8-13.4.4.4-13.4L0 32l9.8-9.2-.4-13.4 13.4.4z"/></svg><p class="num">Ask: 11.2M</p><ul class="bullets small"><li>+2.7M from founders</li><li>13.9M in total</li><li>6.9M left after year 1</li></ul></div>
+      <div class="table-wrap" style="margin-top: 36px;">
+        <table class="money">
+          <thead><tr><th scope="col">EGP</th><th scope="col">Year 1</th><th scope="col">Year 2</th><th scope="col">Year 3</th></tr></thead>
+          <tbody>
+            <tr><td>Sales (plans + partners)</td><td>4.2M</td><td>9M</td><td>22M</td></tr>
+            <tr><td>Donations we keep (10%)</td><td>0.1M</td><td>0.1M</td><td>0.1M</td></tr>
+            <tr><td>Costs</td><td>11.2M</td><td>10.5M</td><td>15M</td></tr>
+            <tr class="profit-row"><td>Profit</td><td>-6.9M</td><td>-1.4M</td><td>+7.1M</td></tr>
+            <tr class="us"><td>Money in the bank</td><td>7M</td><td>5.6M</td><td>12.7M</td></tr>
+          </tbody>
+        </table>
       </div>
-      <p class="note center">Estimates.</p>
+      <p class="note center">Estimates. We start with 13.9M: 11.2M from investors and 2.7M from the six founders. About 1M a year in donations goes through the Egyptian Red Crescent: 90% to Palestine, 10% kept to run the service.</p>
     </div>
   </section>
 
