@@ -204,6 +204,9 @@ footer { padding-block: 28px 40px; border-top: 1px solid rgba(24, 80, 121, .14);
 /* App design */
 .mockup { margin: 40px 0 0; }
 .mockup img { width: 100%; height: auto; display: block; }
+.qr-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; max-width: 640px; margin: 40px auto 0; text-align: center; }
+.qr-pair img { width: 100%; height: auto; display: block; background: #fff; border-radius: 16px; image-rendering: pixelated; }
+.qr-pair a { font-family: var(--head); font-weight: 700; font-size: 1.2rem; color: inherit; display: block; margin-top: 12px; }
 .captions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); text-align: center; font-family: var(--head); font-weight: 700; font-size: 1.2rem; margin-top: 8px; }
 /* Our ad */
 .headline { font-family: var(--head); font-weight: 700; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.15; letter-spacing: -.02em; }
@@ -264,8 +267,8 @@ footer { padding-block: 28px 40px; border-top: 1px solid rgba(24, 80, 121, .14);
         </ul>
       </div>
       <div class="tiles">
-        <div class="tile t1"><h3>Marketing</h3><p><b>Moaz Eid</b><br><b>Ali Alnokrashy</b></p></div>
-        <div class="tile t2"><h3>Finance</h3><p><b>Mohamed Eid</b></p></div>
+        <div class="tile t1"><h3>Marketing</h3><p><b>Moaz Eid</b></p></div>
+        <div class="tile t2"><h3>Finance</h3><p><b>Mohamed Eid</b><br><b>Ali Alnokrashy</b></p></div>
         <div class="tile t3"><h3>Research</h3><p><b>Yahia Radwan</b></p></div>
         <div class="tile t4"><h3>Developer</h3><p><b>Hamza Mansour</b></p></div>
       </div>
@@ -551,6 +554,17 @@ footer { padding-block: 28px 40px; border-top: 1px solid rgba(24, 80, 121, .14);
           <ul class="bullets"><li>Big need: 30M+ elders</li><li>The app already works</li><li>Families are ready to pay</li></ul>
           <ul class="bullets"><li>30 days: go live, 1 NGO, 5 pharmacies</li><li>60 days: improve from the pilot</li><li>90 days: app stores, first ads</li></ul>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QR codes -->
+  <section class="slide" id="scan" aria-labelledby="scan-h">
+    <div class="wrap">
+      <h2 id="scan-h" class="center">Scan &amp; Try</h2>
+      <div class="qr-pair">
+        <figure><img src="qr-app.png" alt="QR code that opens the Easy Help app" width="888" height="888"><a href="https://claude.ai/artifact/KKW63YRKGg9pmyEHGDsNVm" target="_blank" rel="noopener" data-app-link>Try the app</a></figure>
+        <figure><img src="qr-web.png" alt="QR code that opens this website" width="888" height="888"><a href="./">Our website</a></figure>
       </div>
     </div>
   </section>

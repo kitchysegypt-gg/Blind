@@ -109,11 +109,11 @@ The **Build Android APK** GitHub Action does the same on every push to `main` an
 
 ## Website
 
-`website/index.html` is the business plan as a one-page website, with one section for each of the 18 slides of the "Easy Help" Canva pitch deck (team, problem, market, solution, how it works, app design, value, audience, competitors, marketing, the video ad, plans and pricing, revenue, plan, the ask, conclusion). It is published with the app at `/website/`, and its "Try the app" buttons open the app.
+`website/index.html` is the business plan as a one-page website, with one section for each of the slides of the "Easy Help" Canva pitch deck (team, problem, market, solution, how it works, app design, value, audience, competitors, marketing, the video ad, plans and pricing, revenue, plan, the ask, conclusion). It is published with the app at `/website/`, and its "Try the app" buttons open the app.
 
 Plans: Free (the family are the helpers), and paid plans that add Easy Help helpers and professionals: 1 month 250 EGP, 3 months 650 EGP, 6 months 1,200 EGP, 1 year 2,000 EGP.
 
-`website/ad.mp4` is the 32-second 2D animated video ad (voice-over and music), shown in the "Our Ad" section. `website/app-mockup.png` is the app-design picture.
+`website/ad.mp4` is the 32-second 2D animated video ad (voice-over and music), shown in the "Our Ad" section. `website/app-mockup.png` is the app-design picture; `website/qr-app.png` and `website/qr-web.png` are the QR codes.
 
 ## Files
 
