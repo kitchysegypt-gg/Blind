@@ -230,6 +230,14 @@
         <button class="btn btn-secondary" id="refreshPlace"><span class="ico" data-icon="refresh"></span><span data-t="refresh"></span></button>
       </div>
 
+      <div class="card pad stack" id="liveCard">
+        <p class="card-label"><span class="live-dot" id="liveDot" hidden></span><span data-t="liveTitle"></span></p>
+        <p class="lead" id="liveText" aria-live="polite"></p>
+        <p class="hint" id="liveHint" data-t="liveKeepOpen" hidden></p>
+        <button class="btn btn-primary" id="liveBtn"><span class="ico" data-icon="pin"></span><span id="liveBtnLabel"></span></button>
+        <button class="btn btn-secondary" id="liveSend" hidden><span class="ico" data-icon="send"></span><span id="liveSendLabel"></span></button>
+      </div>
+
       <div class="card pad stack">
         <p class="card-label" data-t="homeAddress"></p>
         <p class="lead" id="homeAddressText"></p>
@@ -387,6 +395,22 @@
       <button class="btn btn-primary btn-lg" id="tookItBtn"><span class="ico" data-icon="check"></span><span data-t="tookIt"></span></button>
       <button class="btn btn-secondary" id="snoozeBtn"><span class="ico" data-icon="clock"></span><span data-t="later10"></span></button>
       <button class="linkbtn center" id="skipDoseBtn" data-t="skipDose"></button>
+    </div>
+  </div>
+
+  <!-- Live map of the helper on the way -->
+  <div id="trackSheet" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="trackTitle">
+    <div class="dialog">
+      <p class="dialog-title" id="trackTitle"></p>
+      <div class="map track-map" role="img" data-t-aria="mapAlt">
+        <div class="map-tiles" id="trackTiles"></div>
+        <span class="map-pin" aria-hidden="true"><span class="ico" data-icon="car"></span></span>
+        <span class="map-credit">© OpenStreetMap</span>
+      </div>
+      <p class="lead" id="trackDistance" aria-live="polite"></p>
+      <p class="hint" id="trackUpdated"></p>
+      <a class="btn btn-secondary" id="trackMaps" href="#" target="_blank" rel="noopener"><span class="ico" data-icon="map"></span><span data-t="openMaps"></span></a>
+      <button class="btn btn-primary" id="trackClose"><span data-t="close"></span></button>
     </div>
   </div>
 

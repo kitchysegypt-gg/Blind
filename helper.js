@@ -25,6 +25,8 @@ const STRINGS = {
     coming: "I'm on my way", later: "I'll come later", done: "It's done", cant: "Sorry, I can't",
     sent: 'Thank you. {name} will see: "{answer}".',
     sentAt: 'Sent {when}', langSwitchTo: 'العربية',
+    sharing: '{name} can see you coming on a map while this page is open.',
+    noGps: 'Turn on location for your browser so {name} can see you coming.',
   },
   ar: {
     title: 'إيزي هيلب', loading: 'جارٍ تحميل الطلب…',
@@ -36,6 +38,8 @@ const STRINGS = {
     coming: 'أنا في الطريق', later: 'سآتي لاحقًا', done: 'تم', cant: 'آسف، لا أستطيع',
     sent: 'شكرًا. سيرى {name}: «{answer}».',
     sentAt: 'أُرسل {when}', langSwitchTo: 'English',
+    sharing: 'يستطيع {name} رؤيتك على الخريطة وأنت في الطريق ما دامت هذه الصفحة مفتوحة.',
+    noGps: 'شغّل خدمة الموقع في المتصفح حتى يراك {name} وأنت في الطريق.',
   },
 };
 
@@ -108,6 +112,28 @@ async function load() {
   }
 }
 
+// After "I'm on my way", the helper's position goes to the person every 15 seconds,
+// so they can watch them coming. It stops with any other answer.
+let watchId = null, lastSent = 0;
+function shareWay(on) {
+  const note = document.getElementById('sharing');
+  if (!on || !navigator.geolocation) {
+    if (watchId !== null) navigator.geolocation.clearWatch(watchId);
+    watchId = null;
+    note.hidden = true;
+    return;
+  }
+  if (watchId !== null) return;
+  const name = request.requester_name || T('someone');
+  watchId = navigator.geolocation.watchPosition(p => {
+    note.textContent = T('sharing', { name });
+    note.hidden = false;
+    if (Date.now() - lastSent < 15000) return;
+    lastSent = Date.now();
+    rpc('hh_helper_location', { p_token: token, p_lat: p.coords.latitude, p_lng: p.coords.longitude }).catch(() => { lastSent = 0; });
+  }, () => { note.textContent = T('noGps', { name }); note.hidden = false; }, { enableHighAccuracy: true, maximumAge: 10000 });
+}
+
 document.querySelectorAll('[data-status]').forEach(btn => {
   btn.addEventListener('click', async () => {
     const result = document.getElementById('result');
@@ -119,6 +145,7 @@ document.querySelectorAll('[data-status]').forEach(btn => {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token }),
       }).catch(() => {});
       result.textContent = T('sent', { name: request.requester_name || T('someone'), answer: T(btn.dataset.status) });
+      shareWay(btn.dataset.status === 'coming');
     } catch {
       result.textContent = T('offline');
     } finally {

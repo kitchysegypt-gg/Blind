@@ -158,6 +158,14 @@ const STRINGS = {
     fromHome: 'You are about {d} from home.', atHome: 'You are at home.',
     exampleLocation: 'Tahrir Square, Downtown, Cairo',
     previewLocation: 'Example. In the installed app this shows your real address.',
+    liveTitle: 'Live location', liveOff: 'Your family can follow where you are, live, on a map.',
+    liveOn: 'Sharing your live location. Updated {when}.', liveStart: 'Share my live location', liveStop: 'Stop sharing',
+    liveSendLink: 'Send the live link to {name}', liveNeedsAccount: 'Please sign in first, so your family can follow you.',
+    liveStarted: 'Live location is on.', liveStopped: 'Live location is off. The link no longer works.',
+    liveMsg: 'Follow where I am, live: {l}', liveKeepOpen: 'Keep Easy Help open while you share.',
+    trackHelper: 'See where {name} is', trackTitle: '{name} is on the way', trackDistance: '{d} from you',
+    trackUpdated: 'Updated {when}', trackWaiting: 'Waiting for {name} to share their location…',
+    secondsAgo: '{n} seconds ago', minutesAgo: '{n} minutes ago', justNow: 'just now',
 
     account: 'Account', signedInAs: 'Signed in as {who}', notSignedIn: 'Not signed in. Your details are saved only on this phone.',
     signOut: 'Sign out', signInNow: 'Sign in', signedOut: 'You are signed out.',
@@ -283,6 +291,14 @@ const STRINGS = {
     fromHome: 'أنت على بعد حوالي {d} من البيت.', atHome: 'أنت في البيت.',
     exampleLocation: 'ميدان التحرير، وسط البلد، القاهرة',
     previewLocation: 'مثال. في التطبيق المثبّت يظهر عنوانك الحقيقي.',
+    liveTitle: 'الموقع المباشر', liveOff: 'تستطيع عائلتك متابعة مكانك مباشرةً على الخريطة.',
+    liveOn: 'تتم مشاركة موقعك المباشر. آخر تحديث {when}.', liveStart: 'شارك موقعي المباشر', liveStop: 'أوقف المشاركة',
+    liveSendLink: 'أرسل رابط المتابعة إلى {name}', liveNeedsAccount: 'من فضلك سجّل الدخول أولًا حتى تتابعك عائلتك.',
+    liveStarted: 'الموقع المباشر يعمل.', liveStopped: 'تم إيقاف الموقع المباشر. الرابط لم يعد يعمل.',
+    liveMsg: 'تابع مكاني مباشرةً: {l}', liveKeepOpen: 'اترك إيزي هيلب مفتوحًا أثناء المشاركة.',
+    trackHelper: 'شاهد أين {name} الآن', trackTitle: '{name} في الطريق', trackDistance: 'على بعد {d} منك',
+    trackUpdated: 'آخر تحديث {when}', trackWaiting: 'في انتظار أن يشارك {name} موقعه…',
+    secondsAgo: 'منذ {n} ثانية', minutesAgo: 'منذ {n} دقيقة', justNow: 'الآن',
 
     account: 'الحساب', signedInAs: 'مسجّل الدخول باسم {who}', notSignedIn: 'لم تسجّل الدخول. بياناتك محفوظة على هذا الهاتف فقط.',
     signOut: 'تسجيل الخروج', signInNow: 'تسجيل الدخول', signedOut: 'تم تسجيل الخروج.',
@@ -581,8 +597,8 @@ const SupabaseAccount = {
     });
   },
   async loadRequests() {
-    const rows = await this.rest('hh_requests?select=type,text,status,created_at&order=created_at.desc&limit=50');
-    return (rows || []).map(r => ({ type: r.type, text: r.text, status: r.status, at: Date.parse(r.created_at) }));
+    const rows = await this.rest('hh_requests?select=type,text,status,created_at,token&order=created_at.desc&limit=50');
+    return (rows || []).map(r => ({ type: r.type, text: r.text, status: r.status, at: Date.parse(r.created_at), token: r.token }));
   },
   // Returns the secret token for the helper's reply link.
   async addRequest(r, extra = {}) {
@@ -603,6 +619,21 @@ const SupabaseAccount = {
   async repliesSince(iso) {
     return this.rest(`hh_requests?select=type,text,status,status_at&status_at=gt.${encodeURIComponent(iso)}&order=status_at.asc`);
   },
+  // Where the helper is, while they are on the way to this request.
+  async helperPosition(token) {
+    const rows = await this.rest(`hh_requests?select=helper_lat,helper_lng,helper_at&token=eq.${token}`);
+    const r = rows && rows[0];
+    return r && r.helper_at ? { lat: r.helper_lat, lng: r.helper_lng, at: Date.parse(r.helper_at) } : null;
+  },
+  // Live location: one row per person. Returns the secret token for the family's link.
+  async saveLive(pos, name) {
+    const rows = await this.rest('hh_live?select=token', {
+      method: 'POST', prefer: 'resolution=merge-duplicates,return=representation',
+      body: { user_id: this.session.user.id, name, lat: pos.lat, lng: pos.lng, acc: pos.acc, updated_at: new Date().toISOString() },
+    });
+    return rows && rows[0] ? rows[0].token : null;
+  },
+  async stopLive() { await this.rest(`hh_live?user_id=eq.${this.session.user.id}`, { method: 'DELETE' }); },
 };
 
 const ClaudeAccount = {
@@ -632,6 +663,13 @@ const ClaudeAccount = {
   async clearRequests() { await this.col().doc('requests').set({ items: [] }); },
   async repliesSince() { return []; },
   async savePushToken() {},
+  // The preview has no server: the helper drives towards Tahrir Square over two minutes.
+  async helperPosition() {
+    const t = Math.min(1, (Date.now() - trackStart) / 120000);
+    return { lat: 30.04442 + 0.012 * (1 - t), lng: 31.23571 + 0.009 * (1 - t), at: Date.now() };
+  },
+  async saveLive() { return 'preview'; },
+  async stopLive() {},
 };
 
 const Account = PREVIEW ? ClaudeAccount : SupabaseAccount;
@@ -1063,7 +1101,11 @@ async function addHistory(item, extra) {
   requests = requests.slice(0, 50);
   store.set('hh.history', requests);
   if (!Account.signedIn()) return null;
-  try { return await Account.addRequest(item, extra); } catch { return null; }
+  try {
+    const token = await Account.addRequest(item, extra);
+    if (token) { requests[0].token = token; store.set('hh.history', requests); }
+    return token;
+  } catch { return null; }
 }
 function drawRequests() {
   const list = document.getElementById('historyList');
@@ -1084,6 +1126,13 @@ function drawRequests() {
     const pill = el('span', 'pill', T(`status_${status}`));
     pill.dataset.s = status;
     txt.append(pill);
+    if (status === 'coming' && (h.token || PREVIEW)) {
+      const b = el('button', 'btn btn-secondary');
+      b.type = 'button';
+      b.append(icon('car'), el('span', '', T('trackHelper', { name: settings.helperName || T('yourHelper') })));
+      b.addEventListener('click', () => openTrack(h.token));
+      txt.append(b);
+    }
     card.append(ic, txt);
     list.appendChild(card);
   });
@@ -1238,7 +1287,7 @@ function showReminder(med, time, key) {
   reminderEl.hidden = false;
   document.getElementById('tookItBtn').focus();
   if (navigator.vibrate) navigator.vibrate([300, 150, 300, 150, 300]);
-  notify(T('remindTitle'), `${med.name} · ${fmtTime(time)}`);
+  notify(T('remindTitle'), `${med.name} · ${fmtTime(time)}`, true);
 }
 function closeReminder(value, messageKey) {
   if (!reminderNow) return;
@@ -1250,7 +1299,10 @@ function closeReminder(value, messageKey) {
   if (screenNow() === 'meds') renderMeds();
 }
 document.getElementById('tookItBtn').addEventListener('click', () => closeReminder('taken', 'doseTaken'));
-document.getElementById('snoozeBtn').addEventListener('click', () => closeReminder({ snooze: Date.now() + 10 * 60000 }, 'snoozed'));
+document.getElementById('snoozeBtn').addEventListener('click', () => {
+  if (reminderNow) snoozeNative(reminderNow.med, reminderNow.time);
+  closeReminder({ snooze: Date.now() + 10 * 60000 }, 'snoozed');
+});
 document.getElementById('skipDoseBtn').addEventListener('click', () => closeReminder('skipped', 'doseSkipped'));
 setInterval(checkReminders, 20000);
 
@@ -1271,16 +1323,43 @@ async function scheduleMedReminders() {
     let perm = await LN.checkPermissions();
     if (perm.display !== 'granted') perm = await LN.requestPermissions();
     if (perm.display !== 'granted') return;
+    // "I took it" and "Remind me in 10 minutes" right on the notification.
+    await LN.registerActionTypes({ types: [{ id: 'MED', actions: [{ id: 'took', title: T('tookIt') }, { id: 'snooze', title: T('later10') }] }] });
     const notifications = [];
     meds.forEach(med => med.times.forEach(time => {
       const [hour, minute] = time.split(':').map(Number);
       notifications.push({
         id: notifications.length + 1, title: T('remindTitle'), body: `${med.name} · ${fmtTime(time)}`,
-        schedule: { on: { hour, minute }, allowWhileIdle: true },
+        schedule: { on: { hour, minute }, allowWhileIdle: true }, actionTypeId: 'MED', extra: { medId: med.id, time },
       });
     }));
     await LN.schedule({ notifications });
   } catch { lastSchedule = ''; }
+}
+function snoozeNative(med, time) {
+  const LN = NATIVE && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications;
+  if (!LN) return;
+  LN.schedule({ notifications: [{
+    id: 9000 + Math.floor(Math.random() * 900), title: T('remindTitle'), body: `${med.name} · ${fmtTime(time)}`,
+    schedule: { at: new Date(Date.now() + 10 * 60000), allowWhileIdle: true }, actionTypeId: 'MED', extra: { medId: med.id, time },
+  }] }).catch(() => {});
+}
+// Buttons pressed on a reminder notification.
+function setupReminderActions() {
+  const LN = NATIVE && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications;
+  if (!LN) return;
+  LN.addListener('localNotificationActionPerformed', a => {
+    const extra = (a.notification && a.notification.extra) || {};
+    const med = (settings.meds || []).find(m => m.id === extra.medId);
+    if (!med) return;
+    const key = doseKey(med, extra.time, new Date());
+    if (a.actionId === 'took') { setDose(key, 'taken'); toast(T('doseTaken')); }
+    else if (a.actionId === 'snooze') { setDose(key, { snooze: Date.now() + 10 * 60000 }); snoozeNative(med, extra.time); toast(T('snoozed')); }
+    else { go('meds'); return; }
+    if (reminderNow && reminderNow.key === key) { reminderNow = null; reminderEl.hidden = true; }
+    if (screenNow() === 'home') renderHome();
+    if (screenNow() === 'meds') renderMeds();
+  }).catch(() => {});
 }
 
 // Push notifications from Firebase (Android app only, and only when the build
@@ -1314,8 +1393,9 @@ function askNotificationPermission() {
   Notification.requestPermission().catch(() => {});
 }
 // A phone notification as well, for when the screen is off or another app is open.
-function notify(title, body) {
-  if (PREVIEW || !document.hidden || !('Notification' in window) || Notification.permission !== 'granted') return;
+// Medicine reminders always come as a notification, even with the app open.
+function notify(title, body, always = false) {
+  if (PREVIEW || (!always && !document.hidden) || !('Notification' in window) || Notification.permission !== 'granted') return;
   if (navigator.serviceWorker && navigator.serviceWorker.ready) {
     navigator.serviceWorker.ready.then(reg => reg.showNotification(title, { body, icon: 'icons/icon.svg', tag: 'easy-help', renotify: true, vibrate: [300, 150, 300] })).catch(() => {});
   }
@@ -1370,8 +1450,8 @@ async function addressFor(pos) {
 }
 
 // A small street map made of OpenStreetMap tiles, centred on the person.
-function drawMap(pos) {
-  const box = document.getElementById('mapTiles');
+function drawMap(pos, boxId = 'mapTiles') {
+  const box = document.getElementById(boxId);
   box.innerHTML = '';
   if (!pos) return;
   const z = 16;
@@ -1413,6 +1493,7 @@ function renderHomePlace() {
 }
 function renderLocation() {
   renderHomePlace();
+  renderLive();
   findMe();
 }
 async function findMe() {
@@ -1454,6 +1535,119 @@ document.getElementById('sendPlace').addEventListener('click', async () => {
   await addHistory({ type: 'location', text: lastPlace.address });
   sendMessage(settings.helperPhone, lines.join('\n'));
 });
+
+/* ---------- Live location ---------- */
+// While sharing, the phone's position goes to the server every 15 seconds or so,
+// and the family follows it on track.html through a private link.
+const live = { on: false, watch: null, token: store.get('hh.liveToken', null), at: 0, sending: false, last: null };
+function trackLink(token) {
+  const base = NATIVE ? PUBLIC_URL : `${location.origin}${location.pathname.replace(/[^/]*$/, '')}`;
+  return `${base}track.html?t=${token}`;
+}
+function ago(ms) {
+  const s = Math.max(0, Math.round((Date.now() - ms) / 1000));
+  if (s < 10) return T('justNow');
+  if (s < 90) return T('secondsAgo', { n: s.toLocaleString(locale()) });
+  return T('minutesAgo', { n: Math.round(s / 60).toLocaleString(locale()) });
+}
+function renderLive() {
+  document.getElementById('liveDot').hidden = !live.on;
+  document.getElementById('liveHint').hidden = !live.on;
+  document.getElementById('liveText').textContent = live.on ? T('liveOn', { when: live.at ? ago(live.at) : T('justNow') }) : T('liveOff');
+  document.getElementById('liveBtnLabel').textContent = T(live.on ? 'liveStop' : 'liveStart');
+  const btn = document.getElementById('liveBtn');
+  btn.classList.toggle('btn-primary', !live.on);
+  btn.classList.toggle('btn-secondary', live.on);
+  document.getElementById('liveSend').hidden = !(live.on && live.token);
+  document.getElementById('liveSendLabel').textContent = T('liveSendLink', { name: settings.helperName || T('yourHelper') });
+}
+async function pushLive(pos) {
+  live.last = pos;
+  if (live.sending || Date.now() - live.at < 15000) return;
+  live.sending = true;
+  try {
+    const token = await Account.saveLive(pos, settings.name || '');
+    if (token && token !== live.token) { live.token = token; store.set('hh.liveToken', token); }
+    live.at = Date.now();
+  } catch { /* try again with the next position */ }
+  live.sending = false;
+  if (screenNow() === 'location') renderLive();
+}
+function startLive(quiet) {
+  if (!Account.signedIn()) { toast(T('liveNeedsAccount')); return; }
+  live.on = true;
+  store.set('hh.live', true);
+  if (PREVIEW) pushLive({ lat: 30.04442, lng: 31.23571, acc: 20 });
+  else if (navigator.geolocation) {
+    live.watch = navigator.geolocation.watchPosition(
+      p => pushLive({ lat: p.coords.latitude, lng: p.coords.longitude, acc: p.coords.accuracy }),
+      () => {}, { enableHighAccuracy: true, maximumAge: 10000 },
+    );
+  }
+  if (!quiet) toast(T('liveStarted'));
+  renderLive();
+}
+function stopLive() {
+  live.on = false;
+  store.set('hh.live', false);
+  if (live.watch !== null && navigator.geolocation) navigator.geolocation.clearWatch(live.watch);
+  live.watch = null; live.at = 0; live.token = null; live.last = null;
+  store.remove('hh.liveToken');
+  if (Account.signedIn()) Account.stopLive().catch(() => {});
+  toast(T('liveStopped'));
+  renderLive();
+}
+// Standing still sends no new positions, so re-send the last one now and then.
+setInterval(() => {
+  if (live.on && live.last) pushLive(live.last);
+  if (live.on && screenNow() === 'location') renderLive();
+}, 30000);
+document.getElementById('liveBtn').addEventListener('click', () => (live.on ? stopLive() : startLive()));
+document.getElementById('liveSend').addEventListener('click', () => {
+  if (!settings.helperPhone) { toast(T('needHelperPhone')); return; }
+  sendMessage(settings.helperPhone, [greetLine(), T('liveMsg', { l: trackLink(live.token) }), T('msgFooter')].join('\n'));
+});
+
+/* ---------- The helper on the way, on a map ---------- */
+const trackSheet = document.getElementById('trackSheet');
+let trackTimer = null, trackToken = null, trackStart = 0, trackMe = null;
+async function refreshTrack() {
+  const name = settings.helperName || T('yourHelper');
+  let h = null;
+  try { h = await Account.helperPosition(trackToken); } catch { /* keep the last map */ return; }
+  if (trackSheet.hidden) return;
+  const dist = document.getElementById('trackDistance');
+  const upd = document.getElementById('trackUpdated');
+  const maps = document.getElementById('trackMaps');
+  if (!h) {
+    drawMap(null, 'trackTiles');
+    dist.textContent = T('trackWaiting', { name });
+    upd.textContent = '';
+    maps.hidden = true;
+    return;
+  }
+  drawMap(h, 'trackTiles');
+  const me = trackMe || (lastPlace && lastPlace.pos) || settings.homePos;
+  dist.textContent = me ? T('trackDistance', { d: fmtDistance(distanceM(me, h)) }) : '';
+  upd.textContent = T('trackUpdated', { when: ago(h.at) });
+  maps.href = mapsLink(h);
+  maps.hidden = false;
+}
+function openTrack(token) {
+  trackToken = token;
+  trackStart = Date.now();
+  document.getElementById('trackTitle').textContent = T('trackTitle', { name: settings.helperName || T('myHelperName') });
+  document.getElementById('trackDistance').textContent = T('trackWaiting', { name: settings.helperName || T('yourHelper') });
+  document.getElementById('trackUpdated').textContent = '';
+  document.getElementById('trackMaps').hidden = true;
+  trackSheet.hidden = false;
+  document.getElementById('trackClose').focus();
+  getPosition().then(pos => { trackMe = pos; });
+  refreshTrack();
+  clearInterval(trackTimer);
+  trackTimer = setInterval(refreshTrack, 8000);
+}
+document.getElementById('trackClose').addEventListener('click', () => { trackSheet.hidden = true; clearInterval(trackTimer); });
 
 /* ---------- Messaging and calling ---------- */
 function cleanPhone(p) { return String(p || '').replace(/[^\d+]/g, ''); }
@@ -1676,6 +1870,8 @@ document.getElementById('langBtn').addEventListener('click', () => {
   if (Account.signedIn()) afterSignIn().then(() => { if (screenNow() === 'home') renderHome(); checkReplies(); });
   checkReminders();
   setupPush();
+  setupReminderActions();
+  if (store.get('hh.live', false) && Account.signedIn()) startLive(true);
 })();
 
 if (!PREVIEW && !NATIVE && 'serviceWorker' in navigator && location.protocol !== 'file:') {

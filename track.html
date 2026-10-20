@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Easy Help · Live location</title>
+  <meta name="theme-color" content="#2e5e4a">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Cairo:wght@500;600;700;800&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="helper-page no-tabs">
+  <header class="topbar">
+    <span class="brandmark" aria-hidden="true"><span class="ico" data-icon="homeheart"></span></span>
+    <h1 id="title">Easy Help</h1>
+    <button id="langBtn" class="langbtn" lang="ar" aria-label="العربية">ع</button>
+  </header>
+
+  <main id="main">
+    <section class="screen">
+      <p id="loading" class="status-line"></p>
+
+      <div id="liveBox" class="stack" hidden>
+        <div class="card map-card">
+          <div class="map" role="img" id="map">
+            <div class="map-tiles" id="mapTiles"></div>
+            <span class="map-pin" aria-hidden="true"><span class="ico" data-icon="pin"></span></span>
+            <span class="map-credit">© OpenStreetMap</span>
+          </div>
+          <div class="pad">
+            <p class="card-label"><span class="live-dot"></span><span id="who"></span></p>
+            <p class="lead" id="updated" aria-live="polite"></p>
+            <p class="hint" id="accuracy"></p>
+          </div>
+        </div>
+        <a class="btn btn-primary btn-lg" id="mapsLink" href="#" target="_blank" rel="noopener"><span class="ico" data-icon="map"></span><span data-t="openMaps"></span></a>
+        <a class="btn btn-secondary" id="directions" href="#" target="_blank" rel="noopener"><span class="ico" data-icon="car"></span><span data-t="directions"></span></a>
+      </div>
+    </section>
+  </main>
+  <script src="track.js"></script>
+</body>
+</html>
