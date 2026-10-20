@@ -32,7 +32,7 @@ Three plans. Plus and Premium can be paid for 1, 3, 6 or 12 months.
 
 Requests the plan covers go to the Easy Help team once its WhatsApp number is set in `TEAM_PHONE` at the top of `app.js`; until then, and for anything the plan doesn't cover, they go to the family helper. Payment is not built into the app yet.
 
-The pitch asks for 5M EGP for 10% (50M valuation), exactly the 12-month launch budget with no reserve. Delivery goes through partners instead of our own fleet (estimated prices): Talabat at about 15 EGP an order 450k, Alfa Lab home tests 150k (no monthly fee; members get about 20% off and Alfa Lab pays us about 10% a test), 100 local pharmacies 150k (free to join, they deliver themselves and pay us 5% an order). The rest: 250 helpers 1.7M, 2 developers at 30k a month 720k, 2 support staff 288k, marketing 1.32M, servers, apps and legal 220k. Forecast profit: year 1 -3.5M (sales 1.5M), year 2 +0.3M (sales 9M), year 3 +6M (sales 22M).
+The pitch asks for 11.2M EGP for 10% (112M valuation), the 12-month launch budget: 110 helpers at 6,500 EGP a month 8.58M, 2 developers at 30k a month 720k, 4 support staff at 7k a month 336k, partner setup 300k, marketing 1M, servers, apps and legal 220k. Talabat, Alfa Lab and the pharmacies pay their own staff and customers pay the delivery fee, so delivery costs us nothing. Forecast profit (estimates): year 1 -9.7M (sales 1.5M), year 2 -1.5M (sales 9M), year 3 +7M (sales 22M).
 
 ## Emergency
 
