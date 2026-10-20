@@ -21,7 +21,7 @@ const SUPABASE_KEY = 'sb_publishable_sgYgEuoQbf1UhuED29P3zg_TQRm_mZF';
 const TEAM_PHONE = '';
 const PLANS = ['free', 'plus', 'premium'];
 const PLAN_LENGTHS = ['1', '3', '6', '12']; // months, for Plus and Premium
-// Plus: our delivery team brings shopping, medicine and papers. Premium adds the rest.
+// Plus: Talabat and partner pharmacies deliver shopping and medicine; papers too. Premium adds the rest.
 const PLUS_SERVICES = ['groceries', 'medicine', 'errands'];
 
 /* ---------- Icons: plain line symbols ---------- */
@@ -104,8 +104,8 @@ const STRINGS = {
     plan_free: 'Free · 0 EGP', plan_plus: 'Plus', plan_premium: 'Premium',
     planLengthLabel: 'Pay for', len_1: '1 month', len_3: '3 months (save 13%)', len_6: '6 months (save 20%)', len_12: '1 year (save 33%)',
     tier_free: 'Free: your family are your helpers. Requests go to them, plus medicine reminders, SOS, location and a daily "I\'m OK".',
-    tier_plus: 'Plus (250 / 650 / 1,200 / 2,000 EGP for 1 / 3 / 6 / 12 months): everything in Free, plus our delivery team for shopping, pharmacy and bills, alerts to your family when a dose is missed, and a support line.',
-    tier_premium: 'Premium (450 / 1,150 / 2,150 / 3,600 EGP): everything in Plus, plus nurses and doctors at home, rides and help at home, a helper within 1 hour, a weekly family report and support day and night.',
+    tier_plus: 'Plus (250 / 650 / 1,200 / 2,000 EGP for 1 / 3 / 6 / 12 months): everything in Free, plus delivery of shopping and medicine by Talabat and local pharmacies, help with bills, alerts to your family when a dose is missed, and a support line.',
+    tier_premium: 'Premium (450 / 1,150 / 2,150 / 3,600 EGP): everything in Plus, plus nurses and doctors at home, home lab tests with Alfa Lab, rides and help at home, a helper within 1 hour, a weekly family report and support day and night.',
     planPayHint: 'Paying in the app comes with the Google Play launch.',
     shareApp: 'Share Easy Help', shareAppSub: 'Your family scans this code with their phone camera to open Easy Help.', qrAlt: 'QR code that opens Easy Help',
     nextMedTitle: 'Next medicine', seeAll: 'See all', edit: 'Edit',
@@ -229,8 +229,8 @@ const STRINGS = {
     plan_free: 'مجانية · 0 جنيه', plan_plus: 'بلس', plan_premium: 'بريميوم',
     planLengthLabel: 'مدة الاشتراك', len_1: 'شهر', len_3: '3 شهور (وفّر 13%)', len_6: '6 شهور (وفّر 20%)', len_12: 'سنة (وفّر 33%)',
     tier_free: 'المجانية: عائلتك هم مساعدوك. تُرسل لهم طلباتك، مع تذكير الدواء والطوارئ والموقع ورسالة "أنا بخير" اليومية.',
-    tier_plus: 'بلس (250 / 650 / 1200 / 2000 جنيه لشهر / 3 / 6 / 12 شهرًا): كل مزايا المجانية، مع فريق التوصيل للمشتريات والصيدلية والفواتير، وتنبيه لعائلتك عند نسيان جرعة، وخط دعم.',
-    tier_premium: 'بريميوم (450 / 1150 / 2150 / 3600 جنيه): كل مزايا بلس، مع ممرضات وأطباء في البيت، وتوصيلات ومساعدة في البيت، ومساعد خلال ساعة، وتقرير أسبوعي للعائلة، ودعم ليلًا ونهارًا.',
+    tier_plus: 'بلس (250 / 650 / 1200 / 2000 جنيه لشهر / 3 / 6 / 12 شهرًا): كل مزايا المجانية، مع توصيل المشتريات والأدوية عن طريق طلبات والصيدليات القريبة، والمساعدة في الفواتير، وتنبيه لعائلتك عند نسيان جرعة، وخط دعم.',
+    tier_premium: 'بريميوم (450 / 1150 / 2150 / 3600 جنيه): كل مزايا بلس، مع ممرضات وأطباء في البيت، وتحاليل منزلية مع ألفا لاب، وتوصيلات ومساعدة في البيت، ومساعد خلال ساعة، وتقرير أسبوعي للعائلة، ودعم ليلًا ونهارًا.',
     planPayHint: 'الدفع داخل التطبيق يبدأ مع إطلاقه على جوجل بلاي.',
     shareApp: 'شارك إيزي هيلب', shareAppSub: 'عائلتك تصوّر هذا الرمز بكاميرا الهاتف لفتح إيزي هيلب.', qrAlt: 'رمز QR يفتح إيزي هيلب',
     nextMedTitle: 'الدواء التالي', seeAll: 'عرض الكل', edit: 'تعديل',
