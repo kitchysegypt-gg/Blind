@@ -24,6 +24,8 @@ Groceries, Pharmacy, A ride and Help at home each have their own screen with the
 
 **Free**: your family are your helpers; every request goes to them. **Paid** (250 / 650 / 1,200 / 2,000 EGP for 1 / 3 / 6 / 12 months): requests go to the Easy Help team, with its own helpers and professionals (nurses, doctor visits, physiotherapy, lab tests). Set the team's WhatsApp number in `TEAM_PHONE` at the top of `app.js`; until it is set, paid-plan requests also go to the family helper. Payment is not built into the app yet.
 
+The pitch asks for 4.2M EGP for 20% (21M valuation), the 12-month launch budget: 250 helpers 1.7M, 2 developers at 30k/month 720k, 2 support staff 288k, marketing 700k, 100 pharmacy and 2 delivery partnerships 250k, servers, apps and legal 220k, reserve 322k.
+
 ## Emergency
 
 Calls your emergency number after a short countdown you can cancel (or straight away with **Call now**), or sends an alert with your location to your helper.
