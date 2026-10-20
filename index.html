@@ -82,6 +82,12 @@
         <span class="chev" data-icon="chev"></span>
       </button>
 
+      <button class="card row-card" id="imOkBtn" type="button">
+        <span class="row-ico" data-tone="green"><span class="ico" data-icon="smile"></span></span>
+        <span class="row-text"><span class="row-title" data-t="imOk"></span><span class="row-sub" data-t="imOkSub"></span></span>
+        <span class="chev" data-icon="chev"></span>
+      </button>
+
       <h2 class="section-title" data-t="needSomething"></h2>
       <div class="tiles">
         <button class="tile" data-go="service:groceries" data-tone="green">
@@ -103,6 +109,16 @@
           <span class="tile-ico"><span class="ico" data-icon="hands"></span></span>
           <span class="tile-title" data-t="helper"></span>
           <span class="tile-sub" data-t="helperSub"></span>
+        </button>
+        <button class="tile" data-go="service:pro" data-tone="teal">
+          <span class="tile-ico"><span class="ico" data-icon="steth"></span></span>
+          <span class="tile-title" data-t="pro"></span>
+          <span class="tile-sub" data-t="proSub"></span>
+        </button>
+        <button class="tile" data-go="service:errands" data-tone="slate">
+          <span class="tile-ico"><span class="ico" data-icon="doc"></span></span>
+          <span class="tile-title" data-t="errands"></span>
+          <span class="tile-sub" data-t="errandsSub"></span>
         </button>
       </div>
 
@@ -132,6 +148,7 @@
           <p class="service-lead" id="serviceLead"></p>
         </div>
       </div>
+      <p class="card pad plan-note" id="servicePlanNote" hidden></p>
 
       <div class="card pad stack">
         <p class="field-label" id="servicePrompt"></p>
@@ -244,6 +261,25 @@
 
       <form id="settingsForm" class="stack" novalidate>
         <fieldset class="card pad stack">
+          <legend class="card-label" data-t="myPlan"></legend>
+          <div>
+            <label class="field-label" for="s-plan" data-t="planLabel"></label>
+            <select class="field" id="s-plan" name="plan">
+              <option value="free" data-t="plan_free"></option>
+              <option value="m1" data-t="plan_m1"></option>
+              <option value="m3" data-t="plan_m3"></option>
+              <option value="m6" data-t="plan_m6"></option>
+              <option value="y1" data-t="plan_y1"></option>
+            </select>
+          </div>
+          <ul class="plan-list">
+            <li data-t="planFree"></li>
+            <li data-t="planPaid"></li>
+          </ul>
+          <p class="hint" data-t="planPayHint"></p>
+        </fieldset>
+
+        <fieldset class="card pad stack">
           <legend class="card-label" data-t="aboutMe"></legend>
           <div><label class="field-label" for="s-name" data-t="myName"></label><input class="field" id="s-name" name="name" autocomplete="name"></div>
           <div><label class="field-label" for="s-address" data-t="myAddress"></label><textarea class="field" id="s-address" name="address" rows="2" autocomplete="street-address"></textarea></div>
@@ -304,6 +340,13 @@
 
         <button type="submit" class="btn btn-primary btn-lg"><span class="ico" data-icon="check"></span><span data-t="save"></span></button>
       </form>
+
+      <div class="card pad stack share-card">
+        <p class="card-label" data-t="shareApp"></p>
+        <div class="qr-box"><svg role="img" aria-labelledby="qrTitle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" class="qr"><title id="qrTitle" data-t="qrAlt">QR code that opens Easy Help</title><path fill="#fff" d="M0 0h37v37h-37z"/><path stroke="#1d2b24" d="M2 2.5h7m3 0h1m1 0h10m1 0h1m2 0h7m-33 1h1m5 0h1m2 0h9m3 0h2m1 0h1m1 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m3 0h1m3 0h2m1 0h2m4 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m2 0h2m2 0h1m1 0h2m2 0h2m3 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h1m1 0h2m1 0h4m1 0h1m1 0h3m3 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h1m2 0h1m2 0h2m5 0h3m-24 1h1m1 0h5m2 0h3m1 0h1m1 0h1m1 0h1m2 0h1m3 0h1m1 0h5m-31 1h3m8 0h1m2 0h3m1 0h4m1 0h1m2 0h2m1 0h3m-26 1h1m1 0h1m1 0h2m3 0h2m1 0h1m9 0h1m1 0h2m-32 1h2m1 0h1m1 0h1m1 0h1m6 0h1m4 0h1m1 0h2m5 0h4m-32 1h3m2 0h6m7 0h1m2 0h2m1 0h2m2 0h2m2 0h1m-33 1h2m2 0h1m2 0h2m3 0h5m3 0h1m5 0h1m3 0h3m-33 1h1m1 0h1m2 0h3m1 0h1m1 0h1m2 0h1m2 0h1m1 0h1m2 0h1m1 0h3m4 0h1m-32 1h6m2 0h1m2 0h1m4 0h1m1 0h4m2 0h7m-31 1h2m4 0h3m1 0h5m2 0h1m1 0h2m1 0h2m1 0h1m1 0h2m1 0h1m1 0h1m-33 1h2m1 0h2m3 0h1m1 0h2m2 0h7m2 0h1m2 0h2m1 0h3m-30 1h1m1 0h1m1 0h1m6 0h5m2 0h1m1 0h1m2 0h4m1 0h2m-32 1h1m1 0h3m5 0h1m1 0h1m1 0h1m1 0h3m2 0h1m2 0h2m1 0h6m-31 1h1m1 0h5m2 0h4m1 0h1m4 0h2m1 0h2m2 0h2m-30 1h2m3 0h1m3 0h1m3 0h3m2 0h1m2 0h2m2 0h3m4 0h1m-33 1h1m2 0h1m2 0h1m2 0h1m5 0h2m1 0h1m2 0h1m6 0h2m1 0h1m-32 1h1m1 0h1m4 0h1m2 0h1m1 0h1m1 0h2m5 0h2m2 0h2m2 0h3m-32 1h1m1 0h1m1 0h3m1 0h1m2 0h2m2 0h1m1 0h1m4 0h1m1 0h5m1 0h1m-23 1h4m1 0h2m3 0h4m2 0h1m3 0h1m1 0h3m-33 1h7m2 0h2m1 0h1m2 0h1m2 0h1m1 0h1m1 0h3m1 0h1m1 0h1m1 0h1m-31 1h1m5 0h1m1 0h2m3 0h1m1 0h2m2 0h3m1 0h2m3 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m3 0h1m2 0h1m2 0h2m2 0h1m1 0h6m1 0h1m-32 1h1m1 0h3m1 0h1m1 0h1m3 0h2m1 0h2m7 0h2m2 0h5m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m2 0h2m1 0h1m-30 1h1m5 0h1m4 0h2m3 0h1m3 0h3m1 0h1m1 0h1m1 0h3m-31 1h7m1 0h2m2 0h2m2 0h2m1 0h1m3 0h3m1 0h1m3 0h1"/></svg>
+</div>
+        <p class="hint center" data-t="shareAppSub"></p>
+      </div>
     </section>
 
     <!-- EMERGENCY -->

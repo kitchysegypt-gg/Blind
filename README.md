@@ -10,15 +10,19 @@ A tab bar at the bottom of every screen:
 
 | Tab | What's on it |
 |---|---|
-| **Home** | The time and date, a red **Emergency** button, one tile for each kind of help (**Groceries**, **Pharmacy**, **A ride**, **Help at home**), the next medicine, and a **Call** button for each family member. |
+| **Home** | The time and date, a red **Emergency** button, a **Tell my family I'm OK** button, one tile for each kind of help (**Groceries**, **Pharmacy**, **A ride**, **Help at home**, **Professionals**, **Bills & papers**), the next medicine, and a **Call** button for each family member. |
 | **Requests** | Every request sent, with the helper's answer (Sent, Seen, On the way, Coming later, Can't help, Done). |
 | **Medicines** | Each medicine with today's times marked Taken, Due now, Not taken or Later. At each time a reminder pops up and buzzes: "I took it", "Remind me in 10 minutes" or "Skip". |
 | **Location** | A street map with your position, your street address, **Send my location** to your helper, **Open in Maps**, and your home: save where you are as home, see how far away it is, and get directions back. |
-| **Profile** | Account, your name and address, your helper, up to three family numbers, the emergency number, language and text size. |
+| **Profile** | Account, your plan, your name and address, your helper, up to three family numbers, the emergency number, language, text size, and a QR code your family scans to open Easy Help. |
 
 ## Each kind of help
 
 Groceries, Pharmacy, A ride and Help at home each have their own screen with their own choices (bread, milk… / blood pressure tablets… / doctor, market… / cleaning, cooking…), a box for anything else, **when** (Right away, Later today, Tomorrow) and whether to include your location (for a ride: "Pick me up from where I am now"). The app writes a WhatsApp or SMS message to your helper with your name, address and location, and you press Send.
+
+## Plans
+
+**Free**: your family are your helpers; every request goes to them. **Paid** (250 / 650 / 1,200 / 2,000 EGP for 1 / 3 / 6 / 12 months): requests go to the Easy Help team, with its own helpers and professionals (nurses, doctor visits, physiotherapy, lab tests). Set the team's WhatsApp number in `TEAM_PHONE` at the top of `app.js`; until it is set, paid-plan requests also go to the family helper. Payment is not built into the app yet.
 
 ## Emergency
 
@@ -89,7 +93,7 @@ The **Build Android APK** GitHub Action does the same on every push to `main` an
 
 `website/index.html` is the business plan as a one-page website, with one section for each of the 18 slides of the "Easy Help" Canva pitch deck (team, problem, market, solution, how it works, app design, value, audience, competitors, marketing, the video ad, plans and pricing, revenue, plan, the ask, conclusion). It is published with the app at `/website/`, and its "Try the app" buttons open the app.
 
-Prices: 1 month 250 EGP, 3 months 650 EGP, 6 months 1,200 EGP, 1 year 2,000 EGP.
+Plans: Free (the family are the helpers), and paid plans that add Easy Help helpers and professionals: 1 month 250 EGP, 3 months 650 EGP, 6 months 1,200 EGP, 1 year 2,000 EGP.
 
 `website/ad.mp4` is the 32-second 2D animated video ad (voice-over and music), shown in the "Our Ad" section. `website/app-mockup.png` is the app-design picture.
 

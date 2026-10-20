@@ -15,6 +15,12 @@ const PUBLIC_URL = 'https://kitchysegypt-gg.github.io/Blind/';
 const SUPABASE_URL = 'https://sjlgitmupecmqhfmuyds.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_sgYgEuoQbf1UhuED29P3zg_TQRm_mZF';
 
+// Plans. Free: the family helper gets every request. Paid: requests go to the
+// Easy Help team (helpers and professionals) once its WhatsApp number is set here,
+// in international format, e.g. '+20 100 000 0000'. Until then they go to the helper.
+const TEAM_PHONE = '';
+const PLANS = ['free', 'm1', 'm3', 'm6', 'y1'];
+
 /* ---------- Icons: plain line symbols ---------- */
 const ICONS = {
   homeheart: '<path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/><path d="M12 17.5s-3-1.8-3-3.8a1.6 1.6 0 0 1 3-.9 1.6 1.6 0 0 1 3 .9c0 2-3 3.8-3 3.8z"/>',
@@ -39,6 +45,9 @@ const ICONS = {
   send: '<path d="M21.5 2.5 10.5 13.5M21.5 2.5l-7 19-4-8-8-4z"/>',
   refresh: '<path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"/><path d="M3 21v-5h5"/><path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"/><path d="M21 3v5h-5"/>',
   x: '<path d="M18 6 6 18M6 6l12 12"/>',
+  steth: '<path d="M5 3v5a5 5 0 0 0 10 0V3"/><path d="M10 13v2a5 5 0 0 0 10 0v-3"/><circle cx="20" cy="10" r="2"/>',
+  doc: '<path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
+  smile: '<circle cx="12" cy="12" r="9.5"/><path d="M8 14.5s1.5 2 4 2 4-2 4-2M9 9.5h.01M15 9.5h.01"/>',
 };
 function iconSVG(name) {
   return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${ICONS[name] || ''}</svg>`;
@@ -82,6 +91,18 @@ const STRINGS = {
     medicine: 'Pharmacy', medicineSub: 'Medicine picked up for you',
     ride: 'A ride', rideSub: 'To the doctor, the market or family',
     helper: 'Help at home', helperSub: 'Cleaning, cooking, repairs or company',
+    pro: 'Professionals', proSub: 'Nurse, doctor visit or physiotherapy at home',
+    errands: 'Bills & papers', errandsSub: 'Bills, bank, post and government papers',
+    imOk: "Tell my family I'm OK", imOkSub: 'One tap a day, so nobody worries',
+    msgImOk: "I'm fine today. Just letting you know.",
+    proFreeNote: 'Nurses and doctors come with a paid plan. On the Free plan this request goes to your family helper.',
+    teamName: 'the Easy Help team',
+    myPlan: 'My plan', planLabel: 'Plan',
+    plan_free: 'Free · 0 EGP', plan_m1: '1 month · 250 EGP', plan_m3: '3 months · 650 EGP', plan_m6: '6 months · 1,200 EGP', plan_y1: '1 year · 2,000 EGP',
+    planFree: 'Free: your family are your helpers. Send them requests, plus medicine reminders, SOS and location.',
+    planPaid: 'Paid: Easy Help helpers and professionals (nurses, doctors at home, physiotherapy), alerts to family when a dose is missed, and a support line.',
+    planPayHint: 'Paying in the app comes with the Google Play launch.',
+    shareApp: 'Share Easy Help', shareAppSub: 'Your family scans this code with their phone camera to open Easy Help.', qrAlt: 'QR code that opens Easy Help',
     nextMedTitle: 'Next medicine', seeAll: 'See all', edit: 'Edit',
     noMedsHome: 'No reminders yet', noMedsHomeSub: 'Tap to add your medicines',
     nextDoseTitle: '{name}', nextDoseSub: 'Today at {time}', nextDoseTomorrow: 'Tomorrow at {time}',
@@ -193,6 +214,18 @@ const STRINGS = {
     medicine: 'الصيدلية', medicineSub: 'نحضر لك دواءك',
     ride: 'توصيلة', rideSub: 'إلى الطبيب أو السوق أو العائلة',
     helper: 'مساعدة في البيت', helperSub: 'تنظيف أو طبخ أو تصليح أو ونس',
+    pro: 'متخصصون', proSub: 'ممرضة أو زيارة طبيب أو علاج طبيعي في البيت',
+    errands: 'فواتير وأوراق', errandsSub: 'فواتير وبنك وبريد وأوراق حكومية',
+    imOk: 'طمّن عائلتي إني بخير', imOkSub: 'ضغطة واحدة كل يوم حتى لا يقلق أحد',
+    msgImOk: 'أنا بخير اليوم، حبيت أطمنكم.',
+    proFreeNote: 'الممرضات والأطباء متاحون في الباقات المدفوعة. في الباقة المجانية يُرسل هذا الطلب إلى مساعدك من العائلة.',
+    teamName: 'فريق إيزي هيلب',
+    myPlan: 'باقتي', planLabel: 'الباقة',
+    plan_free: 'مجانية · 0 جنيه', plan_m1: 'شهر · 250 جنيه', plan_m3: '3 شهور · 650 جنيه', plan_m6: '6 شهور · 1200 جنيه', plan_y1: 'سنة · 2000 جنيه',
+    planFree: 'المجانية: عائلتك هم مساعدوك. أرسل لهم طلباتك، مع تذكير الدواء والطوارئ والموقع.',
+    planPaid: 'المدفوعة: مساعدون ومتخصصون من إيزي هيلب (ممرضات وأطباء في البيت وعلاج طبيعي)، وتنبيه للعائلة عند نسيان جرعة، وخط دعم.',
+    planPayHint: 'الدفع داخل التطبيق يبدأ مع إطلاقه على جوجل بلاي.',
+    shareApp: 'شارك إيزي هيلب', shareAppSub: 'عائلتك تصوّر هذا الرمز بكاميرا الهاتف لفتح إيزي هيلب.', qrAlt: 'رمز QR يفتح إيزي هيلب',
     nextMedTitle: 'الدواء التالي', seeAll: 'عرض الكل', edit: 'تعديل',
     noMedsHome: 'لا توجد تذكيرات بعد', noMedsHomeSub: 'اضغط لإضافة أدويتك',
     nextDoseTitle: '{name}', nextDoseSub: 'اليوم الساعة {time}', nextDoseTomorrow: 'غدًا الساعة {time}',
@@ -312,6 +345,24 @@ const SERVICES = {
       intro: 'هل يمكنك مساعدتي في:' },
   },
 };
+SERVICES.pro = {
+  icon: 'steth', tone: 'teal',
+  en: { lead: 'A nurse, doctor or therapist comes to your home.', prompt: 'Who do you need?',
+    chips: ['Nurse at home', 'Doctor home visit', 'Physiotherapy', 'Lab test at home', 'Blood pressure and sugar check', 'Carer for the day'],
+    intro: 'I need a professional at home:' },
+  ar: { lead: 'ممرضة أو طبيب أو أخصائي يأتي إلى بيتك.', prompt: 'من تحتاج؟',
+    chips: ['ممرضة في البيت', 'زيارة طبيب', 'علاج طبيعي', 'تحاليل في البيت', 'قياس الضغط والسكر', 'مرافق لليوم'],
+    intro: 'أحتاج متخصصًا في البيت:' },
+};
+SERVICES.errands = {
+  icon: 'doc', tone: 'slate',
+  en: { lead: 'Someone you trust takes care of bills and papers for you.', prompt: 'What needs doing?',
+    chips: ['Pay the electricity bill', 'Pay the water or gas bill', 'Top up my phone', 'Bank', 'Post office', 'Pension papers', 'Government papers'],
+    intro: 'Could you please take care of this for me:' },
+  ar: { lead: 'شخص تثق به ينهي لك الفواتير والأوراق.', prompt: 'ماذا تحتاج؟',
+    chips: ['دفع فاتورة الكهرباء', 'دفع فاتورة المياه أو الغاز', 'شحن رصيد الهاتف', 'البنك', 'مكتب البريد', 'أوراق المعاش', 'أوراق حكومية'],
+    intro: 'من فضلك أنهِ لي هذا:' },
+};
 const STATUSES = ['sent', 'seen', 'coming', 'later', 'cant', 'done'];
 const TABS = ['home', 'requests', 'meds', 'location', 'profile'];
 const TAB_OF = { service: 'home', medadd: 'meds' };
@@ -332,11 +383,12 @@ const DEFAULTS = {
   name: '', address: '', homePos: null,
   helperName: '', helperPhone: '', sendVia: 'whatsapp',
   fam1Name: '', fam1Phone: '', fam2Name: '', fam2Phone: '', fam3Name: '', fam3Phone: '',
-  emergency: '', countdown: '5', size: '1',
+  emergency: '', countdown: '5', size: '1', plan: 'free',
   meds: [], // [{ id, name, times: ['08:00', '20:00'] }]
 };
 let settings = { ...DEFAULTS, ...store.get('hh.settings', {}) };
 if (!['1', '1.15', '1.3'].includes(String(settings.size))) settings.size = '1';
+if (!PLANS.includes(settings.plan)) settings.plan = 'free';
 let requests = store.get('hh.history', []);
 let skippedSignIn = store.get('hh.skipSignIn', false);
 
@@ -850,6 +902,14 @@ function renderHome() {
 }
 setInterval(() => { if (screenNow() === 'home') renderToday(); }, 30000);
 
+/* ---------- Who gets a request ---------- */
+function paidPlan() { return settings.plan !== 'free'; }
+// Free plan: the family helper. Paid plan: the Easy Help team, once TEAM_PHONE is set.
+function recipient() {
+  if (paidPlan() && TEAM_PHONE) return { name: T('teamName'), phone: TEAM_PHONE, team: true };
+  return settings.helperPhone ? { name: settings.helperName || T('yourHelper'), phone: settings.helperPhone } : null;
+}
+
 /* ---------- One service ---------- */
 function renderService(type) {
   currentService = type in SERVICES ? type : 'groceries';
@@ -864,11 +924,14 @@ function renderService(type) {
   document.querySelector('#whenGroup input[value="now"]').checked = true;
   document.getElementById('shareLoc').checked = true;
   document.getElementById('shareLocLabel').textContent = T(currentService === 'ride' ? 'shareLocRide' : 'shareLoc');
-  const name = settings.helperName || T('yourHelper');
-  document.getElementById('sendReqLabel').textContent = settings.helperPhone ? T('sendTo', { name }) : T('sendReq');
-  document.getElementById('sendHint').textContent = settings.helperPhone
-    ? T('sendHintTo', { name, via: T(settings.sendVia === 'sms' ? 'viaSms' : 'viaWa') })
+  const to = recipient();
+  document.getElementById('sendReqLabel').textContent = to ? T('sendTo', { name: to.name }) : T('sendReq');
+  document.getElementById('sendHint').textContent = to
+    ? T('sendHintTo', { name: to.name, via: T(settings.sendVia === 'sms' ? 'viaSms' : 'viaWa') })
     : T('needHelperPhone');
+  const note = document.getElementById('servicePlanNote');
+  note.hidden = !(currentService === 'pro' && !paidPlan());
+  note.textContent = T('proFreeNote');
 
   const chips = document.getElementById('quickChips');
   chips.innerHTML = '';
@@ -885,8 +948,8 @@ function helperLink(token) {
   const base = NATIVE ? PUBLIC_URL : `${location.origin}${location.pathname.replace(/[^/]*$/, '')}`;
   return `${base}helper.html?r=${token}`;
 }
-function greetLine() {
-  const helperName = settings.helperName ? T('msgName', { name: settings.helperName }) : '';
+function greetLine(to = settings.helperName) {
+  const helperName = to ? T('msgName', { name: to }) : '';
   return settings.name ? T('msgHello', { name: helperName, me: settings.name }) : T('msgHelloAnon', { name: helperName });
 }
 document.getElementById('sendReqBtn').addEventListener('click', async () => {
@@ -895,13 +958,14 @@ document.getElementById('sendReqBtn').addEventListener('click', async () => {
   const typedText = document.getElementById('reqText').value.trim();
   const details = [...picked, typedText].filter(Boolean).join(listSep());
   if (!details) { toast(T('needDetails')); return; }
-  if (!settings.helperPhone) { toast(T('needHelperPhone')); go('profile'); return; }
+  const to = recipient();
+  if (!to) { toast(T('needHelperPhone')); go('profile'); return; }
 
   const btn = document.getElementById('sendReqBtn');
   btn.disabled = true;
   const whenKey = { now: 'whenNow', today: 'whenToday', tomorrow: 'whenTomorrow' }[document.querySelector('#whenGroup input:checked').value];
   const pos = document.getElementById('shareLoc').checked ? await getPosition() : null;
-  const lines = [greetLine(), `${s.intro} ${details}.`, T('msgWhen', { w: T(whenKey) })];
+  const lines = [to.team ? greetLine('') : greetLine(), `${s.intro} ${details}.`, T('msgWhen', { w: T(whenKey) })];
   if (settings.address) lines.push(T('msgAddress', { a: settings.address }));
   if (pos) lines.push(T('msgLocation', { l: mapsLink(pos) }));
   const text = `${details} · ${T(whenKey)}`;
@@ -911,8 +975,14 @@ document.getElementById('sendReqBtn').addEventListener('click', async () => {
   if (token) lines.push(T('replyLink', { url: helperLink(token) }));
   lines.push(T('msgFooter'));
   btn.disabled = false;
-  sendMessage(settings.helperPhone, lines.join('\n'));
+  sendMessage(to.phone, lines.join('\n'), to.name);
   if (PREVIEW) simulateReply(currentService, text);
+});
+
+/* ---------- "I'm OK" check-in to the family helper ---------- */
+document.getElementById('imOkBtn').addEventListener('click', () => {
+  if (!settings.helperPhone) { toast(T('needHelperPhone')); go('profile'); return; }
+  sendMessage(settings.helperPhone, [greetLine(), T('msgImOk'), T('msgFooter')].join('\n'));
 });
 
 /* ---------- Helper replies ---------- */
@@ -1361,11 +1431,11 @@ document.getElementById('sheetCopy').addEventListener('click', () => {
   try { navigator.clipboard.writeText(text).then(() => toast(T('copied')), fallback); } catch { fallback(); }
 });
 
-function sendMessage(phone, body) {
+function sendMessage(phone, body, toName) {
   const num = cleanPhone(phone);
   const via = T(settings.sendVia === 'sms' ? 'viaSms' : 'viaWa');
   if (PREVIEW) {
-    const name = settings.helperName || T('yourHelper');
+    const name = toName || settings.helperName || T('yourHelper');
     showSheet(T('previewMsgTitle'), T('to', { name, num }), body, T('previewMsgNote', { via }));
     return;
   }
