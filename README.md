@@ -22,17 +22,17 @@ Groceries, Pharmacy, A ride and Help at home each have their own screen with the
 
 ## Plans
 
-**Free**: your family are your helpers; every request goes to them. **Paid**: requests go to the Easy Help team, with its own helpers and professionals (nurses, doctor visits, physiotherapy, lab tests). Longer plans add more:
+Three plans. Plus and Premium can be paid for 1, 3, 6 or 12 months.
 
-| Plan | Price | Adds |
-|---|---|---|
-| 1 month | 250 EGP | Easy Help helpers and experts, support line |
-| 3 months | 650 EGP | Alerts to family when a dose is missed |
-| 6 months | 1,200 EGP | Weekly family report, a helper within 1 hour |
-| 1 year | 2,000 EGP | 2 free nurse visits at home, support day and night |
-| Lifetime | 6,000 EGP once | Everything in 1 year, forever, plus a regular helper | Set the team's WhatsApp number in `TEAM_PHONE` at the top of `app.js`; until it is set, paid-plan requests also go to the family helper. Payment is not built into the app yet.
+| | Free | Plus | Premium |
+|---|---|---|---|
+| Price (1 / 3 / 6 / 12 months) | 0 | 250 / 650 / 1,200 / 2,000 EGP | 450 / 1,150 / 2,150 / 3,600 EGP |
+| Who helps | Your family helper | Our delivery team for shopping, pharmacy, bills and papers | Everything in Plus, plus nurses and doctors at home, rides and help at home |
+| Extras | Reminders, SOS, location, daily "I'm OK" | Alerts to family when a dose is missed, support line | A helper within 1 hour, weekly family report, support day and night |
 
-The pitch asks for 4.2M EGP for 20% (21M valuation), the 12-month launch budget: 250 helpers 1.7M, 2 developers at 30k/month 720k, 2 support staff 288k, marketing 700k, 100 pharmacy and 2 delivery partnerships 250k, servers, apps and legal 220k, reserve 322k.
+Requests the plan covers go to the Easy Help team once its WhatsApp number is set in `TEAM_PHONE` at the top of `app.js`; until then, and for anything the plan doesn't cover, they go to the family helper. Payment is not built into the app yet.
+
+The pitch asks for 10M EGP for 25% (40M valuation), the 12-month launch budget: 70 delivery men at 7,000 EGP a month 5.88M, 250 helpers 1.7M, 2 developers at 30k a month 720k, 2 support staff 288k, marketing 700k, pharmacy and delivery partnerships 250k, servers, apps and legal 220k, reserve 242k.
 
 ## Emergency
 
@@ -91,6 +91,7 @@ In the Android app, medicine reminders are real phone notifications every day, s
 1. In the Firebase console, add an Android app with package name `com.easyhelp.elders` and download `google-services.json`.
 2. Put it at `android/app/google-services.json` and run `npm run apk`. The build turns push on only when that file is there (without it Android would crash on start).
 3. The app asks for permission, registers with Firebase, and saves the phone's token in the `hh_push_tokens` table (one row per phone, readable only by its owner). Send a test from the console with **Messaging → Send test message** and that token, or a campaign to the app.
+5. When a helper answers a request, `helper.js` calls the `hh-notify` Supabase Edge Function (`supabase/functions/hh-notify`), which sends "Sara is on the way" to that person's phones. It needs the Edge Function secret `FIREBASE_SERVICE_ACCOUNT` set to the whole Firebase service-account JSON (Firebase console → Project settings → Service accounts → Generate new private key). Never commit that file.
 4. Custom data `screen` = `requests`, `meds`, `location`, `profile`, `home` or `emergency` opens that tab when the notification is tapped.
 
 It is built with Capacitor (`capacitor.config.json`, `android/`). To build it yourself you need Node, Java 21 and the Android SDK:

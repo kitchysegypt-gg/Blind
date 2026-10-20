@@ -266,20 +266,23 @@
             <label class="field-label" for="s-plan" data-t="planLabel"></label>
             <select class="field" id="s-plan" name="plan">
               <option value="free" data-t="plan_free"></option>
-              <option value="m1" data-t="plan_m1"></option>
-              <option value="m3" data-t="plan_m3"></option>
-              <option value="m6" data-t="plan_m6"></option>
-              <option value="y1" data-t="plan_y1"></option>
-              <option value="life" data-t="plan_life"></option>
+              <option value="plus" data-t="plan_plus"></option>
+              <option value="premium" data-t="plan_premium"></option>
+            </select>
+          </div>
+          <div id="planLengthBox">
+            <label class="field-label" for="s-planLength" data-t="planLengthLabel"></label>
+            <select class="field" id="s-planLength" name="planLength">
+              <option value="1" data-t="len_1"></option>
+              <option value="3" data-t="len_3"></option>
+              <option value="6" data-t="len_6"></option>
+              <option value="12" data-t="len_12"></option>
             </select>
           </div>
           <ul class="plan-list">
-            <li data-t="planFree"></li>
-            <li data-t="tier_m1"></li>
-            <li data-t="tier_m3"></li>
-            <li data-t="tier_m6"></li>
-            <li data-t="tier_y1"></li>
-            <li data-t="tier_life"></li>
+            <li data-t="tier_free"></li>
+            <li data-t="tier_plus"></li>
+            <li data-t="tier_premium"></li>
           </ul>
           <p class="hint" data-t="planPayHint"></p>
         </fieldset>

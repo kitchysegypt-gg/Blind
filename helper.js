@@ -114,6 +114,10 @@ document.querySelectorAll('[data-status]').forEach(btn => {
     document.querySelectorAll('[data-status]').forEach(b => { b.disabled = true; });
     try {
       await rpc('hh_helper_reply', { p_token: token, p_status: btn.dataset.status });
+      // Also a phone notification for them, if they have the Android app.
+      fetch(`${SUPABASE_URL}/functions/v1/hh-notify`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token }),
+      }).catch(() => {});
       result.textContent = T('sent', { name: request.requester_name || T('someone'), answer: T(btn.dataset.status) });
     } catch {
       result.textContent = T('offline');

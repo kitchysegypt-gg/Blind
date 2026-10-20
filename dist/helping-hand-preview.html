@@ -618,20 +618,23 @@ body.no-tabs main { padding-bottom: calc(32px + env(safe-area-inset-bottom)); }
             <label class="field-label" for="s-plan" data-t="planLabel"></label>
             <select class="field" id="s-plan" name="plan">
               <option value="free" data-t="plan_free"></option>
-              <option value="m1" data-t="plan_m1"></option>
-              <option value="m3" data-t="plan_m3"></option>
-              <option value="m6" data-t="plan_m6"></option>
-              <option value="y1" data-t="plan_y1"></option>
-              <option value="life" data-t="plan_life"></option>
+              <option value="plus" data-t="plan_plus"></option>
+              <option value="premium" data-t="plan_premium"></option>
+            </select>
+          </div>
+          <div id="planLengthBox">
+            <label class="field-label" for="s-planLength" data-t="planLengthLabel"></label>
+            <select class="field" id="s-planLength" name="planLength">
+              <option value="1" data-t="len_1"></option>
+              <option value="3" data-t="len_3"></option>
+              <option value="6" data-t="len_6"></option>
+              <option value="12" data-t="len_12"></option>
             </select>
           </div>
           <ul class="plan-list">
-            <li data-t="planFree"></li>
-            <li data-t="tier_m1"></li>
-            <li data-t="tier_m3"></li>
-            <li data-t="tier_m6"></li>
-            <li data-t="tier_y1"></li>
-            <li data-t="tier_life"></li>
+            <li data-t="tier_free"></li>
+            <li data-t="tier_plus"></li>
+            <li data-t="tier_premium"></li>
           </ul>
           <p class="hint" data-t="planPayHint"></p>
         </fieldset>
@@ -776,7 +779,10 @@ const SUPABASE_KEY = 'sb_publishable_sgYgEuoQbf1UhuED29P3zg_TQRm_mZF';
 // Easy Help team (helpers and professionals) once its WhatsApp number is set here,
 // in international format, e.g. '+20 100 000 0000'. Until then they go to the helper.
 const TEAM_PHONE = '';
-const PLANS = ['free', 'm1', 'm3', 'm6', 'y1', 'life'];
+const PLANS = ['free', 'plus', 'premium'];
+const PLAN_LENGTHS = ['1', '3', '6', '12']; // months, for Plus and Premium
+// Plus: our delivery team brings shopping, medicine and papers. Premium adds the rest.
+const PLUS_SERVICES = ['groceries', 'medicine', 'errands'];
 
 /* ---------- Icons: plain line symbols ---------- */
 const ICONS = {
@@ -852,16 +858,14 @@ const STRINGS = {
     errands: 'Bills & papers', errandsSub: 'Bills, bank, post and government papers',
     imOk: "Tell my family I'm OK", imOkSub: 'One tap a day, so nobody worries',
     msgImOk: "I'm fine today. Just letting you know.",
-    proFreeNote: 'Nurses and doctors come with a paid plan. On the Free plan this request goes to your family helper.',
+    proFreeNote: 'Nurses and doctors come with Premium. On your plan this request goes to your family helper.',
     teamName: 'the Easy Help team',
     myPlan: 'My plan', planLabel: 'Plan',
-    plan_free: 'Free · 0 EGP', plan_m1: '1 month · 250 EGP', plan_m3: '3 months · 650 EGP', plan_m6: '6 months · 1,200 EGP', plan_y1: '1 year · 2,000 EGP', plan_life: 'Lifetime · 6,000 EGP once',
-    planFree: 'Free: your family are your helpers. Send them requests, plus medicine reminders, SOS and location.',
-    tier_m1: '1 month: Easy Help helpers, nurses and doctors at home, and a support line.',
-    tier_m3: '3 months: all of that, plus alerts to your family when a dose is missed.',
-    tier_m6: '6 months: plus a weekly report for your family and a helper within 1 hour.',
-    tier_y1: '1 year: plus 2 free nurse check-ups at home and support day and night.',
-    tier_life: 'Lifetime: everything in 1 year, forever, plus your own regular helper.',
+    plan_free: 'Free · 0 EGP', plan_plus: 'Plus', plan_premium: 'Premium',
+    planLengthLabel: 'Pay for', len_1: '1 month', len_3: '3 months (save 13%)', len_6: '6 months (save 20%)', len_12: '1 year (save 33%)',
+    tier_free: 'Free: your family are your helpers. Requests go to them, plus medicine reminders, SOS, location and a daily "I\'m OK".',
+    tier_plus: 'Plus (250 / 650 / 1,200 / 2,000 EGP for 1 / 3 / 6 / 12 months): everything in Free, plus our delivery team for shopping, pharmacy and bills, alerts to your family when a dose is missed, and a support line.',
+    tier_premium: 'Premium (450 / 1,150 / 2,150 / 3,600 EGP): everything in Plus, plus nurses and doctors at home, rides and help at home, a helper within 1 hour, a weekly family report and support day and night.',
     planPayHint: 'Paying in the app comes with the Google Play launch.',
     shareApp: 'Share Easy Help', shareAppSub: 'Your family scans this code with their phone camera to open Easy Help.', qrAlt: 'QR code that opens Easy Help',
     nextMedTitle: 'Next medicine', seeAll: 'See all', edit: 'Edit',
@@ -979,16 +983,14 @@ const STRINGS = {
     errands: 'فواتير وأوراق', errandsSub: 'فواتير وبنك وبريد وأوراق حكومية',
     imOk: 'طمّن عائلتي إني بخير', imOkSub: 'ضغطة واحدة كل يوم حتى لا يقلق أحد',
     msgImOk: 'أنا بخير اليوم، حبيت أطمنكم.',
-    proFreeNote: 'الممرضات والأطباء متاحون في الباقات المدفوعة. في الباقة المجانية يُرسل هذا الطلب إلى مساعدك من العائلة.',
+    proFreeNote: 'الممرضات والأطباء متاحون في باقة بريميوم. في باقتك يُرسل هذا الطلب إلى مساعدك من العائلة.',
     teamName: 'فريق إيزي هيلب',
     myPlan: 'باقتي', planLabel: 'الباقة',
-    plan_free: 'مجانية · 0 جنيه', plan_m1: 'شهر · 250 جنيه', plan_m3: '3 شهور · 650 جنيه', plan_m6: '6 شهور · 1200 جنيه', plan_y1: 'سنة · 2000 جنيه', plan_life: 'مدى الحياة · 6000 جنيه مرة واحدة',
-    planFree: 'المجانية: عائلتك هم مساعدوك. أرسل لهم طلباتك، مع تذكير الدواء والطوارئ والموقع.',
-    tier_m1: 'شهر: مساعدون من إيزي هيلب، وممرضات وأطباء في البيت، وخط دعم.',
-    tier_m3: '3 شهور: كل ما سبق، مع تنبيه لعائلتك عند نسيان جرعة.',
-    tier_m6: '6 شهور: مع تقرير أسبوعي لعائلتك ومساعد يصل خلال ساعة.',
-    tier_y1: 'سنة: مع زيارتين مجانيتين من ممرضة للكشف في البيت ودعم ليلًا ونهارًا.',
-    tier_life: 'مدى الحياة: كل مزايا السنة للأبد، مع مساعد ثابت خاص بك.',
+    plan_free: 'مجانية · 0 جنيه', plan_plus: 'بلس', plan_premium: 'بريميوم',
+    planLengthLabel: 'مدة الاشتراك', len_1: 'شهر', len_3: '3 شهور (وفّر 13%)', len_6: '6 شهور (وفّر 20%)', len_12: 'سنة (وفّر 33%)',
+    tier_free: 'المجانية: عائلتك هم مساعدوك. تُرسل لهم طلباتك، مع تذكير الدواء والطوارئ والموقع ورسالة "أنا بخير" اليومية.',
+    tier_plus: 'بلس (250 / 650 / 1200 / 2000 جنيه لشهر / 3 / 6 / 12 شهرًا): كل مزايا المجانية، مع فريق التوصيل للمشتريات والصيدلية والفواتير، وتنبيه لعائلتك عند نسيان جرعة، وخط دعم.',
+    tier_premium: 'بريميوم (450 / 1150 / 2150 / 3600 جنيه): كل مزايا بلس، مع ممرضات وأطباء في البيت، وتوصيلات ومساعدة في البيت، ومساعد خلال ساعة، وتقرير أسبوعي للعائلة، ودعم ليلًا ونهارًا.',
     planPayHint: 'الدفع داخل التطبيق يبدأ مع إطلاقه على جوجل بلاي.',
     shareApp: 'شارك إيزي هيلب', shareAppSub: 'عائلتك تصوّر هذا الرمز بكاميرا الهاتف لفتح إيزي هيلب.', qrAlt: 'رمز QR يفتح إيزي هيلب',
     nextMedTitle: 'الدواء التالي', seeAll: 'عرض الكل', edit: 'تعديل',
@@ -1148,12 +1150,18 @@ const DEFAULTS = {
   name: '', address: '', homePos: null,
   helperName: '', helperPhone: '', sendVia: 'whatsapp',
   fam1Name: '', fam1Phone: '', fam2Name: '', fam2Phone: '', fam3Name: '', fam3Phone: '',
-  emergency: '', countdown: '5', size: '1', plan: 'free',
+  emergency: '', countdown: '5', size: '1', plan: 'free', planLength: '1',
   meds: [], // [{ id, name, times: ['08:00', '20:00'] }]
 };
 let settings = { ...DEFAULTS, ...store.get('hh.settings', {}) };
 if (!['1', '1.15', '1.3'].includes(String(settings.size))) settings.size = '1';
+// Older plan names (one plan per length, and Lifetime) become Plus or Premium.
+{
+  const old = { m1: ['plus', '1'], m3: ['plus', '3'], m6: ['plus', '6'], y1: ['plus', '12'], life: ['premium', '12'] }[settings.plan];
+  if (old) [settings.plan, settings.planLength] = old;
+}
 if (!PLANS.includes(settings.plan)) settings.plan = 'free';
+if (!PLAN_LENGTHS.includes(String(settings.planLength))) settings.planLength = '1';
 let requests = store.get('hh.history', []);
 let skippedSignIn = store.get('hh.skipSignIn', false);
 
@@ -1678,10 +1686,12 @@ function renderHome() {
 setInterval(() => { if (screenNow() === 'home') renderToday(); }, 30000);
 
 /* ---------- Who gets a request ---------- */
-function paidPlan() { return settings.plan !== 'free'; }
-// Free plan: the family helper. Paid plan: the Easy Help team, once TEAM_PHONE is set.
-function recipient() {
-  if (paidPlan() && TEAM_PHONE) return { name: T('teamName'), phone: TEAM_PHONE, team: true };
+function teamCovers(type) {
+  return settings.plan === 'premium' || (settings.plan === 'plus' && PLUS_SERVICES.includes(type));
+}
+// Free: the family helper. Plus and Premium: the Easy Help team for the services the plan covers, once TEAM_PHONE is set.
+function recipient(type) {
+  if (teamCovers(type) && TEAM_PHONE) return { name: T('teamName'), phone: TEAM_PHONE, team: true };
   return settings.helperPhone ? { name: settings.helperName || T('yourHelper'), phone: settings.helperPhone } : null;
 }
 
@@ -1699,13 +1709,13 @@ function renderService(type) {
   document.querySelector('#whenGroup input[value="now"]').checked = true;
   document.getElementById('shareLoc').checked = true;
   document.getElementById('shareLocLabel').textContent = T(currentService === 'ride' ? 'shareLocRide' : 'shareLoc');
-  const to = recipient();
+  const to = recipient(currentService);
   document.getElementById('sendReqLabel').textContent = to ? T('sendTo', { name: to.name }) : T('sendReq');
   document.getElementById('sendHint').textContent = to
     ? T('sendHintTo', { name: to.name, via: T(settings.sendVia === 'sms' ? 'viaSms' : 'viaWa') })
     : T('needHelperPhone');
   const note = document.getElementById('servicePlanNote');
-  note.hidden = !(currentService === 'pro' && !paidPlan());
+  note.hidden = !(currentService === 'pro' && settings.plan !== 'premium');
   note.textContent = T('proFreeNote');
 
   const chips = document.getElementById('quickChips');
@@ -1733,7 +1743,7 @@ document.getElementById('sendReqBtn').addEventListener('click', async () => {
   const typedText = document.getElementById('reqText').value.trim();
   const details = [...picked, typedText].filter(Boolean).join(listSep());
   if (!details) { toast(T('needDetails')); return; }
-  const to = recipient();
+  const to = recipient(currentService);
   if (!to) { toast(T('needHelperPhone')); go('profile'); return; }
 
   const btn = document.getElementById('sendReqBtn');
@@ -2335,7 +2345,13 @@ function renderProfile() {
     const field = form.elements[k];
     if (field) field.value = v ?? '';
   }
+  showPlanLength();
 }
+// "Pay for" (1, 3, 6 or 12 months) only matters for Plus and Premium.
+function showPlanLength() {
+  document.getElementById('planLengthBox').hidden = form.elements.plan.value === 'free';
+}
+form.elements.plan.addEventListener('change', showPlanLength);
 function saveSettings(next) {
   settings = next;
   store.set('hh.settings', settings);

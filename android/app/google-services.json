@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "596336516854",
+    "project_id": "easy-help-80a81",
+    "storage_bucket": "easy-help-80a81.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596336516854:android:67eb70e748572f16c016d7",
+        "android_client_info": {
+          "package_name": "com.easyhelp.elders"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaWNuj79fyo3bpwWLe1ZJagmnlBgNXM10"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
